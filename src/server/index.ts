@@ -17,7 +17,7 @@ const store = Store.init(config)
 app.use(express.json())
 
 app.get('/api', (_req, res) => {
-  res.send('Hello from Express api!')
+  res.send('smh-client api')
 })
 
 app.get('/api/state', (_req, res) => {

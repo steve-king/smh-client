@@ -11,7 +11,7 @@ import { logLevel } from '@/server'
  */
 export const getConfig = (): Config => {
   const cwd = process.cwd()
-  const defaultFile = path.join(cwd, 'src', 'config.default.json')
+  const defaultFile = path.join(cwd, 'src', 'userconfig.default.json')
   const dir = path.join(cwd, 'data')
   const file = path.join(dir, 'config.json')
 
