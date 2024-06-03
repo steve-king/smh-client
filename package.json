@@ -12,8 +12,11 @@
     "start": "cross-env NODE_ENV=production ts-node src/server"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.10.8",
+    "@grpc/proto-loader": "^0.7.13",
     "cross-env": "^7.0.3",
     "express": "^4.19.2",
+    "google-proto-files": "^4.2.0",
     "lodash": "^4.17.21",
     "node-cron": "^3.0.3",
     "react": "^18.2.0",

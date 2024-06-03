@@ -1,0 +1,3 @@
+[submodule "src/server/lib/api"]
+	path = src/server/lib/api
+	url = https://github.com/spacemeshos/api.git

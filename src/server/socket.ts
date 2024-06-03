@@ -5,7 +5,7 @@ import { log } from '@/server/utils'
 
 class SocketServer {
   io: SocketIO.Server | null
-  throttleSeconds: number = 10
+  throttleSeconds: number = 5
 
   constructor() {
     this.io = null
