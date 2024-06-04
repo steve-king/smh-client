@@ -68,7 +68,7 @@ export function log(
   message: string,
   level?: LogLevel
 ) {
-  if (level === logLevel || !level) {
+  if (level !== 'verbose') {
     let text = ''
     const separator = ' '
 

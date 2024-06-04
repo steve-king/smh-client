@@ -42,4 +42,4 @@ server.listen(PORT, () => {
 })
 
 // Log level
-export const logLevel = '' // verbose
+export const logLevel = 'none' // verbose
