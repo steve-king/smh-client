@@ -37,26 +37,26 @@ export const Dashboard = () => {
       <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <CardTemplate title="SMH Price" icon="dollar">
-            <p>Card Content</p>
-            <p>Card Footer</p>
+            <p>$2.50</p>
+            <p>Source: Coingecko</p>
           </CardTemplate>
         </div>
         <div>
           <CardTemplate title="Network" icon="globe">
-            <p>Card Content</p>
-            <p>Card Footer</p>
+            <p>Epoch: 23 Layer: 93972</p>
+            <p>Progress bar</p>
           </CardTemplate>
         </div>
         <div>
           <CardTemplate title="Storage" icon="hardDrive">
-            <p>Card Content</p>
-            <p>Card Footer</p>
+            <p>120 SUs / 7.5 TiB</p>
+            <p>Services: 4</p>
           </CardTemplate>
         </div>
         <div>
           <CardTemplate title="Next layer" icon="layers">
-            <p>Card Content</p>
-            <p>Card Footer</p>
+            <p>14 hrs, 23 min</p>
+            <p>Node: Homelab</p>
           </CardTemplate>
         </div>
       </div>
