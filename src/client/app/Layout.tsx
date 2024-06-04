@@ -10,7 +10,14 @@ import {
 
 import { Dashboard } from '@/client/app/dashboard/Dashboard'
 
-import { Gauge } from 'lucide-react'
+import {
+  Cog,
+  Gauge,
+  RadioTower,
+  HardDrive,
+  MessageSquareCode,
+  Network,
+} from 'lucide-react'
 
 interface Props {
   children?: ReactNode
@@ -18,30 +25,27 @@ interface Props {
 
 const Header = () => {
   return (
-    <header className="bg-zinc-900 dark">
-      <div className="container py-3 flex items-center justify-between">
-        <div className="flex items-center">
-          <div className="mr-2 flex items-center">
-            <img
-              src="/logo-spacemesh.png"
-              width="48"
-              height="auto"
-              className="rounded-xl border-4"
-            />
-            {/* SMH Client */}
+    <header className="bg-white dark">
+      <div className="container py-2 flex items-center justify-between">
+        <div className="flex items-center shrink-0">
+          <div className="-ml-2 -mr-2 flex items-center">
+            <img src="/logo-spacemesh-light.png" width="48" height="auto" />
+            <h1 className="font-medium">SMH Client</h1>
           </div>
-          <TabsList>
-            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-            <TabsTrigger value="node">Node</TabsTrigger>
-            <TabsTrigger value="ser">Services</TabsTrigger>
-            <TabsTrigger value="events">Events</TabsTrigger>
-            <TabsTrigger value="peers">Peers</TabsTrigger>
-          </TabsList>
         </div>
-
-        <a href="#" className="link">
-          Settings
-        </a>
+        <TabsList>
+          <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+          <TabsTrigger value="node">Node</TabsTrigger>
+          <TabsTrigger value="services">Post Services</TabsTrigger>
+          <TabsTrigger value="events">Events</TabsTrigger>
+          <TabsTrigger value="peers">Peers</TabsTrigger>
+          <TabsTrigger value="config">Config</TabsTrigger>
+        </TabsList>
+        {/* <div>
+          <a href="#" className="link">
+            Settings
+          </a>
+        </div> */}
       </div>
     </header>
   )
@@ -67,12 +71,12 @@ const TabContent = (props: {
   return (
     <TabsContent value={props.value}>
       <div className="flex items-center">
-        {Icon && <Icon className="mr-2" />}
+        {Icon && <Icon className="mr-2" size={32} />}
         <h1 className="text-2xl font-semibold">
           <span>{props.title}</span>
         </h1>
       </div>
-      <Separator className="my-6" />
+      <Separator className="my-4" />
       {props.children}
     </TabsContent>
   )
@@ -88,17 +92,20 @@ export const Layout = ({ children }: Props) => {
           <TabContent value="dashboard" title="Dashboard" Icon={Gauge}>
             <Dashboard />
           </TabContent>
-          <TabContent value="node" title="Node">
+          <TabContent value="node" title="Node" Icon={RadioTower}>
             Node content
           </TabContent>
-          <TabContent value="services" title="Services">
+          <TabContent value="services" title="Post Services" Icon={HardDrive}>
             Services content
           </TabContent>
-          <TabContent value="events" title="Events">
+          <TabContent value="events" title="Events" Icon={MessageSquareCode}>
             Events content
           </TabContent>
-          <TabContent value="peers" title="Peers">
+          <TabContent value="peers" title="Peers" Icon={Network}>
             Peers content
+          </TabContent>
+          <TabContent value="config" title="Configuration" Icon={Cog}>
+            Configuration content
           </TabContent>
           {children}
         </main>

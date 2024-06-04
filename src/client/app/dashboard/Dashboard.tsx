@@ -24,7 +24,7 @@ const CardTemplate = ({
     <Card className="flex items-center">
       {Icon && (
         <div className="pl-4">
-          <Icon className="relative" style={{ top: '2px' }} />
+          <Icon className="relative" style={{ top: '1px' }} size={32} />
         </div>
       )}
       <div>
