@@ -9,9 +9,12 @@ import Store from '@/server/store'
 const app = express()
 const PORT = 3131
 const server = http.createServer(app)
-const socket = Socket.init(server)
+
 const config = getConfig()
 const store = Store.init(config)
+store.fetch()
+store.fetchStreams()
+cronTask(config.settings?.refreshInterval, store.fetch).start()
 
 // Routes
 app.use(express.json())
@@ -32,13 +35,11 @@ if (process.env.NODE_ENV === 'production') {
 // Listen
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`)
-})
 
-// Fetch and emit state
-store.fetch()
-store.fetchStreams()
-cronTask(config.settings?.refreshInterval, store.fetch).start()
-store.onUpdate(() => socket.emit('update'))
+  // Emit updates
+  const socket = Socket.init(server)
+  store.onUpdate(() => socket.emit('update'))
+})
 
 // Log level
 export const logLevel = '' // verbose
