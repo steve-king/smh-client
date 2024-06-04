@@ -12,6 +12,7 @@
   },
   "aliases": {
     "components": "@/client/components",
+    "ui": "@/client/components/shadcn",
     "utils": "@/client/lib/utils"
   }
 }

@@ -23,6 +23,7 @@
     "express": "^4.19.2",
     "google-proto-files": "^4.2.0",
     "lodash": "^4.17.21",
+    "lucide-react": "^0.383.0",
     "node-cron": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

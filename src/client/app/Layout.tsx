@@ -1,14 +1,16 @@
 import { ReactNode } from 'react'
 
-import { Separator } from '@/client/components/ui/separator'
+import { Separator } from '@/client/components/shadcn/separator'
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@/client/components/ui/tabs'
+} from '@/client/components/shadcn/tabs'
 
 import { Dashboard } from '@/client/app/dashboard/Dashboard'
+
+import { Gauge } from 'lucide-react'
 
 interface Props {
   children?: ReactNode
@@ -16,9 +18,18 @@ interface Props {
 
 const Header = () => {
   return (
-    <header>
-      <div className="container py-4 flex items-center justify-between">
+    <header className="bg-zinc-900 dark">
+      <div className="container py-3 flex items-center justify-between">
         <div className="flex items-center">
+          <div className="mr-2 flex items-center">
+            <img
+              src="/logo-spacemesh.png"
+              width="48"
+              height="auto"
+              className="rounded-xl border-4"
+            />
+            {/* SMH Client */}
+          </div>
           <TabsList>
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
             <TabsTrigger value="node">Node</TabsTrigger>
@@ -26,9 +37,11 @@ const Header = () => {
             <TabsTrigger value="events">Events</TabsTrigger>
             <TabsTrigger value="peers">Peers</TabsTrigger>
           </TabsList>
-          {/* <div className="mr-4">SMH Client</div> */}
         </div>
-        <div>Settings</div>
+
+        <a href="#" className="link">
+          Settings
+        </a>
       </div>
     </header>
   )
@@ -47,11 +60,18 @@ const Footer = () => {
 const TabContent = (props: {
   title: string
   value: string
+  Icon?: React.ElementType
   children?: ReactNode
 }) => {
+  const { Icon } = props
   return (
     <TabsContent value={props.value}>
-      <h1 className="text-2xl font-semibold">{props.title}</h1>
+      <div className="flex items-center">
+        {Icon && <Icon className="mr-2" />}
+        <h1 className="text-2xl font-semibold">
+          <span>{props.title}</span>
+        </h1>
+      </div>
       <Separator className="my-6" />
       {props.children}
     </TabsContent>
@@ -64,9 +84,8 @@ export const Layout = ({ children }: Props) => {
       <Tabs defaultValue="dashboard">
         <Header />
         <Separator />
-
         <main className="container py-4">
-          <TabContent value="dashboard" title="Dashboard">
+          <TabContent value="dashboard" title="Dashboard" Icon={Gauge}>
             <Dashboard />
           </TabContent>
           <TabContent value="node" title="Node">
