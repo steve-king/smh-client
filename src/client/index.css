@@ -74,3 +74,33 @@
     @apply bg-background text-foreground;
   }
 }
+
+body:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url('mesh-3d-inv.jpg');
+  background-size: 100%;
+  z-index: 0;
+  opacity: 0.025;
+}
+
+.dark body:before {
+  opacity: 0.1;
+  background-image: url('mesh-3d.jpg');
+}
+
+#root {
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+html.dark #header {
+  background: #000;
+}
+
+html.light #header {
+  background: #fff;
+}

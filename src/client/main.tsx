@@ -11,6 +11,8 @@ import './index.css'
 import { App } from '@/client/app'
 import { Dashboard, Node, Error } from './pages'
 
+import { ThemeProvider } from '@/client/app/providers/theme-provider'
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} errorElement={<Error />}>
@@ -22,6 +24,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 )

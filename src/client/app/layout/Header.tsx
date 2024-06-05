@@ -1,7 +1,10 @@
 import { ElementType, ReactNode } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Button, ButtonProps } from '@/client/components/ui/button'
-import * as icon from '@/client/components/icons'
+import * as Icon from '@/client/components/ui/icons'
+
+import { useTheme } from '../providers/theme-provider'
+import ThemeToggle from '@/client/app/layout/theme-toggle'
 
 const NavigationLink = ({
   to,
@@ -28,34 +31,56 @@ const NavigationLink = ({
 }
 
 export default function Header() {
+  const theme = useTheme()
+  console.log(theme)
   return (
-    <header>
+    <header id="header">
       <div className="container py-2 flex items-center justify-between">
         <div className="flex items-center shrink-0">
-          <h1 className="-ml-2 -mr-2 flex items-center">
-            <img src={icon.spacemeshLight} width="48" height="auto" />
+          <h1 className="-ml-4 -mr-2 flex items-center">
+            <img
+              src={Icon.SpacemeshLight}
+              width="48"
+              height="auto"
+              className="dark:hidden"
+            />
+            <img
+              src={Icon.SpacemeshDark}
+              width="48"
+              height="auto"
+              className="hidden dark:block"
+            />
             <span className="font-medium">SMH Client</span>
           </h1>
         </div>
         <nav className="flex flex-wrap -mr-6">
-          <NavigationLink to="/" Icon={icon.Dashboard}>
+          <NavigationLink to="/" Icon={Icon.Dashboard}>
             Dashboard
           </NavigationLink>
-          <NavigationLink to="/node" Icon={icon.Node}>
+          <NavigationLink to="/node" Icon={Icon.Node}>
             Node
           </NavigationLink>
-          <NavigationLink to="/services" Icon={icon.Services}>
+          <NavigationLink to="/services" Icon={Icon.Services}>
             Services
           </NavigationLink>
-          <NavigationLink to="/events" Icon={icon.Events}>
+          <NavigationLink to="/events" Icon={Icon.Events}>
             Events
           </NavigationLink>
-          <NavigationLink to="/peers" Icon={icon.Peers}>
+          <NavigationLink to="/peers" Icon={Icon.Peers}>
             Peers
           </NavigationLink>
-          <NavigationLink to="/settings" Icon={icon.Settings}>
+          {/* <NavigationLink to="/settings" Icon={Icon.Settings}>
             Settings
-          </NavigationLink>
+          </NavigationLink> */}
+        </nav>
+        <nav>
+          <Button variant="ghost" size="icon">
+            <Icon.Hide />
+          </Button>
+          <ThemeToggle />
+          <Button variant="ghost" size="icon">
+            <Icon.Settings />
+          </Button>
         </nav>
       </div>
     </header>
