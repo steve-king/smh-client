@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
-import './App.css'
+import { ReactNode, useEffect, useState } from 'react'
 
 import io from 'socket.io-client'
 
 import { Layout } from '@/client/app/Layout'
+import { Outlet } from 'react-router-dom'
 
 const fetchStore = (setState: Function, setUpdatedOn: Function) => {
   fetch('/api/state')
@@ -17,9 +17,7 @@ const fetchStore = (setState: Function, setUpdatedOn: Function) => {
     .catch((e) => console.log('Error fetching state: ', e))
 }
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function App(props: { children?: ReactNode }) {
   useEffect(() => {
     fetch('/api')
       .then((res) => res.text())
@@ -36,7 +34,7 @@ function App() {
     }
   })
 
-  return <Layout />
+  return <Outlet />
 }
 
 export default App

@@ -1,4 +1,5 @@
-import { ReactNode } from 'react'
+import { ElementType, ReactNode } from 'react'
+import './Layout.css'
 
 import { Separator } from '@/client/components/ui/separator'
 import {
@@ -9,13 +10,17 @@ import {
 } from '@/client/components/ui/tabs'
 import { Button } from '@/client/components/ui/button'
 
-import { Dashboard } from '@/client/app/dashboard/Dashboard'
+import { NavLink } from 'react-router-dom'
+
+import { ButtonProps } from '@/client/components/ui/button'
+
+import logo from '@/client/assets/logo-spacemesh-light.png'
 
 import {
   Cog as SettingsIcon,
   Gauge as DashboardIcon,
   RadioTower as NodeIcon,
-  HardDrive as PostIcon,
+  HardDrive as ServicesIcon,
   MessageSquareCode as EventsIcon,
   Network as PeersIcon,
 } from 'lucide-react'
@@ -24,65 +29,60 @@ interface Props {
   children?: ReactNode
 }
 
-const Header = () => {
+const NavigationLink = ({
+  to,
+  Icon,
+  children,
+}: {
+  to: string
+  Icon: ElementType
+  children: ReactNode
+}) => {
   const iconSize = 20
+  const active: ButtonProps['variant'] = 'default'
+  const inactive: ButtonProps['variant'] = 'ghost'
+  return (
+    <NavLink to={to}>
+      {(props) => (
+        <Button variant={props.isActive ? active : inactive}>
+          <Icon size={iconSize} />
+          <span className="ml-2">{children}</span>
+        </Button>
+      )}
+    </NavLink>
+  )
+}
+
+const Header = () => {
   return (
     <header>
       <div className="container py-2 flex items-center justify-between">
         <div className="flex items-center shrink-0">
-          <div className="-ml-2 -mr-2 flex items-center">
-            <img src="/logo-spacemesh-light.png" width="48" height="auto" />
-            <h1 className="font-medium">SMH Client</h1>
-          </div>
+          <h1 className="-ml-2 -mr-2 flex items-center">
+            <img src={logo} width="48" height="auto" />
+            <span className="font-medium">SMH Client</span>
+          </h1>
         </div>
-        <nav>
-          <ul className="flex flex-wrap">
-            <li>
-              <Button>
-                <DashboardIcon className="mr-2" size={iconSize} />
-                Dashboard
-              </Button>
-            </li>
-            <li>
-              <Button variant="ghost">
-                <NodeIcon className="mr-2" size={iconSize} />
-                Node
-              </Button>
-            </li>
-            <li>
-              <Button variant="ghost">
-                <PostIcon className="mr-2" size={iconSize} />
-                Post Services
-              </Button>
-            </li>
-            <li>
-              <Button variant="ghost">
-                <EventsIcon className="mr-2" size={iconSize} />
-                Events
-              </Button>
-            </li>
-            <li>
-              <Button variant="ghost">
-                <PeersIcon className="mr-2" size={iconSize} />
-                Peers
-              </Button>
-            </li>
-            <li>
-              <Button variant="ghost">
-                <SettingsIcon className="mr-2" size={iconSize} />
-                Settings
-              </Button>
-            </li>
-          </ul>
+        <nav className="flex flex-wrap -mr-6">
+          <NavigationLink to="/" Icon={DashboardIcon}>
+            Dashboard
+          </NavigationLink>
+          <NavigationLink to="/node" Icon={NodeIcon}>
+            Node
+          </NavigationLink>
+          <NavigationLink to="/services" Icon={ServicesIcon}>
+            Services
+          </NavigationLink>
+          <NavigationLink to="/events" Icon={EventsIcon}>
+            Events
+          </NavigationLink>
+          <NavigationLink to="/peers" Icon={PeersIcon}>
+            Peers
+          </NavigationLink>
+          <NavigationLink to="/settings" Icon={SettingsIcon}>
+            Settings
+          </NavigationLink>
         </nav>
-        {/* <TabsList>
-          <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-          <TabsTrigger value="node">Node</TabsTrigger>
-          <TabsTrigger value="services">Post Services</TabsTrigger>
-          <TabsTrigger value="events">Events</TabsTrigger>
-          <TabsTrigger value="peers">Peers</TabsTrigger>
-          <TabsTrigger value="settings">Settings</TabsTrigger>
-        </TabsList> */}
       </div>
     </header>
   )
@@ -119,35 +119,13 @@ const TabContent = (props: {
   )
 }
 
-export const Layout = ({ children }: { children: ReactNode }) => {
+export default function Layout(props: { children: ReactNode }) {
   return (
-    <div>
-      <Tabs defaultValue="dashboard">
-        <Header />
-        <Separator />
-        <main className="container py-4">
-          <TabContent value="dashboard" title="Dashboard" Icon={DashboardIcon}>
-            <Dashboard />
-          </TabContent>
-          <TabContent value="node" title="Node" Icon={NodeIcon}>
-            Node content
-          </TabContent>
-          <TabContent value="services" title="Post Services" Icon={PostIcon}>
-            Services content
-          </TabContent>
-          <TabContent value="events" title="Events" Icon={EventsIcon}>
-            Events content
-          </TabContent>
-          <TabContent value="peers" title="Peers" Icon={PeersIcon}>
-            Peers content
-          </TabContent>
-          <TabContent value="settings" title="Settings" Icon={SettingsIcon}>
-            Configuration content
-          </TabContent>
-          {children}
-        </main>
-        <Footer />
-      </Tabs>
-    </div>
+    <>
+      <Header />
+      <Separator />
+      <main className="container py-4">{props.children}</main>
+      <Footer />
+    </>
   )
 }
