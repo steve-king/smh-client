@@ -1,11 +1,7 @@
-import { Layout, Page } from '@/client/app'
+import { Page } from '@/client/app'
 
 const NodePage = () => {
-  return (
-    <Layout>
-      <Page title="Node">Node page</Page>
-    </Layout>
-  )
+  return <Page title="Node">Node page</Page>
 }
 
 export default NodePage

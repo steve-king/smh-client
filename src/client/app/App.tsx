@@ -1,8 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react'
-
 import io from 'socket.io-client'
-
-import { Layout } from '@/client/app/Layout'
 import { Outlet } from 'react-router-dom'
 
 const fetchStore = (setState: Function, setUpdatedOn: Function) => {

@@ -1,4 +1,4 @@
-import { Layout, Page } from '@/client/app'
+import { Page } from '@/client/app'
 
 import {
   Card,
@@ -41,32 +41,30 @@ const CardTemplate = ({
 
 export const DashboardPage = () => {
   return (
-    <Layout>
-      <Page title="Dashboard">
-        <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-          <CardTemplate title="SMH Price" Icon={DollarSign}>
-            <p className="text-2xl">2.50</p>
-            <p>Source: Coingecko</p>
-          </CardTemplate>
+    <Page title="Dashboard">
+      <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <CardTemplate title="SMH Price" Icon={DollarSign}>
+          <p className="text-2xl">2.50</p>
+          <p>Source: Coingecko</p>
+        </CardTemplate>
 
-          <CardTemplate title="Network" Icon={Globe}>
-            <p>Epoch: 23 Layer: 93972</p>
-            <p>Progress bar</p>
-          </CardTemplate>
+        <CardTemplate title="Network" Icon={Globe}>
+          <p>Epoch: 23 Layer: 93972</p>
+          <p>Progress bar</p>
+        </CardTemplate>
 
-          <CardTemplate title="Storage" Icon={HardDrive}>
-            <p>120 SUs / 7.5 TiB</p>
-            <p>Services: 4</p>
-          </CardTemplate>
+        <CardTemplate title="Storage" Icon={HardDrive}>
+          <p>120 SUs / 7.5 TiB</p>
+          <p>Services: 4</p>
+        </CardTemplate>
 
-          <CardTemplate title="Next layer" Icon={Layers3}>
-            <p>14 hrs, 23 min</p>
-            <p>Node: Homelab</p>
-          </CardTemplate>
-        </div>
-        <Separator />
-      </Page>
-    </Layout>
+        <CardTemplate title="Next layer" Icon={Layers3}>
+          <p>14 hrs, 23 min</p>
+          <p>Node: Homelab</p>
+        </CardTemplate>
+      </div>
+      <Separator />
+    </Page>
   )
 }
 
