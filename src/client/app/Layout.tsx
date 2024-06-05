@@ -1,22 +1,23 @@
 import { ReactNode } from 'react'
 
-import { Separator } from '@/client/components/shadcn/separator'
+import { Separator } from '@/client/components/ui/separator'
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@/client/components/shadcn/tabs'
+} from '@/client/components/ui/tabs'
+import { Button } from '@/client/components/ui/button'
 
 import { Dashboard } from '@/client/app/dashboard/Dashboard'
 
 import {
-  Cog,
-  Gauge,
-  RadioTower,
-  HardDrive,
-  MessageSquareCode,
-  Network,
+  Cog as SettingsIcon,
+  Gauge as DashboardIcon,
+  RadioTower as NodeIcon,
+  HardDrive as PostIcon,
+  MessageSquareCode as EventsIcon,
+  Network as PeersIcon,
 } from 'lucide-react'
 
 interface Props {
@@ -24,8 +25,9 @@ interface Props {
 }
 
 const Header = () => {
+  const iconSize = 20
   return (
-    <header className="bg-white dark">
+    <header>
       <div className="container py-2 flex items-center justify-between">
         <div className="flex items-center shrink-0">
           <div className="-ml-2 -mr-2 flex items-center">
@@ -33,19 +35,54 @@ const Header = () => {
             <h1 className="font-medium">SMH Client</h1>
           </div>
         </div>
-        <TabsList>
+        <nav>
+          <ul className="flex flex-wrap">
+            <li>
+              <Button>
+                <DashboardIcon className="mr-2" size={iconSize} />
+                Dashboard
+              </Button>
+            </li>
+            <li>
+              <Button variant="ghost">
+                <NodeIcon className="mr-2" size={iconSize} />
+                Node
+              </Button>
+            </li>
+            <li>
+              <Button variant="ghost">
+                <PostIcon className="mr-2" size={iconSize} />
+                Post Services
+              </Button>
+            </li>
+            <li>
+              <Button variant="ghost">
+                <EventsIcon className="mr-2" size={iconSize} />
+                Events
+              </Button>
+            </li>
+            <li>
+              <Button variant="ghost">
+                <PeersIcon className="mr-2" size={iconSize} />
+                Peers
+              </Button>
+            </li>
+            <li>
+              <Button variant="ghost">
+                <SettingsIcon className="mr-2" size={iconSize} />
+                Settings
+              </Button>
+            </li>
+          </ul>
+        </nav>
+        {/* <TabsList>
           <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
           <TabsTrigger value="node">Node</TabsTrigger>
           <TabsTrigger value="services">Post Services</TabsTrigger>
           <TabsTrigger value="events">Events</TabsTrigger>
           <TabsTrigger value="peers">Peers</TabsTrigger>
-          <TabsTrigger value="config">Config</TabsTrigger>
-        </TabsList>
-        {/* <div>
-          <a href="#" className="link">
-            Settings
-          </a>
-        </div> */}
+          <TabsTrigger value="settings">Settings</TabsTrigger>
+        </TabsList> */}
       </div>
     </header>
   )
@@ -82,29 +119,29 @@ const TabContent = (props: {
   )
 }
 
-export const Layout = ({ children }: Props) => {
+export const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <div>
       <Tabs defaultValue="dashboard">
         <Header />
         <Separator />
         <main className="container py-4">
-          <TabContent value="dashboard" title="Dashboard" Icon={Gauge}>
+          <TabContent value="dashboard" title="Dashboard" Icon={DashboardIcon}>
             <Dashboard />
           </TabContent>
-          <TabContent value="node" title="Node" Icon={RadioTower}>
+          <TabContent value="node" title="Node" Icon={NodeIcon}>
             Node content
           </TabContent>
-          <TabContent value="services" title="Post Services" Icon={HardDrive}>
+          <TabContent value="services" title="Post Services" Icon={PostIcon}>
             Services content
           </TabContent>
-          <TabContent value="events" title="Events" Icon={MessageSquareCode}>
+          <TabContent value="events" title="Events" Icon={EventsIcon}>
             Events content
           </TabContent>
-          <TabContent value="peers" title="Peers" Icon={Network}>
+          <TabContent value="peers" title="Peers" Icon={PeersIcon}>
             Peers content
           </TabContent>
-          <TabContent value="config" title="Configuration" Icon={Cog}>
+          <TabContent value="settings" title="Settings" Icon={SettingsIcon}>
             Configuration content
           </TabContent>
           {children}

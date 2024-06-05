@@ -5,8 +5,8 @@ import {
   // CardFooter,
   CardHeader,
   // CardTitle,
-} from '@/client/components/shadcn/card'
-import { Separator } from '@/client/components/shadcn/separator'
+} from '@/client/components/ui/card'
+import { Separator } from '@/client/components/ui/separator'
 import { ReactNode } from 'react'
 
 import { DollarSign, Globe, HardDrive, Layers3 } from 'lucide-react'

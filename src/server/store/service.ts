@@ -55,12 +55,12 @@ const getStatusHTTP = (target: string, request: any, callback: Function) => {
     .then((res) => res.json())
     .then((result) => {
       log('INFO', 'post.v1', httpTarget)
-      console.log(result)
+      // console.log(result)
       callback(result)
     })
     .catch((error) => {
       log('INFO', 'post.v1', httpTarget)
-      console.log('offline')
+      // console.log('offline')
       callback({ error: true, ...error.cause })
     })
 }
