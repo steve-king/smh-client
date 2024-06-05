@@ -9,21 +9,27 @@ import ThemeToggle from '@/client/app/layout/theme-toggle'
 const NavigationLink = ({
   to,
   Icon,
+  iconSize = 24,
   children,
+  iconOnly,
 }: {
   to: string
-  Icon: ElementType
+  Icon?: ElementType
+  iconSize?: number
+  iconOnly?: boolean
   children: ReactNode
 }) => {
-  const iconSize = 20
   const active: ButtonProps['variant'] = 'default'
   const inactive: ButtonProps['variant'] = 'ghost'
   return (
     <NavLink to={to}>
       {(props) => (
-        <Button variant={props.isActive ? active : inactive}>
-          <Icon size={iconSize} />
-          <span className="ml-2">{children}</span>
+        <Button
+          variant={props.isActive ? active : inactive}
+          size={iconOnly ? 'icon' : 'default'}
+        >
+          {Icon && <Icon size={iconSize} />}
+          {!iconOnly && <span className="ml-2">{children}</span>}
         </Button>
       )}
     </NavLink>
@@ -69,18 +75,15 @@ export default function Header() {
           <NavigationLink to="/peers" Icon={Icon.Peers}>
             Peers
           </NavigationLink>
-          {/* <NavigationLink to="/settings" Icon={Icon.Settings}>
-            Settings
-          </NavigationLink> */}
         </nav>
         <nav>
           <Button variant="ghost" size="icon">
             <Icon.Hide />
           </Button>
           <ThemeToggle />
-          <Button variant="ghost" size="icon">
-            <Icon.Settings />
-          </Button>
+          <NavigationLink to="/settings" Icon={Icon.Settings} iconOnly>
+            Settings
+          </NavigationLink>
         </nav>
       </div>
     </header>
