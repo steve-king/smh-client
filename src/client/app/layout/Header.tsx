@@ -28,7 +28,7 @@ const NavigationLink = ({
           variant={props.isActive ? active : inactive}
           size={iconOnly ? 'icon' : 'default'}
         >
-          {Icon && <Icon size={iconSize} />}
+          {Icon && <Icon size={iconSize} strokeWidth={1} />}
           {!iconOnly && <span className="ml-2">{children}</span>}
         </Button>
       )}
@@ -78,7 +78,7 @@ export default function Header() {
         </nav>
         <nav>
           <Button variant="ghost" size="icon">
-            <Icon.Hide />
+            <Icon.Hide strokeWidth={1} />
           </Button>
           <ThemeToggle />
           <NavigationLink to="/settings" Icon={Icon.Settings} iconOnly>
