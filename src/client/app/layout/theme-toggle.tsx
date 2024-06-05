@@ -17,14 +17,14 @@ export default function ModeToggle() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild className="mx-1">
         <Button variant="ghost" size="icon">
           <Icon.Light
-            strokeWidth={1}
+            strokeWidth={2}
             className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
           />
           <Icon.Dark
-            strokeWidth={1}
+            strokeWidth={2}
             className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
           />
           <span className="sr-only">Toggle theme</span>
