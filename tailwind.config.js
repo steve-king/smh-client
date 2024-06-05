@@ -23,8 +23,8 @@ module.exports = {
         // sans: ['Inter Variable'],
         // sans: ['Source Sans Pro'],
         // sans: ['Space Grotesk Variable'],
-        // sans: ['JetBrains Mono Variable', 'monospace'],
-        sans: ['Source Code Pro Variable', 'monospace'],
+        sans: ['JetBrains Mono Variable', 'monospace'],
+        // sans: ['Source Code Pro Variable', 'monospace'],
       },
       colors: {
         border: 'hsl(var(--border))',
