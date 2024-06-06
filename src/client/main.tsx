@@ -14,7 +14,7 @@ import '@fontsource-variable/jetbrains-mono'
 import '@fontsource-variable/source-code-pro'
 import './index.css'
 import { App } from '@/client/app'
-import { Dashboard, Node, Error } from './pages'
+import { Dashboard, Nodes, Error } from './pages'
 
 import { ThemeProvider } from '@/client/app/providers/theme-provider'
 
@@ -22,7 +22,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} errorElement={<Error />}>
       <Route path="/" element={<Dashboard />} />
-      <Route path="/node" element={<Node />} />
+      <Route path="/nodes" element={<Nodes />} />
     </Route>
   )
 )

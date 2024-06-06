@@ -9,6 +9,7 @@ export {
   EyeOff as Hide,
   Sun as Light,
   Moon as Dark,
+  Globe as Connection,
 } from 'lucide-react'
 
 import SpacemeshLight from '@/client/assets/logo-spacemesh-light.png'

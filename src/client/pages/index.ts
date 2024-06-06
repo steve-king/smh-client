@@ -1,5 +1,5 @@
 import Dashboard from './Dashboard'
-import Node from './Node'
+import Nodes from './Nodes'
 import Error from './Error'
 
-export { Dashboard, Node, Error }
+export { Dashboard, Nodes, Error }
