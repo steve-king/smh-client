@@ -49,7 +49,7 @@ export const DashboardPage = () => {
           </p>
         </Stat>
       </div>
-      <Separator className="mb-6" />
+      {/* <Separator className="mb-6" /> */}
 
       <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {/* <Card>

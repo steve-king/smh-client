@@ -75,64 +75,51 @@
   }
 }
 
-body:before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url('/mesh-3d-inv.jpg');
-  background-size: 100%;
-  z-index: 0;
-  opacity: 0.1;
-}
-
-.dark body:before {
-  opacity: 0.12;
-
-  background-image: url('/mesh-3d.jpg');
-  /* background-image: url('ascii-1.png'); */
-  /* background-image: url('ascii-2.png'); */
-  /* background-image: url('ascii-3.png'); */
-  background-size: 1900px;
-
-  /* opacity: 0.2;
-  background-image: url('topography.jpg');
-  background-size: 50%; */
-}
-
 #root {
   height: 100vh;
   position: relative;
   z-index: 1;
 }
 
-html.dark body {
-  background: #09090b;
-  /* background-color: rgb(2 44 34); */
-  /* background-color: rgb(4 47 46); */
-}
-
-html.light body {
-  /* background: #f4f4f5; */
-  background-color: rgb(229 231 235);
+body {
   background-color: rgb(231 229 228);
-  /* background-color: rgb(245 245 244);
-  background-color: rgb(254 226 226);
-  background-color: rgb(253 230 138);
-  background-color: rgb(236 252 203);
-  background-color: rgb(220 252 231); */
 }
 
-html.dark .bg-card {
-  background-color: rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(3px);
+.dark body {
+  background: #09090b;
 }
 
-html.light .bg-card {
-  background-color: rgba(255, 255, 255, 0.33);
+body:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.2;
+  background-size: 90%;
+  background-position: center center;
+
+  background-image: url('/mesh-3d-inv.jpg');
+  /* background-image: url('ascii-1.png'); */
+  /* background-image: url('ascii-2.png'); */
+  /* background-image: url('ascii-3.png'); */
+  /* background-size: 1900px; */
+}
+
+.dark body:before {
+  background-image: url('/mesh-3d.jpg');
+  /* background-image: url('ascii-1.png'); */
+  /* background-image: url('ascii-2.png'); */
+  /* background-image: url('ascii-3.png'); */
+  /* background-image: url('topography.jpg'); */
+}
+
+.bg-card {
   backdrop-filter: blur(4px);
+  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.25);
 }
 
-/* #root .rounded-xl {
-  border-radius: 0.25rem;
-} */
+.dark .bg-card {
+  background-color: rgba(0, 0, 0, 0.25);
+}

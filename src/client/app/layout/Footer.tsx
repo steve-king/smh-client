@@ -47,11 +47,11 @@ import { cn } from '@/client/lib/utils'
 const ConnectionStatus = () => {
   const { isConnected } = useSocketContext()
   const statusString = isConnected ? 'Connected' : 'Disconnected'
-  const statusColour = isConnected ? 'muted-foreground' : 'red-700'
+  // const statusColour = isConnected ? 'muted-foreground' : 'red-700'
   return (
     <p className="text-xs p-1 text-center text-muted-foreground relative">
       {statusString}
-      {!isConnected && (
+      {/* {!isConnected && (
         <span
           className="block absolute bg-red-700"
           style={{
@@ -61,7 +61,7 @@ const ConnectionStatus = () => {
             right: '0',
           }}
         />
-      )}
+      )} */}
     </p>
   )
   return
