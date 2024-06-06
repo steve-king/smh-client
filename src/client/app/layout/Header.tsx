@@ -38,13 +38,11 @@ const NavigationLink = ({
 }
 
 export default function Header() {
-  const theme = useTheme()
-  console.log(theme)
   return (
     <header id="header">
-      <div className="container py-2 flex items-center justify-between">
+      <div className="p-2 flex items-center justify-between">
         <div className="flex items-center shrink-0">
-          <h1 className="-ml-4 -mr-2 flex items-center">
+          <h1 className="-mr-2 flex items-center">
             <img
               src={Icon.SpacemeshLight}
               width="48"

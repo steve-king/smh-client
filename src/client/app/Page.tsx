@@ -1,16 +1,23 @@
 import { ElementType, ReactNode } from 'react'
 import { Separator } from '@/client/components/ui/separator'
 import Layout from './layout'
+import { useStoreContext } from '@/client/lib/store'
 
 const Page = ({
   title,
   Icon,
   children,
 }: {
-  title: string
+  title?: string
   Icon?: ElementType
   children: ReactNode
 }) => {
+  const { state } = useStoreContext()
+
+  if (!state) {
+    return <div>Loading...</div>
+  }
+
   return (
     <Layout>
       <div className="flex items-center my-6">
