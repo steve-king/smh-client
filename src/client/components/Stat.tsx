@@ -1,4 +1,4 @@
-import { Component, ElementType, ReactNode } from 'react'
+import { ElementType, ReactNode } from 'react'
 
 import * as UiCard from './ui/card'
 
@@ -13,10 +13,11 @@ interface Icon {
     color?: string
     size?: number
     strokeWidth?: number
+    absoluteStrokeWidth?: boolean
   }
 }
 
-const defaultIconProps = { size: 64, strokeWidth: 1 }
+const defaultIconProps = { size: 48, strokeWidth: 3, absoluteStrokeWidth: true }
 
 export default function Card({ children, icon }: CardProps) {
   const Icon = icon?.component
@@ -25,13 +26,13 @@ export default function Card({ children, icon }: CardProps) {
     ...icon?.props,
   }
   return (
-    <UiCard.Card className="flex items-start">
+    <UiCard.Card className="flex items-center">
       {Icon && (
         <UiCard.CardContent className="p-6 pr-0">
           <Icon {...iconProps} />
         </UiCard.CardContent>
       )}
-      <UiCard.CardContent className="p-6">{children}</UiCard.CardContent>
+      <UiCard.CardContent className="grow p-4">{children}</UiCard.CardContent>
     </UiCard.Card>
   )
 }

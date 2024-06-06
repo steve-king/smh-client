@@ -11,6 +11,10 @@ export function slug(input: string) {
   return input.split(' ').join('-').toLowerCase()
 }
 
+export function nodePath(name: string) {
+  return '/nodes/' + slug(name)
+}
+
 export function findItemBy(
   propKey: string | undefined,
   propVal: string | undefined,
@@ -50,7 +54,7 @@ export function parseNode(node: NodeProps) {
     statusText === 'Online' ? green : statusText === 'Syncing' ? yellow : red
 
   return {
-    path: `/nodes/${slug(node.name)}`,
+    path: nodePath(node.name),
     ...config,
     isOnline,
     statusText,
@@ -59,4 +63,24 @@ export function parseNode(node: NodeProps) {
     status: !statusError && { ...node.data.status },
     version: !statusError ? node.data.version : '',
   }
+}
+
+export function getNodeByServiceName(
+  name: string,
+  nodes: NodeProps[]
+): NodeProps | undefined {
+  const keyFilename = name + '.key'
+  const node = nodes.find((item) => {
+    const postInfo: {
+      error?: boolean
+      states: { name: string }[]
+    } = item.data.postInfo
+
+    if (!postInfo?.error) {
+      return postInfo?.states.find((service) => service.name === keyFilename)
+    }
+    return false
+  })
+
+  return node
 }

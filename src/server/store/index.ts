@@ -6,7 +6,7 @@ import { getNodeStreams } from '@/server/store/node-streams'
 import { getService } from '@/server/store/service'
 import Stream from '@/server/store/Stream'
 
-let testService = {
+const testService = {
   name: 'test',
   host: '192.168.1.10',
   port_operator: '10001',
@@ -52,7 +52,7 @@ class Store {
   fetchServices = () => {
     let services = this.state?.services
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV !== 'production') {
       const testData = services?.find((item) => item.name === 'test')
       if (!testData) {
         this.state?.services.push(testService)

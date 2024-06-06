@@ -2,28 +2,27 @@ import { useParams } from 'react-router-dom'
 import { useStoreContext } from '@/client/lib/store'
 import { findItemBy, parseNode } from '@/client/lib/utils'
 import { Page } from '@/client/app'
-import { Node as NodeIcon } from '@/client/components/ui/icons'
 import { Node as NodeProps } from '@/types'
 
 import * as Icon from '@/client/components/ui/icons'
 
 import Stat from '@/client/components/Stat'
 
-import colors from 'tailwindcss/colors'
-const green = colors.green[500] // #16a34a
-const yellow = colors.yellow[500] // #16a34a
+// import colors from 'tailwindcss/colors'
+// const green = colors.green[500] // #16a34a
+// const yellow = colors.yellow[500] // #16a34a
 
 const Node = () => {
-  let nodeProps: NodeProps
+  // let nodeProps: NodeProps
   let node
   const { name } = useParams()
   const { state } = useStoreContext()
-  nodeProps = findItemBy('name', name, state?.nodes)
+  const nodeProps: NodeProps = findItemBy('name', name, state?.nodes)
 
   if (nodeProps) {
     node = parseNode(nodeProps)
     return (
-      <Page title={node.name} Icon={NodeIcon}>
+      <Page title={node.name} Icon={Icon.Node}>
         <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           <Stat icon={{ component: Icon.Host }}>
             <h3 className="text-xs text-muted-foreground">Host</h3>
@@ -41,13 +40,13 @@ const Node = () => {
             <h3 className="text-xs text-muted-foreground">Status</h3>
             <p className="text-2xl">{node.statusText}</p>
             <p className="text-xs text-muted-foreground">
-              Layer: {node.status.synced_layer.number} /
-              {node.status.top_layer.number}
+              Layer: {node.status?.synced_layer?.number} /
+              {node.status?.top_layer?.number}
             </p>
           </Stat>
           <Stat icon={{ component: Icon.Peers }}>
             <h3 className="text-xs text-muted-foreground">Network</h3>
-            <p className="text-2xl">Peers: {node.status.connected_peers}</p>
+            <p className="text-2xl">Peers: {node.status?.connected_peers}</p>
           </Stat>
           <Stat icon={{ component: Icon.Version }}>
             <h3 className="text-xs text-muted-foreground">Version:</h3>

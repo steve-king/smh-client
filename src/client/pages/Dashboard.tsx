@@ -1,22 +1,22 @@
 import { Page } from '@/client/app'
-import { Separator } from '@/client/components/ui/separator'
+// import { Separator } from '@/client/components/ui/separator'
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/client/components/ui/table'
+// import {
+//   Table,
+//   TableBody,
+//   TableCaption,
+//   TableCell,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from '@/client/components/ui/table'
 
 import * as Icon from '@/client/components/ui/icons'
 import Stat from '@/client/components/Stat'
 
 export const DashboardPage = () => {
   return (
-    <Page title="Dashboard">
+    <Page title="Dashboard" Icon={Icon.Dashboard}>
       <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <Stat icon={{ component: Icon.Price }}>
           <p>SMH Price</p>

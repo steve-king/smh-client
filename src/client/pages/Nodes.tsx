@@ -1,11 +1,6 @@
 import { Page } from '@/client/app'
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/client/components/ui/card'
+import Card from '@/client/components/Stat'
 
 import {
   Table,
@@ -14,7 +9,6 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  TableCaption,
 } from '../components/ui/table'
 
 import { Link } from 'react-router-dom'
@@ -29,24 +23,22 @@ const Node = (props: NodeProps) => {
   const node = parseNode(props)
 
   return (
-    <>
-      <TableRow>
-        <TableCell className="font-medium">
-          <Link to={node.path}>{node.name}</Link>
-        </TableCell>
-        <TableCell className="font-medium">{node.host}</TableCell>
-        <TableCell>
-          :{node.port_public} :{node.port_private} :{node.port_post}
-        </TableCell>
-        <TableCell>{node.version}</TableCell>
-        <TableCell className={'text-' + node.statusColour + '-500'}>
-          <div className="flex items-center">
-            <Icon.Connection />
-            <span className="ml-2">{node.statusText}</span>
-          </div>
-        </TableCell>
-      </TableRow>
-    </>
+    <TableRow>
+      <TableCell className="font-medium">
+        <Link to={node.path}>{node.name}</Link>
+      </TableCell>
+      <TableCell className="font-medium">{node.host}</TableCell>
+      <TableCell>
+        :{node.port_public} :{node.port_private} :{node.port_post}
+      </TableCell>
+      <TableCell>{node.version}</TableCell>
+      <TableCell className={'text-' + node.statusColour + '-500'}>
+        <div className="flex items-center">
+          <Icon.Connection />
+          <span className="ml-2">{node.statusText}</span>
+        </div>
+      </TableCell>
+    </TableRow>
   )
 }
 
@@ -55,24 +47,22 @@ const Nodes = () => {
   return (
     <Page title="Nodes" Icon={Icon.Node}>
       <Card>
-        <CardContent className="p-6">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Host</TableHead>
-                <TableHead>Ports</TableHead>
-                <TableHead>Version</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {state?.nodes.map((node) => (
-                <Node key={node.name} {...node} />
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Host</TableHead>
+              <TableHead>Ports</TableHead>
+              <TableHead>Version</TableHead>
+              <TableHead>Status</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {state?.nodes.map((node) => (
+              <Node key={node.name} {...node} />
+            ))}
+          </TableBody>
+        </Table>
       </Card>
     </Page>
   )
