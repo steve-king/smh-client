@@ -7,11 +7,7 @@ import {
   Route,
 } from 'react-router-dom'
 
-import '@fontsource-variable/inter'
-import '@fontsource/source-sans-pro'
-import '@fontsource-variable/space-grotesk'
 import '@fontsource-variable/jetbrains-mono'
-import '@fontsource-variable/source-code-pro'
 import './index.css'
 import { App } from '@/client/app'
 import { Dashboard, Nodes, Node, Services, Error } from './pages'

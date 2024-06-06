@@ -20,9 +20,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        // sans: ['Inter Variable'],
         sans: ['JetBrains Mono Variable', 'monospace'],
-        // sans: ['Source Code Pro Variable', 'monospace'],
       },
       colors: {
         border: 'hsl(var(--border))',
