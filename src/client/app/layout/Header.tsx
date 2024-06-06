@@ -65,7 +65,7 @@ export default function Header() {
           <NavigationLink to="/nodes" Icon={Icon.Node}>
             Nodes
           </NavigationLink>
-          <NavigationLink to="/services" Icon={Icon.Services}>
+          <NavigationLink to="/services" Icon={Icon.Service}>
             Services
           </NavigationLink>
           <NavigationLink to="/events" Icon={Icon.Events}>

@@ -87,8 +87,17 @@ body:before {
 }
 
 .dark body:before {
-  opacity: 0.1;
-  background-image: url('mesh-3d.jpg');
+  opacity: 0.12;
+
+  /* background-image: url('mesh-3d.jpg'); */
+  /* background-image: url('ascii-1.png'); */
+  /* background-image: url('ascii-2.png'); */
+  background-image: url('ascii-3.png');
+  background-size: 1900px;
+
+  /* opacity: 0.2;
+  background-image: url('topography.jpg');
+  background-size: 50%; */
 }
 
 #root {
@@ -112,3 +121,17 @@ html.dark #header {
 html.light #header {
   background: #fff;
 }
+
+html.dark .bg-card {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+html.light .bg-card {
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(2px);
+}
+
+/* #root .rounded-xl {
+  border-radius: 0.25rem;
+} */

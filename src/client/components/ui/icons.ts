@@ -2,7 +2,7 @@ export {
   Cog as Settings,
   Gauge as Dashboard,
   RadioTower as Node,
-  HardDrive as Services,
+  HardDrive as Service,
   MessageSquareCode as Events,
   Network as Peers,
   Eye as Show,
@@ -10,6 +10,9 @@ export {
   Sun as Light,
   Moon as Dark,
   Globe as Connection,
+  Layers3 as Layers,
+  DollarSign as Price,
+  PcCase as Host,
 } from 'lucide-react'
 
 import SpacemeshLight from '@/client/assets/logo-spacemesh-light.png'
