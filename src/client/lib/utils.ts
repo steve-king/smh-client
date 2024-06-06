@@ -25,6 +25,39 @@ export function findItemBy(
   return undefined
 }
 
-export function parseNodeObject(node: NodeProps) {
-  return { ...node }
+import colors from 'tailwindcss/colors'
+const green = colors.green[500]
+const yellow = colors.yellow[500]
+const red = colors.red[500]
+
+export function parseNode(node: NodeProps) {
+  const statusError = node.data.status.error
+  const isOnline = !statusError
+  const statusText = node.data.status.error
+    ? 'Offline'
+    : node.data.status.is_synced
+    ? 'Online'
+    : 'Syncing'
+
+  const statusColour =
+    statusText === 'Online' ? green : statusText === 'Syncing' ? yellow : red
+
+  const config = {
+    name: node.name,
+    host: node.host,
+    port_public: node.port_public,
+    port_private: node.port_private,
+    port_post: node.port_post,
+  }
+
+  const version = !statusError ? node.data.version : ''
+
+  return {
+    ...config,
+    path: `/nodes/${slug(node.name)}`,
+    isOnline,
+    statusText,
+    statusColour,
+    version,
+  }
 }

@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { useStoreContext } from '@/client/lib/store'
-import { findItemBy, parseNodeObject } from '@/client/lib/utils'
+import { findItemBy, parseNode } from '@/client/lib/utils'
 import { Page } from '@/client/app'
 import { Node as NodeIcon } from '@/client/components/ui/icons'
 import { Node as NodeProps } from '@/types'
@@ -14,37 +14,31 @@ const green = colors.green[500] // #16a34a
 const yellow = colors.yellow[500] // #16a34a
 
 const Node = () => {
-  let nodeObject: NodeProps
+  let nodeProps: NodeProps
   let node
   const { name } = useParams()
   const { state } = useStoreContext()
-  nodeObject = findItemBy('name', name, state?.nodes)
+  nodeProps = findItemBy('name', name, state?.nodes)
 
-  if (nodeObject) {
-    node = parseNodeObject(nodeObject)
-
-    let status = 'Offline'
-    let colour = 'red'
-    let version
-    const isOnline = !node.data.status.error
-
-    if (isOnline) {
-      status = node.data.status.is_synced ? 'Online' : 'Syncing'
-      colour = node.data.status.is_synced ? 'green' : 'yellow'
-    }
-
+  if (nodeProps) {
+    node = parseNode(nodeProps)
     return (
       <Page title={node.name} Icon={NodeIcon}>
         <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-          <Stat icon={{ component: Icon.Connection, props: { color: green } }}>
+          <Stat
+            icon={{
+              component: Icon.Connection,
+              props: { color: node.statusColour },
+            }}
+          >
             <p>Status</p>
-            <p>{status}</p>
+            <p>{node.statusText}</p>
           </Stat>
           <Stat icon={{ component: Icon.Host }}>
             <p>Host: {}</p>
-            <p>{status}</p>
+            <p>{node.host}</p>
           </Stat>
-          <Stat icon={{ component: Icon.Service, props: { color: yellow } }}>
+          <Stat icon={{ component: Icon.Service }}>
             <p>Storage</p>
             <p>Idle</p>
           </Stat>

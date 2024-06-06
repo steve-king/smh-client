@@ -68,12 +68,12 @@ export default function Header() {
           <NavigationLink to="/services" Icon={Icon.Service}>
             Services
           </NavigationLink>
-          <NavigationLink to="/events" Icon={Icon.Events}>
+          {/* <NavigationLink to="/events" Icon={Icon.Events}>
             Events
           </NavigationLink>
           <NavigationLink to="/peers" Icon={Icon.Peers}>
             Peers
-          </NavigationLink>
+          </NavigationLink> */}
         </nav>
         <nav>
           <Button variant="ghost" size="icon" className="mx-1">

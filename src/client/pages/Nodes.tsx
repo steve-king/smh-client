@@ -17,53 +17,32 @@ import {
   TableCaption,
 } from '../components/ui/table'
 
-import { Button } from '../components/ui/button'
-
 import { Link } from 'react-router-dom'
 
-import {
-  Node as NodeIcon,
-  Connection as ConnectionIcon,
-} from '../components/ui/icons'
+import * as Icon from '../components/ui/icons'
 import { useStoreContext } from '@/client/lib/store'
 
 import { Node as NodeProps } from '@/types'
-import { slug } from '@/client/lib/utils'
+import { parseNode } from '@/client/lib/utils'
 
-const Node = ({
-  name,
-  host,
-  port_public,
-  port_private,
-  port_post,
-  smeshing,
-  data,
-}: NodeProps) => {
-  let status = 'Offline'
-  let colour = 'red'
-  let version
-  const isOnline = !data.status.error
-
-  if (isOnline) {
-    status = data.status.is_synced ? 'Online' : 'Syncing'
-    colour = data.status.is_synced ? 'green' : 'yellow'
-  }
+const Node = (props: NodeProps) => {
+  const node = parseNode(props)
 
   return (
     <>
       <TableRow>
         <TableCell className="font-medium">
-          <Link to={`/nodes/${slug(name)}`}>{name}</Link>
+          <Link to={node.path}>{node.name}</Link>
         </TableCell>
-        <TableCell className="font-medium">{host}</TableCell>
+        <TableCell className="font-medium">{node.host}</TableCell>
         <TableCell>
-          :{port_public} :{port_private} :{port_post}
+          :{node.port_public} :{node.port_private} :{node.port_post}
         </TableCell>
-        <TableCell>{version}</TableCell>
-        <TableCell className={'text-' + colour + '-500'}>
+        <TableCell>{node.version}</TableCell>
+        <TableCell className={'text-' + node.statusColour + '-500'}>
           <div className="flex items-center">
-            <ConnectionIcon className="inline-block" />{' '}
-            <span className="ml-2">{status}</span>
+            <Icon.Connection />
+            <span className="ml-2">{node.statusText}</span>
           </div>
         </TableCell>
       </TableRow>
@@ -74,7 +53,7 @@ const Node = ({
 const Nodes = () => {
   const { state } = useStoreContext()
   return (
-    <Page title="Nodes" Icon={NodeIcon}>
+    <Page title="Nodes" Icon={Icon.Node}>
       <Card>
         <CardContent className="p-6">
           <Table>
