@@ -21,8 +21,6 @@ module.exports = {
     extend: {
       fontFamily: {
         // sans: ['Inter Variable'],
-        // sans: ['Source Sans Pro'],
-        // sans: ['Space Grotesk Variable'],
         sans: ['JetBrains Mono Variable', 'monospace'],
         // sans: ['Source Code Pro Variable', 'monospace'],
       },

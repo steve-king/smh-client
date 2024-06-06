@@ -39,7 +39,7 @@ const NavigationLink = ({
 
 export default function Header() {
   return (
-    <header id="header">
+    <header className="app-header">
       <div className="p-2 flex items-center justify-between">
         <div className="flex items-center shrink-0">
           <h1 className="-mr-2 flex items-center">

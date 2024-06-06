@@ -114,11 +114,12 @@ html.light body {
   background: #f4f4f5;
 }
 
-html.dark #header {
+html.dark .app-header,
+html.dark .app-footer {
   background: #000;
 }
 
-html.light #header {
+html.light .app-header html.light .app-footer {
   background: #fff;
 }
 
