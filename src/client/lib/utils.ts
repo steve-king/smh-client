@@ -31,17 +31,6 @@ const yellow = colors.yellow[500]
 const red = colors.red[500]
 
 export function parseNode(node: NodeProps) {
-  const statusError = node.data.status.error
-  const isOnline = !statusError
-  const statusText = node.data.status.error
-    ? 'Offline'
-    : node.data.status.is_synced
-    ? 'Online'
-    : 'Syncing'
-
-  const statusColour =
-    statusText === 'Online' ? green : statusText === 'Syncing' ? yellow : red
-
   const config = {
     name: node.name,
     host: node.host,
@@ -50,14 +39,24 @@ export function parseNode(node: NodeProps) {
     port_post: node.port_post,
   }
 
-  const version = !statusError ? node.data.version : ''
+  const statusError = node.data.status.error
+  const isOnline = !statusError
+  const statusText = node.data.status.error
+    ? 'Offline'
+    : node.data.status.is_synced
+    ? 'Online'
+    : 'Syncing'
+  const statusColour =
+    statusText === 'Online' ? green : statusText === 'Syncing' ? yellow : red
 
   return {
-    ...config,
     path: `/nodes/${slug(node.name)}`,
+    ...config,
     isOnline,
     statusText,
     statusColour,
-    version,
+    statusError,
+    status: !statusError && { ...node.data.status },
+    version: !statusError ? node.data.version : '',
   }
 }

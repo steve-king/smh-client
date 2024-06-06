@@ -13,6 +13,7 @@ export {
   Layers3 as Layers,
   DollarSign as Price,
   PcCase as Host,
+  Github as Version,
 } from 'lucide-react'
 
 import SpacemeshLight from '@/client/assets/logo-spacemesh-light.png'

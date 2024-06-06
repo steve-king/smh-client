@@ -25,26 +25,38 @@ const Node = () => {
     return (
       <Page title={node.name} Icon={NodeIcon}>
         <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          <Stat icon={{ component: Icon.Host }}>
+            <h3 className="text-xs text-muted-foreground">Host</h3>
+            <p className="text-2xl">{node.host}</p>
+            <p className="text-xs text-muted-foreground">
+              :{node.port_public} :{node.port_private} :{node.port_post}
+            </p>
+          </Stat>
           <Stat
             icon={{
               component: Icon.Connection,
               props: { color: node.statusColour },
             }}
           >
-            <p>Status</p>
-            <p>{node.statusText}</p>
+            <h3 className="text-xs text-muted-foreground">Status</h3>
+            <p className="text-2xl">{node.statusText}</p>
+            <p className="text-xs text-muted-foreground">
+              Layer: {node.status.synced_layer.number} /
+              {node.status.top_layer.number}
+            </p>
           </Stat>
-          <Stat icon={{ component: Icon.Host }}>
-            <p>Host: {}</p>
-            <p>{node.host}</p>
+          <Stat icon={{ component: Icon.Peers }}>
+            <h3 className="text-xs text-muted-foreground">Network</h3>
+            <p className="text-2xl">Peers: {node.status.connected_peers}</p>
           </Stat>
-          <Stat icon={{ component: Icon.Service }}>
-            <p>Storage</p>
-            <p>Idle</p>
+          <Stat icon={{ component: Icon.Version }}>
+            <h3 className="text-xs text-muted-foreground">Version:</h3>
+            <p className="text-2xl">v1.5.7</p>
+            <p className="text-xs text-muted-foreground">view source</p>
           </Stat>
         </div>
 
-        <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
+        {/* <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
           <Stat icon={{ component: Icon.Node }}>
             <p>Status</p>
             <p>{status}</p>
@@ -53,9 +65,9 @@ const Node = () => {
             <p>Storage</p>
             <p>Idle</p>
           </Stat>
-        </div>
+        </div> */}
 
-        <Stat icon={{ component: Icon.Service, props: { color: yellow } }}>
+        {/* <Stat icon={{ component: Icon.Service, props: { color: yellow } }}>
           <p>Storage</p>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -81,7 +93,7 @@ const Node = () => {
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.
           </p>
-        </Stat>
+        </Stat> */}
 
         <pre className="text-xs">{JSON.stringify(node, null, 2)}</pre>
       </Page>

@@ -25,7 +25,7 @@ export default function Card({ children, icon }: CardProps) {
     ...icon?.props,
   }
   return (
-    <UiCard.Card className="flex items-center">
+    <UiCard.Card className="flex items-start">
       {Icon && (
         <UiCard.CardContent className="p-6 pr-0">
           <Icon {...iconProps} />
