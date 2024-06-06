@@ -69,7 +69,7 @@ const ConnectionStatus = () => {
 
 export default function Footer() {
   return (
-    <footer className="app-footer">
+    <footer className="app-footer bg-card border-t">
       <ConnectionStatus />
     </footer>
   )

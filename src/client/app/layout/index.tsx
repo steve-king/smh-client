@@ -8,7 +8,6 @@ export default function Layout(props: { children: ReactNode }) {
   return (
     <div className="h-full flex flex-col">
       <Header />
-      <Separator />
       <main className="container py-4 grow">{props.children}</main>
       <Footer />
     </div>

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { Button, ButtonProps } from '@/client/components/ui/button'
 import * as Icon from '@/client/components/ui/icons'
 
-import { useTheme } from '../providers/theme-provider'
+// import { useTheme } from '../providers/theme-provider'
 import ThemeToggle from '@/client/app/layout/theme-toggle'
 
 const NavigationLink = ({
@@ -39,7 +39,7 @@ const NavigationLink = ({
 
 export default function Header() {
   return (
-    <header className="app-header">
+    <header className="app-header bg-card border-b">
       <div className="p-2 flex items-center justify-between">
         <div className="flex items-center shrink-0">
           <h1 className="-mr-2 flex items-center">

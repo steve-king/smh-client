@@ -39,11 +39,11 @@ export function parseNode(node: NodeProps) {
     port_post: node.port_post,
   }
 
-  const statusError = node.data.status.error
+  const statusError = node.data.status?.error
   const isOnline = !statusError
-  const statusText = node.data.status.error
+  const statusText = node.data.status?.error
     ? 'Offline'
-    : node.data.status.is_synced
+    : node.data.status?.is_synced
     ? 'Online'
     : 'Syncing'
   const statusColour =

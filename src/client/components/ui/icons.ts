@@ -16,7 +16,7 @@ export {
   Github as Version,
 } from 'lucide-react'
 
-import SpacemeshLight from '@/client/assets/logo-spacemesh-light.png'
-import SpacemeshDark from '@/client/assets/logo-spacemesh-dark.png'
+import SpacemeshLight from '@/client/assets/logo-spacemesh-trans-black.png'
+import SpacemeshDark from '@/client/assets/logo-spacemesh-trans-white.png'
 
 export { SpacemeshLight, SpacemeshDark }
