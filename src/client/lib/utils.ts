@@ -29,11 +29,6 @@ export function findItemBy(
   return undefined
 }
 
-import colors from 'tailwindcss/colors'
-const green = colors.green[500]
-const yellow = colors.yellow[500]
-const red = colors.red[500]
-
 export function parseNode(node: NodeProps) {
   const config = {
     name: node.name,
@@ -51,7 +46,11 @@ export function parseNode(node: NodeProps) {
     ? 'Online'
     : 'Syncing'
   const statusColour =
-    statusText === 'Online' ? green : statusText === 'Syncing' ? yellow : red
+    statusText === 'Online'
+      ? 'green-500'
+      : statusText === 'Syncing'
+      ? 'yellow-500'
+      : 'red-500'
 
   return {
     path: nodePath(node.name),
@@ -93,28 +92,3 @@ export const suToBytes = (su: number): number => {
   const bytes = TiB * bytesPerTiB
   return bytes
 }
-
-// export function parseService(service: ServiceProps, nodes: NodeProps[]) {
-//   let statusText
-//   let isProving = false
-//   let provingStatus
-//   if (service.data.error) {
-//     statusText = 'Offline'
-//   } else if (service.data === 'string') {
-//     statusText = service.data
-//   } else if (service.data.proving) {
-//     isProving = true
-
-//     provingData.stage
-//     provingData.progress
-//   }
-
-//   return {
-//     ...service,
-//     node: getNodeByServiceName(service.name, nodes),
-//     TiB: suToTiB(service.su),
-//     statusText,
-//     isProving,
-//     provingData
-//   }
-// }

@@ -1,20 +1,20 @@
-import { ElementType, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Button, ButtonProps } from '@/client/components/ui/button'
-import * as Icon from '@/client/components/Icon'
-
-// import { useTheme } from '../providers/theme-provider'
 import ThemeToggle from '@/client/app/layout/theme-toggle'
+import Icon from '@/client/components/RenderIcon'
+import logoLight from '@/client/assets/logo-spacemesh-trans-black.png'
+import logoDark from '@/client/assets/logo-spacemesh-trans-white.png'
 
 const NavigationLink = ({
   to,
-  Icon,
+  icon,
   iconSize = 24,
   children,
   iconOnly,
 }: {
   to: string
-  Icon?: ElementType
+  icon?: string
   iconSize?: number
   iconOnly?: boolean
   children: ReactNode
@@ -29,8 +29,13 @@ const NavigationLink = ({
           size={iconOnly ? 'icon' : 'default'}
           className="mx-1"
         >
-          {Icon && (
-            <Icon size={iconSize} strokeWidth={2} absoluteStrokeWidth={true} />
+          {icon && (
+            <Icon
+              i={icon}
+              size={iconSize}
+              strokeWidth={2}
+              absoluteStrokeWidth={true}
+            />
           )}
           {!iconOnly && <span className="ml-2">{children}</span>}
         </Button>
@@ -43,14 +48,9 @@ export default function Header() {
   return (
     <header className="app-header bg-card border-b p-2 flex items-center justify-between">
       <h1 className="-mr-2 flex-1 flex items-center">
+        <img src={logoLight} width="48" height="auto" className="dark:hidden" />
         <img
-          src={Icon.SpacemeshLight}
-          width="48"
-          height="auto"
-          className="dark:hidden"
-        />
-        <img
-          src={Icon.SpacemeshDark}
+          src={logoDark}
           width="48"
           height="auto"
           className="hidden dark:block"
@@ -59,30 +59,24 @@ export default function Header() {
       </h1>
 
       <nav className="flex-2">
-        <NavigationLink to="/" Icon={Icon.Dashboard}>
+        <NavigationLink to="/" icon="dashboard">
           Dashboard
         </NavigationLink>
-        <NavigationLink to="/nodes" Icon={Icon.Node}>
+        <NavigationLink to="/nodes" icon="node">
           Nodes
         </NavigationLink>
-        <NavigationLink to="/services" Icon={Icon.Service}>
+        <NavigationLink to="/services" icon="service">
           Services
         </NavigationLink>
-        {/* <NavigationLink to="/events" Icon={Icon.Events}>
-            Events
-          </NavigationLink>
-          <NavigationLink to="/peers" Icon={Icon.Peers}>
-            Peers
-          </NavigationLink> */}
       </nav>
       <nav className="flex-1 text-right">
-        {/* <Button variant="ghost" size="icon" className="mx-1">
-          <Icon.Hide strokeWidth={2} />
-        </Button> */}
+        <Button variant="ghost" size="icon" className="mx-1">
+          <Icon i="hide" strokeWidth={2} />
+        </Button>
         <ThemeToggle />
-        {/* <NavigationLink to="/settings" Icon={Icon.Settings} iconOnly>
+        <NavigationLink to="/settings" icon="cog" iconOnly>
           Settings
-        </NavigationLink> */}
+        </NavigationLink>
       </nav>
     </header>
   )

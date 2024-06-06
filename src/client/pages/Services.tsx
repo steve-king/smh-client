@@ -1,7 +1,13 @@
-import { Link } from 'react-router-dom'
-import { Page } from '@/client/app'
-import * as Icon from '@/client/components/Icon'
-import Card from '../components/Stat'
+import { useStoreContext } from '@/client/lib/store'
+import { Service as ServiceProps } from '@/types'
+
+import {
+  getNodeByServiceName,
+  nodePath,
+  suToBytes,
+  suToTiB,
+  cn,
+} from '@/client/lib/utils'
 
 import {
   Table,
@@ -13,21 +19,15 @@ import {
 } from '@/client/components/ui/table'
 import { Progress as ProgressBar } from '@/client/components/ui/progress'
 
-import { useStoreContext } from '@/client/lib/store'
-import {
-  getNodeByServiceName,
-  nodePath,
-  suToBytes,
-  suToTiB,
-  cn,
-} from '@/client/lib/utils'
-import { Service as ServiceProps } from '@/types'
-import { ElementType } from 'react'
+import { Link } from 'react-router-dom'
+import { Page } from '@/client/app'
+import Card from '../components/Stat'
+import Icon from '../components/RenderIcon'
 
 interface StatusProps {
   isProving: boolean
   text: string
-  Icon: ElementType
+  icon: string
   colour: string
   percent: number
   nonces?: {
@@ -45,9 +45,7 @@ const ServiceStatus = (props: StatusProps) => {
   }
   return (
     <div className={cn('flex items-center', animateClass)}>
-      <div className={'text-' + props.colour}>
-        <props.Icon size={24} strokeWidth={1} className="mr-2" />
-      </div>
+      <Icon i={props.icon} className={cn('text-' + props.colour, 'mr-2')} />
       <div className="grow">
         <p className="flex items-end justify-between">
           <span className={cn(textClass)}>{props.text}</span>
@@ -84,7 +82,7 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
   let isProving = false
   let statusText = ''
   let statusColour = ''
-  let statusIcon = Icon.Service
+  let statusIcon = 'service'
   let percentRounded = 0
 
   if (data === 'IDLE') {
@@ -111,7 +109,7 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
     statusText = 'Reading PoST'
 
     if (position === 0) {
-      statusIcon = Icon.Cpu
+      statusIcon = 'cpu'
       statusText = 'K2PoW'
     }
   }
@@ -130,7 +128,7 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
         <ServiceStatus
           isProving={isProving}
           text={statusText}
-          Icon={statusIcon}
+          icon={statusIcon}
           colour={statusColour}
           percent={percentRounded}
           nonces={data?.Proving?.nonces}
@@ -144,7 +142,7 @@ export default function Services() {
   const { state } = useStoreContext()
 
   return (
-    <Page title="Services" Icon={Icon.Service}>
+    <Page title="Services" icon="service">
       <Card>
         <Table className="table-fixed">
           <TableHeader>

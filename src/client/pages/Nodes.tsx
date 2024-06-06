@@ -13,7 +13,7 @@ import {
 
 import { Link } from 'react-router-dom'
 
-import * as Icon from '../components/Icon'
+import Icon from '../components/RenderIcon'
 import { useStoreContext } from '@/client/lib/store'
 
 import { Node as NodeProps } from '@/types'
@@ -34,7 +34,7 @@ const Node = (props: NodeProps) => {
       <TableCell>{node.version}</TableCell>
       <TableCell className={'text-' + node.statusColour + '-500'}>
         <div className="flex items-center">
-          <Icon.Connection />
+          <Icon i="connection" className={'text-' + node.statusColour} />
           <span className="ml-2">{node.statusText}</span>
         </div>
       </TableCell>
@@ -45,7 +45,7 @@ const Node = (props: NodeProps) => {
 const Nodes = () => {
   const { state } = useStoreContext()
   return (
-    <Page title="Nodes" Icon={Icon.Node}>
+    <Page title="Nodes" icon="node">
       <Card>
         <Table>
           <TableHeader>

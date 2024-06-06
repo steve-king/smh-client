@@ -2,13 +2,15 @@ import { ElementType, ReactNode } from 'react'
 import Layout from './layout'
 import { useStoreContext } from '@/client/lib/store'
 
+import Icon from '../components/RenderIcon'
+
 const Page = ({
   title,
-  Icon,
+  icon,
   children,
 }: {
   title?: string
-  Icon?: ElementType
+  icon?: string
   children: ReactNode
 }) => {
   const { state } = useStoreContext()
@@ -20,14 +22,7 @@ const Page = ({
   return (
     <Layout>
       <div className="flex items-center my-6">
-        {Icon && (
-          <Icon
-            className="mr-2"
-            size={48}
-            strokeWidth={1}
-            // absoluteStrokeWidth
-          />
-        )}
+        <Icon i={icon} size={48} className="mr-4" />
         <h1 className="text-2xl font-semibold">
           <span>{title}</span>
         </h1>

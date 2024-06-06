@@ -44,7 +44,9 @@ import { useSocketContext } from '@/client/lib/socket'
 //   )
 // }
 
-import * as Icon from '@/client/components/Icon'
+// import * as Icon from '@/client/components/Icon'
+import Icon from '@/client/components/RenderIcon'
+import { cn } from '@/client/lib/utils'
 
 const ConnectionStatus = () => {
   const { isConnected } = useSocketContext()
@@ -52,24 +54,10 @@ const ConnectionStatus = () => {
   const statusColour = isConnected ? 'green-500' : 'red-700'
   return (
     <p className="text-xs p-1 text-muted-foreground relative flex items-center">
-      <span className={'text-' + statusColour}>
-        <Icon.Dot strokeWidth={2} />
-      </span>
+      <Icon i="dot" strokeWidth={2} className={cn('text-' + statusColour)} />
       {statusString}
-      {/* {!isConnected && (
-        <span
-          className="block absolute bg-red-700"
-          style={{
-            width: '100%',
-            height: '1px',
-            top: '1px',
-            right: '0',
-          }}
-        />
-      )} */}
     </p>
   )
-  return
 }
 
 export default function Footer() {
