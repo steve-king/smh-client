@@ -23,7 +23,7 @@ const Node = () => {
               :{node.port_public} :{node.port_private} :{node.port_post}
             </p>
           </Stat>
-          <Stat icon="connection">
+          <Stat icon="connection" iconProps={{ className: node.statusColour }}>
             <h3 className="text-xs text-muted-foreground">Status</h3>
             <p className="text-2xl">{node.statusText}</p>
             <p className="text-xs text-muted-foreground">

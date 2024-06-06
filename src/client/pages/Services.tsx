@@ -45,7 +45,7 @@ const ServiceStatus = (props: StatusProps) => {
   }
   return (
     <div className={cn('flex items-center', animateClass)}>
-      <Icon i={props.icon} className={cn('text-' + props.colour, 'mr-2')} />
+      <Icon i={props.icon} className={cn(props.colour, 'mr-2')} />
       <div className="grow">
         <p className="flex items-end justify-between">
           <span className={cn(textClass)}>{props.text}</span>
@@ -87,13 +87,13 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
 
   if (data === 'IDLE') {
     statusText = 'Idle'
-    statusColour = 'green-500'
+    statusColour = 'text-green-500'
   } else if (data.error) {
     statusText = 'Offline'
-    statusColour = 'red-500'
+    statusColour = 'text-red-500'
   } else if (data.Proving) {
     isProving = true
-    statusColour = 'yellow-500'
+    statusColour = 'text-yellow-500'
     const {
       nonces,
       // position
@@ -101,7 +101,7 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
 
     // dev
     let position = 0
-    position = 635416084480
+    // position = 635416084480
 
     const bytes = suToBytes(su)
     const percent = position / bytes

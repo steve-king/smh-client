@@ -1,45 +1,44 @@
 import { ReactNode } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Button, ButtonProps } from '@/client/components/ui/button'
+import {
+  Button,
+  ButtonProps,
+  buttonVariants,
+} from '@/client/components/ui/button'
 import ThemeToggle from '@/client/app/layout/theme-toggle'
 import Icon from '@/client/components/Icon'
 import logoLight from '@/client/assets/logo-spacemesh-trans-black.png'
 import logoDark from '@/client/assets/logo-spacemesh-trans-white.png'
+import { cn } from '@/client/lib/utils'
 
 const NavigationLink = ({
   to,
+  text,
   icon,
-  iconSize = 24,
-  children,
-  iconOnly,
 }: {
   to: string
+  text?: string
   icon?: string
-  iconSize?: number
-  iconOnly?: boolean
-  children: ReactNode
 }) => {
-  const active: ButtonProps['variant'] = 'default'
-  const inactive: ButtonProps['variant'] = 'ghost'
+  const inactiveClass = buttonVariants({
+    variant: 'ghost',
+    size: text ? 'default' : 'icon',
+    className: 'mx-1',
+  })
+
+  const activeClass = buttonVariants({
+    variant: 'default',
+    size: text ? 'default' : 'icon',
+    className: 'mx-1',
+  })
+
   return (
-    <NavLink to={to}>
-      {(props) => (
-        <Button
-          variant={props.isActive ? active : inactive}
-          size={iconOnly ? 'icon' : 'default'}
-          className="mx-1"
-        >
-          {icon && (
-            <Icon
-              i={icon}
-              size={iconSize}
-              strokeWidth={2}
-              absoluteStrokeWidth={true}
-            />
-          )}
-          {!iconOnly && <span className="ml-2">{children}</span>}
-        </Button>
-      )}
+    <NavLink
+      to={to}
+      className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
+    >
+      <Icon i={icon} strokeWidth={2} />
+      {text && <span className="ml-2 font-bold">{text}</span>}
     </NavLink>
   )
 }
@@ -59,24 +58,16 @@ export default function Header() {
       </h1>
 
       <nav className="flex-2">
-        <NavigationLink to="/" icon="dashboard">
-          Dashboard
-        </NavigationLink>
-        <NavigationLink to="/nodes" icon="node">
-          Nodes
-        </NavigationLink>
-        <NavigationLink to="/services" icon="service">
-          Services
-        </NavigationLink>
+        <NavigationLink to="/" icon="dashboard" text="Dashboard" />
+        <NavigationLink to="/nodes" icon="node" text="Nodes" />
+        <NavigationLink to="/services" icon="service" text="Services" />
       </nav>
       <nav className="flex-1 text-right">
         <Button variant="ghost" size="icon" className="mx-1">
           <Icon i="hide" strokeWidth={2} />
         </Button>
         <ThemeToggle />
-        <NavigationLink to="/settings" icon="cog" iconOnly>
-          Settings
-        </NavigationLink>
+        <NavigationLink to="/settings" icon="cog" />
       </nav>
     </header>
   )

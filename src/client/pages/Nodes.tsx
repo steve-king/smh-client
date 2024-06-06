@@ -1,6 +1,10 @@
+import { Link } from 'react-router-dom'
 import { Page } from '@/client/app'
+import { useStoreContext } from '@/client/lib/store'
+import { parseNode, cn } from '@/client/lib/utils'
 
 import Card from '@/client/components/Stat'
+import Icon from '../components/Icon'
 
 import {
   Table,
@@ -11,17 +15,11 @@ import {
   TableRow,
 } from '../components/ui/table'
 
-import { Link } from 'react-router-dom'
-
-import Icon from '../components/Icon'
-import { useStoreContext } from '@/client/lib/store'
-
 import { Node as NodeProps } from '@/types'
-import { parseNode } from '@/client/lib/utils'
 
 const Node = (props: NodeProps) => {
   const node = parseNode(props)
-
+  const textClass = node.isOnline ? '' : 'text-muted-foreground'
   return (
     <TableRow>
       <TableCell className="font-medium">
@@ -32,10 +30,10 @@ const Node = (props: NodeProps) => {
         :{node.port_public} :{node.port_private} :{node.port_post}
       </TableCell>
       <TableCell>{node.version}</TableCell>
-      <TableCell className={'text-' + node.statusColour + '-500'}>
+      <TableCell>
         <div className="flex items-center">
-          <Icon i="connection" className={'text-' + node.statusColour} />
-          <span className="ml-2">{node.statusText}</span>
+          <Icon i="connection" className={node.statusColour} />
+          <span className={cn('ml-2', textClass)}>{node.statusText}</span>
         </div>
       </TableCell>
     </TableRow>
@@ -47,7 +45,7 @@ const Nodes = () => {
   return (
     <Page title="Nodes" icon="node">
       <Card>
-        <Table>
+        <Table className="table-fixed">
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>

@@ -23,9 +23,9 @@ export default function RenderIcon(props: Props) {
   if (props.i !== undefined && icons[props.i] !== undefined) {
     const Icon = icons[props.i]
     return (
-      <div className={cn('', props.className)}>
+      <span className={cn('', props.className)}>
         <Icon {...iconProps} />
-      </div>
+      </span>
     )
   }
 
@@ -51,7 +51,7 @@ const icons: {
   host: Lucide.PcCase,
   peers: Lucide.Network,
   version: Lucide.Github,
-  price: Lucide.DollarSign,
+  price: Lucide.CircleDollarSign,
   layers: Lucide.Layers3,
   light: Lucide.Sun,
   dark: Lucide.Moon,

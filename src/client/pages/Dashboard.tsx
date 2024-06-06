@@ -7,7 +7,7 @@ export const DashboardPage = () => {
       <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <Stat icon="price">
           <p>SMH Price</p>
-          <p className="text-3xl">2.50</p>
+          <p className="text-2xl">2.50</p>
           <p className="text-xs font-light  text-muted-foreground">
             Source: Coingecko
           </p>
