@@ -1,7 +1,7 @@
 import { ElementType, ReactNode } from 'react'
 
 import * as UiCard from './ui/card'
-import Icon from './RenderIcon'
+import Icon from './Icon'
 
 interface CardProps {
   icon?: string

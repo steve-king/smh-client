@@ -1,5 +1,4 @@
 import { Page } from '@/client/app'
-import * as Icon from '@/client/components/Icon'
 import Stat from '@/client/components/Stat'
 
 export const DashboardPage = () => {

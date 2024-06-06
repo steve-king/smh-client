@@ -22,7 +22,7 @@ import { Progress as ProgressBar } from '@/client/components/ui/progress'
 import { Link } from 'react-router-dom'
 import { Page } from '@/client/app'
 import Card from '../components/Stat'
-import Icon from '../components/RenderIcon'
+import Icon from '../components/Icon'
 
 interface StatusProps {
   isProving: boolean

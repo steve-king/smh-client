@@ -2,7 +2,7 @@ import { ElementType, ReactNode } from 'react'
 import Layout from './layout'
 import { useStoreContext } from '@/client/lib/store'
 
-import Icon from '../components/RenderIcon'
+import Icon from '../components/Icon'
 
 const Page = ({
   title,

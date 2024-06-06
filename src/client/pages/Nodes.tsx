@@ -13,7 +13,7 @@ import {
 
 import { Link } from 'react-router-dom'
 
-import Icon from '../components/RenderIcon'
+import Icon from '../components/Icon'
 import { useStoreContext } from '@/client/lib/store'
 
 import { Node as NodeProps } from '@/types'
