@@ -24,8 +24,8 @@ const Page = ({
           <Icon
             className="mr-2"
             size={48}
-            strokeWidth={3}
-            absoluteStrokeWidth
+            strokeWidth={1}
+            // absoluteStrokeWidth
           />
         )}
         <h1 className="text-2xl font-semibold">

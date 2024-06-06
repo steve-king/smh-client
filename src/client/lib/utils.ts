@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
-import { Node as NodeProps } from '@/types'
+import { Node as NodeProps, Service as ServiceProps } from '@/types'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -93,3 +93,28 @@ export const suToBytes = (su: number): number => {
   const bytes = TiB * bytesPerTiB
   return bytes
 }
+
+// export function parseService(service: ServiceProps, nodes: NodeProps[]) {
+//   let statusText
+//   let isProving = false
+//   let provingStatus
+//   if (service.data.error) {
+//     statusText = 'Offline'
+//   } else if (service.data === 'string') {
+//     statusText = service.data
+//   } else if (service.data.proving) {
+//     isProving = true
+
+//     provingData.stage
+//     provingData.progress
+//   }
+
+//   return {
+//     ...service,
+//     node: getNodeByServiceName(service.name, nodes),
+//     TiB: suToTiB(service.su),
+//     statusText,
+//     isProving,
+//     provingData
+//   }
+// }

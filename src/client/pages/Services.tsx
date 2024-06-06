@@ -11,108 +11,131 @@ import {
   TableHeader,
   TableRow,
 } from '@/client/components/ui/table'
-import { Progress } from '@/client/components/ui/progress'
+import { Progress as ProgressBar } from '@/client/components/ui/progress'
 
 import { useStoreContext } from '@/client/lib/store'
-import { getNodeByServiceName, nodePath, suToBytes } from '@/client/lib/utils'
-import { Service as ServiceProps, Node as NodeProps } from '@/types'
+import {
+  getNodeByServiceName,
+  nodePath,
+  suToBytes,
+  suToTiB,
+  cn,
+} from '@/client/lib/utils'
+import { Service as ServiceProps } from '@/types'
+import { ElementType } from 'react'
 
-interface ProvingProps {
-  Proving: {
-    nonces: {
-      start: number
-      end: number
-    }
-    position: number
+interface StatusProps {
+  isProving: boolean
+  text: string
+  Icon: ElementType
+  colour: string
+  percent: number
+  nonces?: {
+    start: number
+    end: number
   }
-  su: number
 }
 
-const ProvingStatus = (props: ProvingProps) => {
-  if (props.Proving) {
-    const { nonces } = props.Proving
-    const position = 635416084480
-    // const position = 0
-    const bytes = suToBytes(props.su)
-    const percent = position / bytes
-    const percentRounded = Math.round(percent * 100)
-
-    let PostIcon = Icon.Cpu
-    let postText = 'K2PoW'
-    let showNonces = true
-    let showProgress = false
-    let showPercentage = false
-
-    if (position > 0) {
-      PostIcon = Icon.Service
-      postText = `Reading PoST`
-      showNonces = false
-      showProgress = true
-      showPercentage = true
-    }
-
-    return (
-      <>
-        <TableCell>
-          <div className="flex items-center animate-pulse">
-            <div className="text-yellow-500">
-              <PostIcon
-                size={24}
-                strokeWidth={1}
-                absoluteStrokeWidth
-                className="mr-2"
-              />
-            </div>
-            <div className="grow text-left">
-              <p className="text-xs flex items-center justify-between">
-                {postText}
-                {showPercentage && (
-                  <span className="text-muted-foreground">
-                    {percentRounded}%
-                  </span>
-                )}
-              </p>
-              {showProgress && (
-                <Progress
-                  value={percentRounded}
-                  className="mt-1 h-[4px] mb-[8px]"
-                />
-              )}
-              {showNonces && (
-                <p className="text-xs text-muted-foreground">
-                  Nonces: {nonces.start}-{nonces.end}
-                </p>
-              )}
-            </div>
-          </div>
-        </TableCell>
-      </>
-    )
+const ServiceStatus = (props: StatusProps) => {
+  let textClass = 'text-muted-foreground'
+  let animateClass = ''
+  if (props.isProving) {
+    animateClass = 'animate-pulse'
+    textClass = ''
   }
-  return null
+  return (
+    <div className={cn('flex items-center', animateClass)}>
+      <div className={'text-' + props.colour}>
+        <props.Icon size={24} strokeWidth={1} className="mr-2" />
+      </div>
+      <div className="grow">
+        <p className="flex items-end justify-between">
+          <span className={cn(textClass)}>{props.text}</span>
+          {props.isProving && props.percent > 0 && (
+            <span className="text-xs text-muted-foreground">
+              {props.percent}%
+            </span>
+          )}
+        </p>
+        {props.isProving && (
+          <>
+            {props.percent === 0 ? (
+              <p className="text-xs text-muted-foreground">
+                Nonces:{props.nonces?.end}
+              </p>
+            ) : (
+              <ProgressBar
+                value={props.percent}
+                className="mt-1 h-[4px] mb-[8px]"
+              />
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  )
 }
 
 interface RowProps extends ServiceProps {
-  node: NodeProps | undefined
+  node: any
 }
 
 const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
-  let status
-  if (typeof data === 'string') {
-    status = data
-  } else if (typeof data === 'object') {
-    status = <ProvingStatus {...data} su={su} />
+  let isProving = false
+  let statusText = ''
+  let statusColour = ''
+  let statusIcon = Icon.Service
+  let percentRounded = 0
+
+  if (data === 'IDLE') {
+    statusText = 'Idle'
+    statusColour = 'green-500'
+  } else if (data.error) {
+    statusText = 'Offline'
+    statusColour = 'red-500'
+  } else if (data.Proving) {
+    isProving = true
+    statusColour = 'yellow-500'
+    const {
+      nonces,
+      // position
+    } = data.Proving
+
+    // dev
+    let position = 0
+    position = 635416084480
+
+    const bytes = suToBytes(su)
+    const percent = position / bytes
+    percentRounded = Math.round(percent * 100)
+    statusText = 'Reading PoST'
+
+    if (position === 0) {
+      statusIcon = Icon.Cpu
+      statusText = 'K2PoW'
+    }
   }
 
   return (
     <TableRow>
-      <TableCell>{name}</TableCell>
-      <TableCell>{host}</TableCell>
-      <TableCell>:{port_operator}</TableCell>
       <TableCell>
         {node && <Link to={nodePath(node.name)}>{node.name}</Link>}
       </TableCell>
-      {status}
+      <TableCell>{name}</TableCell>
+      <TableCell>{host}</TableCell>
+      <TableCell>:{port_operator}</TableCell>
+      <TableCell>{su} SU</TableCell>
+      <TableCell>{suToTiB(su)} TiB</TableCell>
+      <TableCell>
+        <ServiceStatus
+          isProving={isProving}
+          text={statusText}
+          Icon={statusIcon}
+          colour={statusColour}
+          percent={percentRounded}
+          nonces={data?.Proving?.nonces}
+        />
+      </TableCell>
     </TableRow>
   )
 }
@@ -126,10 +149,12 @@ export default function Services() {
         <Table className="table-fixed">
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
+              <TableHead>Node</TableHead>
+              <TableHead>Service Name</TableHead>
               <TableHead className="max-w-[100px]">Host</TableHead>
               <TableHead>Port</TableHead>
-              <TableHead>Node</TableHead>
+              <TableHead>Size (SU)</TableHead>
+              <TableHead>Size (TiB)</TableHead>
               <TableHead>Status</TableHead>
             </TableRow>
           </TableHeader>

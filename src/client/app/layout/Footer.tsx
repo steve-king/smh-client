@@ -44,12 +44,17 @@ import { useSocketContext } from '@/client/lib/socket'
 //   )
 // }
 
+import * as Icon from '@/client/components/Icon'
+
 const ConnectionStatus = () => {
   const { isConnected } = useSocketContext()
   const statusString = isConnected ? 'Connected' : 'Disconnected'
-  // const statusColour = isConnected ? 'muted-foreground' : 'red-700'
+  const statusColour = isConnected ? 'green-500' : 'red-700'
   return (
-    <p className="text-xs p-1 text-center text-muted-foreground relative">
+    <p className="text-xs p-1 text-muted-foreground relative flex items-center">
+      <span className={'text-' + statusColour}>
+        <Icon.Dot strokeWidth={2} />
+      </span>
       {statusString}
       {/* {!isConnected && (
         <span
