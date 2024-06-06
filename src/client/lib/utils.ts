@@ -84,3 +84,12 @@ export function getNodeByServiceName(
 
   return node
 }
+
+export const suToTiB = (su: number): number => su / 16
+
+export const suToBytes = (su: number): number => {
+  const TiB = suToTiB(su)
+  const bytesPerTiB = 1024 * 1024 * 1024 * 1024
+  const bytes = TiB * bytesPerTiB
+  return bytes
+}

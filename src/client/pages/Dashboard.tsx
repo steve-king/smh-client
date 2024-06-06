@@ -11,7 +11,7 @@ import { Page } from '@/client/app'
 //   TableRow,
 // } from '@/client/components/ui/table'
 
-import * as Icon from '@/client/components/ui/icons'
+import * as Icon from '@/client/components/Icon'
 import Stat from '@/client/components/Stat'
 
 export const DashboardPage = () => {

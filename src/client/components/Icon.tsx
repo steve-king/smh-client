@@ -19,6 +19,7 @@ export {
   // Laptop as Host,
   Github as Version,
   Dot,
+  Cpu,
 } from 'lucide-react'
 
 import SpacemeshLight from '@/client/assets/logo-spacemesh-trans-black.png'

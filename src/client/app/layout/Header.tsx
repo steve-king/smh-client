@@ -1,7 +1,7 @@
 import { ElementType, ReactNode } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Button, ButtonProps } from '@/client/components/ui/button'
-import * as Icon from '@/client/components/ui/icons'
+import * as Icon from '@/client/components/Icon'
 
 // import { useTheme } from '../providers/theme-provider'
 import ThemeToggle from '@/client/app/layout/theme-toggle'

@@ -4,7 +4,7 @@ import { findItemBy, parseNode } from '@/client/lib/utils'
 import { Page } from '@/client/app'
 import { Node as NodeProps } from '@/types'
 
-import * as Icon from '@/client/components/ui/icons'
+import * as Icon from '@/client/components/Icon'
 
 import Stat from '@/client/components/Stat'
 

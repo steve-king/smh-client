@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/client/components/ui/dropdown-menu'
 
-import * as Icon from '@/client/components/ui/icons'
+import * as Icon from '@/client/components/Icon'
 
 import { useTheme } from '@/client/app/providers/theme-provider'
 
