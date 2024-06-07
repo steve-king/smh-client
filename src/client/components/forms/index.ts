@@ -1,4 +1,5 @@
+import FormDialog from './FormDialog'
 import NodeForm from './NodeForm'
 import ServiceForm from './ServiceForm'
 
-export { NodeForm, ServiceForm }
+export { FormDialog, NodeForm, ServiceForm }

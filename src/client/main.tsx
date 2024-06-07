@@ -12,7 +12,6 @@ import './index.css'
 import { App } from '@/client/app'
 import { Dashboard, Nodes, Node, Services, Error } from './pages'
 import { NodeForm, ServiceForm } from '@/client/components/forms'
-
 import { SocketProvider } from '@/client/lib/socket'
 import { StoreProvider } from '@/client/lib/store'
 import { ThemeProvider } from '@/client/app/providers/theme-provider'

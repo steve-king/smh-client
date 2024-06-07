@@ -15,7 +15,7 @@ import {
   TableRow,
 } from '../components/ui/table'
 
-import { Button, buttonVariants } from '../components/ui/button'
+import { NodeForm } from '@/client/components/forms'
 
 import { Node as NodeProps } from '@/types'
 
@@ -46,21 +46,7 @@ const Node = (props: NodeProps) => {
 const Nodes = () => {
   const { state } = useStoreContext()
   return (
-    <Page
-      title="Nodes"
-      icon="node"
-      Actions={() => (
-        <>
-          <Link
-            to="/nodes/create"
-            className={buttonVariants({ variant: 'ghost' })}
-          >
-            <span className="mr-2">Add node</span>
-            <Icon i="add" />
-          </Link>
-        </>
-      )}
-    >
+    <Page title="Nodes" icon="node">
       <Card>
         <Table className="table-fixed">
           <TableHeader>
@@ -103,7 +89,11 @@ const Nodes = () => {
           </TableBody>
         </Table>
       </Card>
-      <Outlet />
+      <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <Card className="mt-6">
+          <NodeForm />
+        </Card>
+      </div>
     </Page>
   )
 }
