@@ -1,4 +1,5 @@
-import { Link, Outlet } from 'react-router-dom'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Page } from '@/client/app'
 import { useStoreContext } from '@/client/lib/store'
 import { parseNode, cn } from '@/client/lib/utils'
@@ -15,9 +16,20 @@ import {
   TableRow,
 } from '../components/ui/table'
 
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/client/components/ui/alert-dialog'
+
+import { Button } from '../components/ui/button'
+
 import { NodeForm } from '@/client/components/forms'
 
 import { Node as NodeProps } from '@/types'
+import { Separator } from '@radix-ui/react-separator'
 
 const Node = (props: NodeProps) => {
   const node = parseNode(props)
@@ -45,8 +57,25 @@ const Node = (props: NodeProps) => {
 
 const Nodes = () => {
   const { state } = useStoreContext()
+
+  const [showForm, setShowForm] = useState(false)
+
+  const onNodeFormSubmit = () => {
+    console.log('nodeFormSubmit')
+    setShowForm(false)
+  }
+
   return (
-    <Page title="Nodes" icon="node">
+    <Page
+      title="Nodes"
+      icon="node"
+      Actions={() => (
+        <Button variant="ghost" size="icon" onClick={() => setShowForm(true)}>
+          {/* <span className="mr-2">Add node</span> */}
+          <Icon i="add"></Icon>
+        </Button>
+      )}
+    >
       <Card>
         <Table className="table-fixed">
           <TableHeader>
@@ -89,11 +118,21 @@ const Nodes = () => {
           </TableBody>
         </Table>
       </Card>
-      <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        <Card className="mt-6">
-          <NodeForm />
-        </Card>
-      </div>
+      <AlertDialog open={showForm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Node config</AlertDialogTitle>
+            <AlertDialogDescription>
+              Add a new node to your configuration.
+            </AlertDialogDescription>
+            <Separator className="my-4" />
+            <NodeForm
+              onSubmit={onNodeFormSubmit}
+              onCancel={() => setShowForm(false)}
+            />
+          </AlertDialogHeader>
+        </AlertDialogContent>
+      </AlertDialog>
     </Page>
   )
 }
