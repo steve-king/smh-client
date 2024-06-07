@@ -31,18 +31,19 @@ export default {
 
 # SMH-Client
 
-A self-hosted web application powered by a gRPC client on the backend for monitoring Spacemesh nodes and post services.
+A self-hosted web application for monitoring Spacemesh nodes and post services. This is powered by a go-spacemesh gRPC client running on the backend.
 
-- node.js will maintain gRPC streaming calls with all of your configured nodes/services.
-- This data is continuaously collected in real time and a global 'state' object is held in memory.
+- node.js backend will maintain gRPC streaming calls with your configured nodes/services.
+- Data is collected in real time and a global 'state' object is held in memory.
 - When the state changes, an 'update' websocket event is emitted to all connected web browser clients.
-- When the websocket event is received, the browser will immediately fetch the latest state from the server using a good old http request.
-- If you already have a VPN or ZTNA (Zero Trust Network Access) solution for remote access to your network, you can easily check on your nodes from any location.
+- When the websocket event is received, the browser will immediately fetch the latest state from the server using a http request.
+- If you already have a VPN or ZTNA (Zero Trust Network Access) solution for remote access to your local network, you can easily check on your nodes from any location.
 
 To do / Feature roadmap
 
-- Email alerts whenever a significant event occurs (e.g node offline, post service starts/finishes proving, ATX submitted)
-- Web panel user authentication? (tbc)
+- Configurable email alerts when significant events occur (e.g node offline, service starts/finishes proving, ATX submitted)
+- User authentication? (tbc)
+- TLS? (I might need some help with this)
 
 # Installation
 
@@ -64,7 +65,7 @@ services:
 ```
 
 3. cd to `smh-client` directory
-4. Run:
+4. Compose:
 
 ```
 docker compose up -d
@@ -90,12 +91,39 @@ If you prefer not to use compose, run:
 
 Pre-requisites:
 
-- git
-- nodejs (v18 or higher)
+- NodeJS
+- git (optional see below)
 
-1. clone repository: `git clone git@github.com:steve-king/smh-client.git`
-2. Change to directory: `cd smh-client`
-3. Initialise submodule: `git submodule update --init --recursive`
-4. Install node packages: `npm install`
-5. Compile and run: `npm run build && npm start`
-6. Or for dev environment: `npm run dev`
+1. clone repository:
+
+```
+git clone git@github.com:steve-king/smh-client.git
+```
+
+2. Change to directory:
+
+```
+cd smh-client
+```
+
+3. Initialise submodule:
+
+```
+git submodule update --init --recursive
+```
+
+4. Install node packages:
+   `npm install`
+5. Compile and run:
+   `npm run build && npm start`
+
+### Without git
+
+So long as you have NodeJS on your machine, it is possible (though not recommended) to get set up without git:
+
+1. Download and extract smh-client
+2. Download and extract [spacemeshos/api](https://github.com/spacemeshos/api/) to `smh-client/src/server/lib/api`
+3. Install node packages:
+   `npm install`
+4. Compile and run:
+   `npm run build && npm start`
