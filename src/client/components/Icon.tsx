@@ -62,4 +62,5 @@ const icons: {
   network: Lucide.Earth,
   port: Lucide.Unplug,
   name: Lucide.File,
+  add: Lucide.CirclePlus,
 }

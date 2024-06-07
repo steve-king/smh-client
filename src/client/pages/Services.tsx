@@ -25,6 +25,9 @@ import { Page } from '@/client/app'
 import Card from '../components/Card'
 import Icon from '../components/Icon'
 
+import { buttonVariants } from '../components/ui/button'
+import { Outlet } from 'react-router-dom'
+
 const NodeStatus = ({ data }: { data: NodeProps | undefined }) => {
   const node = data ? parseNode(data) : undefined
 
@@ -178,7 +181,21 @@ export default function Services() {
   const { state } = useStoreContext()
 
   return (
-    <Page title="Services" icon="services">
+    <Page
+      title="Services"
+      icon="services"
+      Actions={() => (
+        <>
+          <Link
+            to="/services/create"
+            className={buttonVariants({ variant: 'ghost' })}
+          >
+            <span className="mr-2">Add service</span>
+            <Icon i="add" />
+          </Link>
+        </>
+      )}
+    >
       <Card>
         <Table className="table-fixed">
           <TableHeader>
@@ -227,6 +244,7 @@ export default function Services() {
           </TableBody>
         </Table>
       </Card>
+      <Outlet />
     </Page>
   )
 }

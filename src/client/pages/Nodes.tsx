@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import { Page } from '@/client/app'
 import { useStoreContext } from '@/client/lib/store'
 import { parseNode, cn } from '@/client/lib/utils'
@@ -14,6 +14,8 @@ import {
   TableHeader,
   TableRow,
 } from '../components/ui/table'
+
+import { Button, buttonVariants } from '../components/ui/button'
 
 import { Node as NodeProps } from '@/types'
 
@@ -44,7 +46,21 @@ const Node = (props: NodeProps) => {
 const Nodes = () => {
   const { state } = useStoreContext()
   return (
-    <Page title="Nodes" icon="node">
+    <Page
+      title="Nodes"
+      icon="node"
+      Actions={() => (
+        <>
+          <Link
+            to="/nodes/create"
+            className={buttonVariants({ variant: 'ghost' })}
+          >
+            <span className="mr-2">Add node</span>
+            <Icon i="add" />
+          </Link>
+        </>
+      )}
+    >
       <Card>
         <Table className="table-fixed">
           <TableHeader>
@@ -87,6 +103,7 @@ const Nodes = () => {
           </TableBody>
         </Table>
       </Card>
+      <Outlet />
     </Page>
   )
 }
