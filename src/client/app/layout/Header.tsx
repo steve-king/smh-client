@@ -60,14 +60,14 @@ export default function Header() {
       <nav className="flex-2">
         <NavigationLink to="/" icon="dashboard" text="Dashboard" />
         <NavigationLink to="/nodes" icon="node" text="Nodes" />
-        <NavigationLink to="/services" icon="service" text="Services" />
+        <NavigationLink to="/services" icon="services" text="Services" />
       </nav>
       <nav className="flex-1 text-right">
-        <Button variant="ghost" size="icon" className="mx-1">
+        {/* <Button variant="ghost" size="icon" className="mx-1">
           <Icon i="hide" />
-        </Button>
+        </Button> */}
         <ThemeToggle />
-        <NavigationLink to="/settings" icon="cog" />
+        {/* <NavigationLink to="/settings" icon="cog" /> */}
       </nav>
     </header>
   )

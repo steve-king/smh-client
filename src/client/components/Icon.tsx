@@ -43,6 +43,7 @@ const icons: {
 } = {
   cog: Lucide.Cog,
   service: Lucide.HardDrive,
+  services: Lucide.Server,
   cpu: Lucide.Cpu,
   dot: Lucide.Dot,
   dashboard: Lucide.ActivitySquare,
@@ -59,4 +60,6 @@ const icons: {
   hide: Lucide.EyeOff,
   show: Lucide.Eye,
   network: Lucide.Earth,
+  port: Lucide.Unplug,
+  name: Lucide.File,
 }

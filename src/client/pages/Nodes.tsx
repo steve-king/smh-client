@@ -25,11 +25,12 @@ const Node = (props: NodeProps) => {
       <TableCell className="font-medium">
         <Link to={node.path}>{node.name}</Link>
       </TableCell>
+      <TableCell>{node.version}</TableCell>
       <TableCell className="font-medium">{node.host}</TableCell>
       <TableCell>
         :{node.port_public} :{node.port_private} :{node.port_post}
       </TableCell>
-      <TableCell>{node.version}</TableCell>
+      <TableCell>{props.data.postInfo?.states?.length}</TableCell>
       <TableCell>
         <div className="flex items-center">
           <Icon i={node.statusIcon} className={node.statusColour} />
@@ -48,11 +49,35 @@ const Nodes = () => {
         <Table className="table-fixed">
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Host</TableHead>
-              <TableHead>Ports</TableHead>
-              <TableHead>Version</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead>
+                <div className="flex items-center">
+                  <Icon i="name" className="mr-2" /> Name
+                </div>
+              </TableHead>
+              <TableHead>
+                <div className="flex items-center">
+                  <Icon i="version" className="mr-2" /> Version
+                </div>
+              </TableHead>
+
+              <TableHead>
+                <div className="flex items-center">
+                  <Icon i="host" className="mr-2" /> Host
+                </div>
+              </TableHead>
+              <TableHead>
+                <div className="flex items-center">
+                  <Icon i="port" className="mr-2" /> Ports
+                </div>
+              </TableHead>
+              <TableHead>
+                <div className="flex items-center">
+                  <Icon i="services" className="mr-2" /> Services
+                </div>
+              </TableHead>
+              <TableHead>
+                <div className="flex items-center">Status</div>
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

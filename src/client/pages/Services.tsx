@@ -30,7 +30,7 @@ const NodeStatus = ({ data }: { data: NodeProps | undefined }) => {
 
   let icon = 'disconnected'
   let text = 'Not found'
-  let statusColour = 'text-red-700'
+  let statusColour = 'text-red-600'
   let textColour = 'text-muted-foreground'
 
   if (node) {
@@ -125,12 +125,12 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
     if (node) {
       statusColour = 'text-green-700'
     } else {
-      statusColour = 'text-red-700'
+      statusColour = 'text-red-600'
     }
   } else if (data.error) {
     statusText = 'Offline'
     statusTextClass = 'text-muted-foreground'
-    statusColour = 'text-red-700'
+    statusColour = 'text-red-600'
   } else if (data.Proving) {
     isProving = true
     statusColour = 'text-yellow-600'
@@ -151,10 +151,10 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
 
   return (
     <TableRow>
+      <TableCell>{name}</TableCell>
       <TableCell>
         <NodeStatus data={node} />
       </TableCell>
-      <TableCell>{name}</TableCell>
       <TableCell>{host}</TableCell>
       <TableCell>:{port_operator}</TableCell>
       <TableCell>{su} SU</TableCell>
@@ -178,17 +178,41 @@ export default function Services() {
   const { state } = useStoreContext()
 
   return (
-    <Page title="Services" icon="service">
+    <Page title="Services" icon="services">
       <Card>
         <Table className="table-fixed">
           <TableHeader>
             <TableRow>
-              <TableHead>Node</TableHead>
-              <TableHead>Service Name</TableHead>
-              <TableHead className="max-w-[100px]">Host</TableHead>
-              <TableHead>Port</TableHead>
-              <TableHead>Size (SU)</TableHead>
-              <TableHead>Size (TiB)</TableHead>
+              <TableHead>
+                <div className="flex items-center">
+                  <Icon i="name" className="mr-2" /> Name
+                </div>
+              </TableHead>
+              <TableHead>
+                <div className="flex items-center">
+                  <Icon i="node" className="mr-2" /> Node
+                </div>
+              </TableHead>
+              <TableHead>
+                <div className="flex items-center">
+                  <Icon i="host" className="mr-2" /> Host
+                </div>
+              </TableHead>
+              <TableHead>
+                <div className="flex items-center">
+                  <Icon i="port" className="mr-2" /> Port
+                </div>
+              </TableHead>
+              <TableHead>
+                <div className="flex items-center">
+                  <Icon i="service" className="mr-2" /> Size (SU)
+                </div>
+              </TableHead>
+              <TableHead>
+                <div className="flex items-center">
+                  <Icon i="service" className="mr-2" /> Size (TiB)
+                </div>
+              </TableHead>
               <TableHead>Status</TableHead>
             </TableRow>
           </TableHeader>

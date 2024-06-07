@@ -81,6 +81,11 @@
   z-index: 1;
 }
 
+.app-main.container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 body {
   background-color: rgb(223 221 220);
 }

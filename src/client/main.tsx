@@ -21,7 +21,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />} errorElement={<Error />}>
       <Route path="/" element={<Dashboard />} />
       <Route path="/nodes" element={<Nodes />} />
-      <Route path="/nodes/:name" element={<Node />} />
+      <Route path="/node/:name" element={<Node />} />
       <Route path="/services" element={<Services />} />
     </Route>
   )

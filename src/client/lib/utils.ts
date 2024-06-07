@@ -12,7 +12,7 @@ export function slug(input: string) {
 }
 
 export function nodePath(name: string) {
-  return '/nodes/' + slug(name)
+  return '/node/' + slug(name)
 }
 
 export function findItemBy(
@@ -51,11 +51,12 @@ export function parseNode(node: NodeProps) {
       ? 'text-green-700'
       : statusText === 'Syncing'
       ? 'text-yellow-600'
-      : 'text-red-700'
+      : 'text-red-600'
 
   return {
     path: nodePath(node.name),
     ...config,
+    ...node,
     isOnline,
     statusText,
     statusIcon,
