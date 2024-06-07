@@ -47,10 +47,10 @@ export function parseNode(node: NodeProps) {
     : 'Syncing'
   const statusColour =
     statusText === 'Online'
-      ? 'text-green-500'
+      ? 'text-green-700'
       : statusText === 'Syncing'
-      ? 'text-yellow-500'
-      : 'text-red-500'
+      ? 'text-yellow-600'
+      : 'text-red-700'
 
   return {
     path: nodePath(node.name),

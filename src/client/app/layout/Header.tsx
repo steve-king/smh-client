@@ -37,7 +37,7 @@ const NavigationLink = ({
       to={to}
       className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
     >
-      <Icon i={icon} strokeWidth={2} />
+      <Icon i={icon} strokeWidth={1.5} />
       {text && <span className="ml-2 font-bold">{text}</span>}
     </NavLink>
   )

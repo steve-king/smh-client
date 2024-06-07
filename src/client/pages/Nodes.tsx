@@ -32,7 +32,12 @@ const Node = (props: NodeProps) => {
       <TableCell>{node.version}</TableCell>
       <TableCell>
         <div className="flex items-center">
-          <Icon i="connection" className={node.statusColour} />
+          <Icon
+            i="connection"
+            className={node.statusColour}
+            // size={32}
+            strokeWidth={1.5}
+          />
           <span className={cn('ml-2', textClass)}>{node.statusText}</span>
         </div>
       </TableCell>

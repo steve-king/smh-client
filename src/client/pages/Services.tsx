@@ -27,6 +27,7 @@ import Icon from '../components/Icon'
 interface StatusProps {
   isProving: boolean
   text: string
+  textClass: string
   icon: string
   colour: string
   percent: number
@@ -37,18 +38,23 @@ interface StatusProps {
 }
 
 const ServiceStatus = (props: StatusProps) => {
-  let textClass = 'text-muted-foreground'
+  // let textClass = 'text-muted-foreground'
   let animateClass = ''
   if (props.isProving) {
     animateClass = 'animate-pulse'
-    textClass = ''
+    // textClass = ''
   }
   return (
     <div className={cn('flex items-center', animateClass)}>
-      <Icon i={props.icon} className={cn(props.colour, 'mr-2')} />
+      <Icon
+        i={props.icon}
+        className={cn(props.colour, 'mr-2')}
+        strokeWidth={1.5}
+        // size={32}
+      />
       <div className="grow">
         <p className="flex items-end justify-between">
-          <span className={cn(textClass)}>{props.text}</span>
+          <span className={cn(props.textClass)}>{props.text}</span>
           {props.isProving && props.percent > 0 && (
             <span className="text-xs text-muted-foreground">
               {props.percent}%
@@ -84,16 +90,21 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
   let statusColour = ''
   let statusIcon = 'service'
   let percentRounded = 0
+  let statusTextClass = ''
 
-  if (data === 'IDLE') {
-    statusText = 'Idle'
-    statusColour = 'text-green-500'
+  if (data === 'Idle') {
+    statusText = data
+    statusColour = 'text-green-700'
+    statusTextClass = ''
   } else if (data.error) {
     statusText = 'Offline'
-    statusColour = 'text-red-500'
+    statusTextClass = 'text-muted-foreground'
+    statusColour = 'text-red-700'
   } else if (data.Proving) {
     isProving = true
-    statusColour = 'text-yellow-500'
+    statusColour = 'text-yellow-600'
+    statusTextClass = 'text-xs'
+
     const {
       nonces,
       // position
@@ -103,14 +114,14 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
     let position = 0
     // position = 635416084480
 
-    const bytes = suToBytes(su)
-    const percent = position / bytes
-    percentRounded = Math.round(percent * 100)
-    statusText = 'Reading PoST'
-
     if (position === 0) {
       statusIcon = 'cpu'
       statusText = 'K2PoW'
+    } else {
+      statusText = 'Reading PoST'
+      const bytes = suToBytes(su)
+      const percent = position / bytes
+      percentRounded = Math.round(percent * 100)
     }
   }
 
@@ -128,6 +139,7 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
         <ServiceStatus
           isProving={isProving}
           text={statusText}
+          textClass={statusTextClass}
           icon={statusIcon}
           colour={statusColour}
           percent={percentRounded}
