@@ -1,4 +1,5 @@
 // import { ReactNode } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -29,6 +30,8 @@ export default function NodeForm(props: {
   onSubmit: () => void
   onCancel: () => void
 }) {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,14 +45,19 @@ export default function NodeForm(props: {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-
-    // Do HTTP request
-
-    // Close the form
-    if (typeof props.onSubmit === 'function') {
-      props.onSubmit()
-    }
+    setIsSubmitting(true)
+    fetch('/api/node', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    }).then((res) => {
+      setIsSubmitting(false)
+      if (res.ok && typeof props.onSubmit === 'function') {
+        props.onSubmit()
+      }
+    })
   }
 
   return (
@@ -62,7 +70,11 @@ export default function NodeForm(props: {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Enter name" {...field} />
+                <Input
+                  placeholder="Enter name"
+                  {...field}
+                  disabled={isSubmitting}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -75,7 +87,11 @@ export default function NodeForm(props: {
             <FormItem>
               <FormLabel>Host</FormLabel>
               <FormControl>
-                <Input placeholder="x.x.x.x" {...field} />
+                <Input
+                  placeholder="x.x.x.x"
+                  {...field}
+                  disabled={isSubmitting}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -91,7 +107,11 @@ export default function NodeForm(props: {
                 <FormItem>
                   <FormLabel>Ports</FormLabel>
                   <FormControl>
-                    <Input placeholder=":public" {...field} />
+                    <Input
+                      placeholder=":public"
+                      {...field}
+                      disabled={isSubmitting}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -105,7 +125,11 @@ export default function NodeForm(props: {
               <FormItem>
                 <FormLabel>&nbsp;</FormLabel>
                 <FormControl>
-                  <Input placeholder=":private" {...field} />
+                  <Input
+                    placeholder=":private"
+                    {...field}
+                    disabled={isSubmitting}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -119,7 +143,11 @@ export default function NodeForm(props: {
                 <FormLabel>&nbsp;</FormLabel>
                 {/* <FormLabel>Port (post)</FormLabel> */}
                 <FormControl>
-                  <Input placeholder=":post" {...field} />
+                  <Input
+                    placeholder=":post"
+                    {...field}
+                    disabled={isSubmitting}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -130,11 +158,12 @@ export default function NodeForm(props: {
           control={form.control}
           name="smeshing"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-center space-x-3 space-y-0 border p-4 rounded-md">
+            <FormItem className="flex items-center space-x-3 space-y-0 border p-4 rounded-md">
               <FormControl>
                 <Checkbox
                   checked={field.value}
                   onCheckedChange={field.onChange}
+                  disabled={isSubmitting}
                 />
               </FormControl>
               <div>
@@ -147,10 +176,17 @@ export default function NodeForm(props: {
           )}
         />
         <div className="flex justify-end gap-4">
-          <Button type="button" onClick={props.onCancel} variant="secondary">
+          <Button
+            type="button"
+            onClick={props.onCancel}
+            variant="secondary"
+            disabled={isSubmitting}
+          >
             Cancel
           </Button>
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={isSubmitting}>
+            Submit
+          </Button>
         </div>
       </form>
     </Form>

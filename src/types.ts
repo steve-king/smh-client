@@ -9,6 +9,7 @@ interface Settings {
 }
 
 export interface Node {
+  id: string
   name: string
   host: string
   port_public: string

@@ -31,6 +31,20 @@ export const getConfig = (): Config => {
   return json
 }
 
+export const writeConfig = (data: Config): boolean => {
+  const cwd = process.cwd()
+  const dir = path.join(cwd, 'data')
+  const file = path.join(dir, 'config.json')
+  try {
+    fs.writeFileSync(file, JSON.stringify(data, null, 2), { encoding: 'utf8' })
+    log('INFO', 'config', `saved to disk: ${file}`)
+    return true
+  } catch (e) {
+    log('ERROR', 'config', `Error writing config: ${file}`)
+    return false
+  }
+}
+
 /**
  * Set a nested value on an object via dot notation string
  * @param obj
@@ -80,7 +94,7 @@ export function log(
     text += separator
     text += message
 
-    // console.log(text)
+    console.log(text)
   }
 }
 

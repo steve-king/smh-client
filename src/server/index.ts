@@ -2,9 +2,10 @@ import express from 'express'
 import http from 'http'
 import path from 'path'
 
-import { getConfig, log, cronTask } from '@/server/utils'
+import { getConfig, writeConfig, log, cronTask } from '@/server/utils'
 import Socket from './socket'
 import Store from '@/server/store'
+import routes from '@/server/routes'
 
 const app = express()
 const PORT = 3131
@@ -16,17 +17,8 @@ store.fetch()
 store.fetchStreams()
 cronTask(config.settings?.refreshInterval, store.fetch).start()
 
-// Routes
 app.use(express.json())
-
-app.get('/api', (_req, res) => {
-  res.send('smh-client api')
-})
-
-app.get('/api/state', (_req, res) => {
-  log('INFO', 'http', '[GET] /api/state')
-  res.json(store.state)
-})
+app.use('/api', routes)
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {

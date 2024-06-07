@@ -71,7 +71,6 @@ const Nodes = () => {
       icon="node"
       Actions={() => (
         <Button variant="ghost" size="icon" onClick={() => setShowForm(true)}>
-          {/* <span className="mr-2">Add node</span> */}
           <Icon i="add"></Icon>
         </Button>
       )}
@@ -125,7 +124,6 @@ const Nodes = () => {
             <AlertDialogDescription>
               Add a new node to your configuration.
             </AlertDialogDescription>
-            <Separator className="my-4" />
             <NodeForm
               onSubmit={onNodeFormSubmit}
               onCancel={() => setShowForm(false)}

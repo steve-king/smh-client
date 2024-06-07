@@ -11,6 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/client/components/ui/alert-dialog'
+import { Separator } from '@radix-ui/react-separator'
 
 export default function FormDialog({
   title,
@@ -33,6 +34,7 @@ export default function FormDialog({
           <AlertDialogTitle>{title}</AlertDialogTitle>
           {desc && <AlertDialogDescription>{desc}</AlertDialogDescription>}
         </AlertDialogHeader>
+        <Separator />
         <Form />
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>

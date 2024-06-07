@@ -23,9 +23,10 @@ const Page = ({
 
   return (
     <Layout>
-      <div className="flex items-center my-6">
-        <Icon i={icon} size={48} className="mr-4" />
-        <h1 className="text-2xl font-semibold grow">
+      <div className="flex items-end my-6">
+        {/* <div></div> */}
+        <h1 className="flex items-center text-2xl font-semibold grow">
+          <Icon i={icon} size={48} className="mr-4" />
           <span>{title}</span>
         </h1>
         {Actions && <Actions />}
