@@ -35,21 +35,18 @@ router.post('/node', (req, res) => {
 router.delete('/node/:id', (req, res) => {
   log('INFO', 'http', '[DELETE] /api/node/' + req.params.id)
 
-  const config = getConfig()
-  const index = config.nodes.findIndex((item) => item.id === req.params.id)
-
-  delete config.nodes[index]
-
-  if (writeConfig(config)) {
+  try {
+    const config = getConfig()
+    const index = config.nodes.findIndex((item) => item.id === req.params.id)
+    delete config.nodes[index]
+    writeConfig(config)
     store.init(config)
     res.status(200).send()
-  } else {
-    res
-      .status(500)
-      .json({
-        error: true,
-        message: 'Could not delete node from disk: ' + req.params.id,
-      })
+  } catch (e) {
+    res.status(500).json({
+      error: true,
+      message: 'Could not delete node from disk: ' + req.params.id,
+    })
   }
 })
 
