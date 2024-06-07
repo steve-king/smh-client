@@ -28,8 +28,13 @@ app.get('/api/state', (_req, res) => {
   res.json(store.state)
 })
 
+// Serve static files in production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../../dist')))
+  const dist = path.resolve(__dirname, '../../dist')
+  app.use(express.static(dist))
+  app.get('*', function (req, res) {
+    res.sendFile(path.resolve(dist, 'index.html'))
+  })
 }
 
 // Listen
@@ -42,4 +47,4 @@ server.listen(PORT, () => {
 })
 
 // Log level
-export const logLevel = 'none' // verbose
+export const logLevel = '' // verbose

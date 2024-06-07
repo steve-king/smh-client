@@ -80,7 +80,7 @@ export function log(
     text += separator
     text += message
 
-    // console.log(text)
+    console.log(text)
   }
 }
 
