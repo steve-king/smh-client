@@ -3,7 +3,7 @@ import { Page } from '@/client/app'
 import { useStoreContext } from '@/client/lib/store'
 import { parseNode, cn } from '@/client/lib/utils'
 
-import Card from '@/client/components/Stat'
+import Card from '@/client/components/Card'
 import Icon from '../components/Icon'
 
 import {
@@ -32,12 +32,7 @@ const Node = (props: NodeProps) => {
       <TableCell>{node.version}</TableCell>
       <TableCell>
         <div className="flex items-center">
-          <Icon
-            i="connection"
-            className={node.statusColour}
-            // size={32}
-            strokeWidth={1.5}
-          />
+          <Icon i={node.statusIcon} className={node.statusColour} />
           <span className={cn('ml-2', textClass)}>{node.statusText}</span>
         </div>
       </TableCell>

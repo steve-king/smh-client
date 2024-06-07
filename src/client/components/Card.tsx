@@ -20,7 +20,7 @@ interface Icon {
   }
 }
 
-const defaultIconProps = { size: 48, strokeWidth: 3, absoluteStrokeWidth: true }
+// const defaultIconProps = { size: 48, strokeWidth: 3, absoluteStrokeWidth: true }
 
 export default function Card({ children, icon, iconProps }: CardProps) {
   return (

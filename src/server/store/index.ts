@@ -6,8 +6,8 @@ import { getNodeStreams } from '@/server/store/node-streams'
 import { getService } from '@/server/store/service'
 import Stream from '@/server/store/Stream'
 
-const testService = {
-  name: 'test',
+const testService1 = {
+  name: 'test1',
   host: '192.168.1.10',
   port_operator: '10001',
   su: 16,
@@ -16,6 +16,20 @@ const testService = {
       nonces: { start: 0, end: 128 },
       // position: 317708042240,
       position: 0,
+    },
+  },
+}
+
+const testService2 = {
+  name: 'test2',
+  host: '192.168.1.10',
+  port_operator: '10001',
+  su: 16,
+  data: {
+    Proving: {
+      nonces: { start: 0, end: 128 },
+      position: 317708042240,
+      // position: 0,
     },
   },
 }
@@ -53,11 +67,14 @@ class Store {
     let services = this.state?.services
 
     if (process.env.NODE_ENV !== 'production') {
-      const testData = services?.find((item) => item.name === 'test')
-      if (!testData) {
-        this.state?.services.unshift(testService)
+      const testData = services?.filter((item) => item.name.startsWith('test'))
+      if (!testData || testData.length === 0) {
+        this.state?.services.unshift(testService1)
+        this.state?.services.unshift(testService2)
       }
-      services = this.state?.services.filter((item) => item.name !== 'test')
+      services = this.state?.services.filter(
+        (item) => !item.name.startsWith('test')
+      )
     }
 
     services?.forEach((service) => {

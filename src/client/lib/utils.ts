@@ -40,6 +40,7 @@ export function parseNode(node: NodeProps) {
 
   const statusError = node.data.status?.error
   const isOnline = !statusError
+  const statusIcon = statusError ? 'disconnected' : 'connected'
   const statusText = node.data.status?.error
     ? 'Offline'
     : node.data.status?.is_synced
@@ -57,6 +58,7 @@ export function parseNode(node: NodeProps) {
     ...config,
     isOnline,
     statusText,
+    statusIcon,
     statusColour,
     statusError,
     status: !statusError && { ...node.data.status },

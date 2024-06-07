@@ -9,7 +9,7 @@ interface Props extends Lucide.LucideProps {
 
 export default function RenderIcon(props: Props) {
   const defaultProps = {
-    strokeWidth: 1,
+    strokeWidth: 1.5,
   }
 
   let iconProps = {
@@ -47,7 +47,8 @@ const icons: {
   dot: Lucide.Dot,
   dashboard: Lucide.ActivitySquare,
   node: Lucide.Radio,
-  connection: Lucide.Globe,
+  connected: Lucide.Globe,
+  disconnected: Lucide.CircleAlert,
   host: Lucide.PcCase,
   peers: Lucide.Network,
   version: Lucide.Github,
@@ -57,4 +58,5 @@ const icons: {
   dark: Lucide.Moon,
   hide: Lucide.EyeOff,
   show: Lucide.Eye,
+  network: Lucide.Earth,
 }

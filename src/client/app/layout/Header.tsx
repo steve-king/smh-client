@@ -37,7 +37,7 @@ const NavigationLink = ({
       to={to}
       className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
     >
-      <Icon i={icon} strokeWidth={1.5} />
+      <Icon i={icon} />
       {text && <span className="ml-2 font-bold">{text}</span>}
     </NavLink>
   )
@@ -64,7 +64,7 @@ export default function Header() {
       </nav>
       <nav className="flex-1 text-right">
         <Button variant="ghost" size="icon" className="mx-1">
-          <Icon i="hide" strokeWidth={2} />
+          <Icon i="hide" />
         </Button>
         <ThemeToggle />
         <NavigationLink to="/settings" icon="cog" />
