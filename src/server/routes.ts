@@ -16,13 +16,13 @@ router.get('/state', (_req, res) => {
 
 router.post('/node', (req, res) => {
   const data = req.body
+  log('INFO', 'http', '[POST] /api/node ' + JSON.stringify(data))
+
   const config = getConfig()
   config.nodes.push({
     id: uuidv4(),
     ...data,
   })
-
-  log('INFO', 'http', '[POST] /api/node ' + JSON.stringify(data))
 
   if (writeConfig(config)) {
     store.init(config)
@@ -38,7 +38,7 @@ router.delete('/node/:id', (req, res) => {
   try {
     const config = getConfig()
     const index = config.nodes.findIndex((item) => item.id === req.params.id)
-    delete config.nodes[index]
+    config.nodes.splice(index, 1)
     writeConfig(config)
     store.init(config)
     res.status(200).send()
