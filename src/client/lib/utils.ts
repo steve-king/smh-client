@@ -41,11 +41,12 @@ export function parseNode(node: NodeProps) {
   const statusError = node.data.status?.error
   const isOnline = !statusError
   const statusIcon = statusError ? 'disconnected' : 'connected'
-  const statusText = node.data.status?.error
-    ? 'Offline'
-    : node.data.status?.is_synced
-    ? 'Online'
-    : 'Syncing'
+  const statusText =
+    !node.data.status || node.data.status?.error
+      ? 'Offline'
+      : node.data.status?.is_synced
+      ? 'Online'
+      : 'Syncing'
   const statusColour =
     statusText === 'Online'
       ? 'text-green-700'
