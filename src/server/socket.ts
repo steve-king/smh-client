@@ -25,9 +25,12 @@ class SocketServer {
       )
     })
 
-    this.io.engine.on('connection_error', (err: any) => {
-      log('ERROR', 'socket', err.code + '|' + err.message + '|' + err.context)
-    })
+    this.io.engine.on(
+      'connection_error',
+      (err: { code: string; message: string; context: string }) => {
+        log('ERROR', 'socket', err.code + '|' + err.message + '|' + err.context)
+      }
+    )
 
     return this
   }

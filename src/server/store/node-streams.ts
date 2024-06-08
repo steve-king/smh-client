@@ -29,10 +29,9 @@ export const getNodeStreams = (node: Node, updateNode: Function) => {
       request: {},
       onUpdate: (response: any) => {
         log(
-          'INFO',
+          'DEBUG',
           'grpc',
-          `${publicTarget} NodeService.StatusStream event received`,
-          'verbose'
+          `${publicTarget} NodeService.StatusStream event received`
         )
 
         const data = response.error ? response : response.status
@@ -46,7 +45,7 @@ export const getNodeStreams = (node: Node, updateNode: Function) => {
    * Ensure no more than 10 errors stored at any one time?
    */
   let errors: any[]
-  let errorsMax = 5
+  const errorsMax = 5
   streams.push(
     new Stream({
       service: api.spacemesh.v1.NodeService,
@@ -90,8 +89,7 @@ export const getNodeStreams = (node: Node, updateNode: Function) => {
         log(
           'INFO',
           'grpc',
-          `${privateTarget} AdminService.EventsStream event received`,
-          'verbose'
+          `${privateTarget} AdminService.EventsStream event received`
         )
         events.push(response)
         updateNode(node.name, 'EventsStream', events)
@@ -115,12 +113,7 @@ export const getNodeStreams = (node: Node, updateNode: Function) => {
       request: {},
       onStart: () => (peers = []),
       onUpdate: (response: any) => {
-        log(
-          'INFO',
-          'grpc',
-          `${privateTarget} PeerInfoStream response received`,
-          'verbose'
-        )
+        log('INFO', 'grpc', `${privateTarget} PeerInfoStream response received`)
         peers.push(response)
       },
       onEnd: () => updateNode(node.name, 'PeerInfoStream', peers),

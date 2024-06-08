@@ -3,7 +3,7 @@ import path from 'path'
 import cron from 'node-cron'
 
 import { Config } from '@/types'
-import { logLevel } from '@/server'
+import { logPreference } from '@/server'
 
 /**
  *
@@ -74,15 +74,10 @@ export const setProperty = (obj: any, dotPath: string, value: any): void => {
  * @param title
  * @param message
  */
-type LogType = 'INFO' | 'WARN' | 'ERROR'
-type LogLevel = '' | 'verbose'
-export function log(
-  type: LogType,
-  title: string,
-  message: string,
-  level?: LogLevel
-) {
-  if (level !== 'verbose') {
+type LogType = 'ERROR' | 'INFO' | 'DEBUG'
+
+export function log(type: LogType, title: string, message: string) {
+  if (logPreference.includes(type)) {
     let text = ''
     const separator = ' '
 
@@ -100,7 +95,7 @@ export function log(
 
 export const cronTask = (
   interval: number = 5, // 5m default
-  callback: Function
+  callback: () => void
 ) => {
   const cronString = `*/${interval} * * * *`
   const task = cron.schedule(

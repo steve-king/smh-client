@@ -117,7 +117,7 @@ class Store {
 
   onUpdate = (callback: Function) => {
     this.onUpdateCallback = () => {
-      log('INFO', 'store', 'updated', 'verbose')
+      log('DEBUG', 'store', 'updated')
       callback()
     }
   }

@@ -1,8 +1,10 @@
+export const logPreference = ['ERROR'] //['ERROR', 'INFO', 'DEBUG']
+
 import express from 'express'
 import http from 'http'
 import path from 'path'
 
-import { getConfig, writeConfig, log, cronTask } from '@/server/utils'
+import { getConfig, cronTask } from '@/server/utils'
 import Socket from './socket'
 import Store from '@/server/store'
 import routes from '@/server/routes'
@@ -37,6 +39,3 @@ server.listen(PORT, () => {
   const socket = Socket.init(server)
   store.onUpdate(() => socket.emit('update'))
 })
-
-// Log level
-export const logLevel = '' // verbose
