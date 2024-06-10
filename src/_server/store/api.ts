@@ -6,7 +6,7 @@ import { recursiveFileList } from '@/server/utils'
 const cwd = process.cwd()
 const protoDirs = {
   google: path.join(cwd, 'node_modules/google-proto-files'),
-  spacemesh: path.join(cwd, 'src/server/lib/api'),
+  spacemesh: path.join(cwd, 'submodules/spacemeshos/api'),
 }
 
 const protoFiles = recursiveFileList(protoDirs.spacemesh, '.proto')
