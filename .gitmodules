@@ -1,3 +1,6 @@
-[submodule "src/server/lib/api"]
-	path = src/server/lib/api
+[submodule "submodules/spacemeshos/api"]
+	path = submodules/spacemeshos/api
 	url = https://github.com/spacemeshos/api.git
+[submodule "submodules/grpc-ecosystem/grpc-gateway"]
+	path = submodules/grpc-ecosystem/grpc-gateway
+	url = https://github.com/grpc-ecosystem/grpc-gateway.git

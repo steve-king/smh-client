@@ -1,117 +1,7 @@
 import fs from 'fs'
 import path from 'path'
+import net from 'net'
 import cron from 'node-cron'
-
-import { Config } from '@/types'
-import { logPreference } from '@/server'
-
-/**
- *
- * @returns Config
- */
-export const getConfig = (): Config => {
-  const cwd = process.cwd()
-  const defaultFile = path.join(cwd, 'src', 'userconfig.default.json')
-  const dir = path.join(cwd, 'data')
-  const file = path.join(dir, 'config.json')
-
-  if (!fs.existsSync(dir)) {
-    log('INFO', 'config', `create folder: ${dir}`)
-    fs.mkdirSync(dir)
-  }
-
-  if (!fs.existsSync(file)) {
-    log('INFO', 'config', 'not found, copying config.default.json')
-    fs.copyFileSync(defaultFile, file)
-  }
-
-  const fileContents = fs.readFileSync(file, { encoding: 'utf8' })
-  const json = JSON.parse(fileContents)
-  log('INFO', 'config', `read from disk: ${file}`)
-  return json
-}
-
-export const writeConfig = (data: Config): boolean => {
-  const cwd = process.cwd()
-  const dir = path.join(cwd, 'data')
-  const file = path.join(dir, 'config.json')
-  try {
-    fs.writeFileSync(file, JSON.stringify(data, null, 2), { encoding: 'utf8' })
-    log('INFO', 'config', `saved to disk: ${file}`)
-    return true
-  } catch (e) {
-    log('ERROR', 'config', `Error writing config: ${file}`)
-    return false
-  }
-}
-
-/**
- * Set a nested value on an object via dot notation string
- * @param obj
- * @param dotPath // e.g. 'myProp1.myProp2'
- * @param value
- */
-export const setProperty = (obj: any, dotPath: string, value: any): void => {
-  const keys = dotPath.split('.')
-  let current = obj
-
-  keys.forEach((key, i) => {
-    if (!(key in current)) {
-      current[key] = {} // Create the object if it doesn't exist
-    }
-
-    if (i === keys.length - 1) {
-      current[key] = value // Final key - set the  value
-    }
-
-    current = current[key] // Set current for next iteration
-  })
-}
-
-/**
- *
- * @param level
- * @param title
- * @param message
- */
-type LogType = 'ERROR' | 'INFO' | 'DEBUG'
-
-export function log(type: LogType, title: string, message: string) {
-  if (logPreference.includes(type)) {
-    let text = ''
-    const separator = ' '
-
-    text += `[${type}]`
-    text += separator
-    text += new Date().toISOString()
-    text += separator
-    text += title
-    text += separator
-    text += message
-
-    console.log(text)
-  }
-}
-
-export const cronTask = (
-  interval: number = 5, // 5m default
-  callback: () => void
-) => {
-  const cronString = `*/${interval} * * * *`
-  const task = cron.schedule(
-    cronString,
-    () => {
-      callback()
-      log('INFO', 'cron', 'task executed')
-    },
-    {
-      scheduled: false,
-    }
-  )
-
-  log('INFO', 'cron', `task schedule: every ${interval} minutes`)
-  return task
-}
 
 /**
  * recursively get a list of all files in a directory
@@ -135,4 +25,146 @@ export const recursiveFileList = (dir: string, ext?: string) => {
     }
   }
   return fileList
+}
+
+/**
+ *
+ * @param host
+ * @param port
+ * @returns connection success/fail
+ */
+export const pingHost = (host: string, port: number): Promise<boolean> =>
+  new Promise((resolve) => {
+    const netSocket = new net.Socket({})
+    netSocket.setTimeout(10000)
+
+    netSocket.on('connect', () => {
+      log('DEBUG', 'PING', `host is online: ${host}:${port}`)
+      netSocket.destroy()
+      resolve(true)
+    })
+
+    netSocket.on('timeout', () => {
+      log('DEBUG', 'PING', `host connection timed out: ${host}:${port}`)
+      netSocket.destroy()
+      resolve(false)
+    })
+
+    netSocket.on('error', () => {
+      log('DEBUG', 'PING', `host connection error: ${host}:${port}`)
+      netSocket.destroy()
+      resolve(false)
+    })
+
+    netSocket.connect({
+      host,
+      port,
+    })
+  })
+
+/**
+ *
+ * @param callback
+ * @param interval
+ * @returns cron task
+ */
+export const cronTask = (
+  callback: () => void,
+  interval: number = 1 // 1m default
+) => {
+  const cronString = `*/${interval} * * * *`
+  const task = cron.schedule(
+    cronString,
+    () => {
+      log('DEBUG', 'CRON', 'executing task')
+      callback()
+    },
+    {
+      scheduled: false,
+    }
+  )
+
+  log('INFO', 'CRON', `task scheduled to run every ${interval} minutes`)
+  return task
+}
+
+export const hexArrayToBase64 = (hexArray: number[]): string => {
+  // Convert hex array to binary string
+  let binaryString = ''
+  for (let i = 0; i < hexArray.length; i++) {
+    binaryString += String.fromCharCode(hexArray[i])
+  }
+
+  // Encode binary string to Base64
+  const base64String = btoa(binaryString)
+
+  return base64String
+}
+
+/**
+ *
+ * @param obj1
+ * @param obj2
+ * @returns
+ */
+export const objectsAreEqual = (obj1: any, obj2: any): boolean => {
+  const stringObj1 = JSON.stringify(obj1)
+  const stringObj2 = JSON.stringify(obj2)
+
+  return stringObj1 === stringObj2
+}
+
+/**
+ * Usage: Array().sort(sortArrayByKey('theKey'))
+ * @param key
+ * @returns
+ */
+export const sortArrayByKey = (key: string) => (a: any, b: any) => {
+  if (a[key] < b[key]) return -1 // a should come before b
+  if (a[key] > b[key]) return 1 // b should come before a
+  return 0 // names are equal
+}
+
+/**
+ * Usage: isoDateString = secondsAndNanosToISOString(seconds, nanos)
+ * @param seconds
+ * @param nanos
+ * @returns
+ */
+export const secondsAndNanosToISOString = (
+  seconds: number,
+  nanos: number
+): string => {
+  const milliseconds = seconds * 1000 + Math.floor(nanos / 1000000)
+  const date = new Date(milliseconds)
+  const isoString = date.toISOString()
+  return isoString
+}
+
+/**
+ *
+ * @param level
+ * @param title
+ * @param message
+ */
+
+type LogType = 'ERROR' | 'INFO' | 'DEBUG' | 'VERBOSE'
+const logSettings: LogType[] = ['ERROR', 'INFO']
+
+export function log(type: LogType, ...args: any[]) {
+  if (logSettings.includes(type)) {
+    let text = ''
+    const separator = ' '
+
+    text += new Date().toISOString()
+    text += separator
+    text += `[${type}]`
+
+    args.forEach((arg) => {
+      text += separator
+      text += arg
+    })
+
+    console.log(text)
+  }
 }
