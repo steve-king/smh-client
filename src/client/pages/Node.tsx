@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom'
-import { useStoreContext } from '@/client/lib/store'
 import { findItemBy, parseNode } from '@/client/lib/utils'
 import { Page } from '@/client/app'
 import { Node as NodeProps } from '@/types'
@@ -8,7 +7,7 @@ import Card from '@/client/components/Card'
 const Node = () => {
   let node
   const { name } = useParams()
-  const { state } = useStoreContext()
+  const state = {}
   const nodeProps: NodeProps = findItemBy('name', name, state?.nodes)
 
   if (nodeProps) {

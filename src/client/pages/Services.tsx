@@ -1,4 +1,3 @@
-import { useStoreContext } from '@/client/lib/store'
 import { Service as ServiceProps, Node as NodeProps } from '@/types'
 
 import {
@@ -178,8 +177,6 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
 }
 
 export default function Services() {
-  const { state } = useStoreContext()
-
   return (
     <Page
       title="Services"
@@ -234,13 +231,13 @@ export default function Services() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {state?.services.map((service: ServiceProps) => (
+            {/* {state?.services.map((service: ServiceProps) => (
               <Service
                 key={service.name}
                 {...service}
                 node={getNodeByServiceName(service.name, state.nodes)}
               />
-            ))}
+            ))} */}
           </TableBody>
         </Table>
       </Card>

@@ -1,11 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Page } from '@/client/app'
-import { useStoreContext } from '@/client/lib/store'
 import { parseNode, cn } from '@/client/lib/utils'
-
-import Card from '@/client/components/Card'
-import Icon from '../components/Icon'
 
 import {
   Table,
@@ -23,13 +19,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/client/components/ui/alert-dialog'
-
 import { Button } from '../components/ui/button'
+import Card from '@/client/components/Card'
+import Icon from '@/client/components/Icon'
 
 import { NodeForm } from '@/client/components/forms'
-
 import { Node as NodeProps } from '@/types'
-import { Separator } from '@radix-ui/react-separator'
 
 const Node = (props: NodeProps) => {
   const node = parseNode(props)
@@ -56,7 +51,7 @@ const Node = (props: NodeProps) => {
 }
 
 const Nodes = () => {
-  const { state } = useStoreContext()
+  // const { state } = useStoreContext()
 
   const [showForm, setShowForm] = useState(false)
 
@@ -111,9 +106,9 @@ const Nodes = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {state?.nodes.map((node) => (
+            {/* {state?.nodes.map((node) => (
               <Node key={node.name} {...node} />
-            ))}
+            ))} */}
           </TableBody>
         </Table>
       </Card>

@@ -63,7 +63,7 @@ function App() {
 
   return (
     <SmhContext.Provider value={{ state, isConnected }}>
-      {/* <Outlet /> */}
+      <Outlet />
       <p>{isConnected ? 'connected' : 'disconnected'}</p>
       <pre className="text-xs">{JSON.stringify(state, null, 2)}</pre>
     </SmhContext.Provider>
