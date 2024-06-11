@@ -46,6 +46,9 @@ export default abstract class SpacemeshClient {
       return
     }
 
+    // log('DEBUG', 'CACHE', `set ${key}`)
+    // log('VERBOSE', JSON.stringify(value))
+
     spacemesh.cache.set(key, value)
   }
 

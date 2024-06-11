@@ -38,3 +38,8 @@ export interface Service {
   su: number
   data: string | any
 }
+
+export interface Action {
+  type: string
+  payload: any
+}

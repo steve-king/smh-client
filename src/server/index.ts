@@ -1,5 +1,6 @@
 import express from 'express'
 import http from 'http'
+import path from 'path'
 import SocketIO from 'socket.io'
 
 const app = express().use(express.json())
@@ -11,11 +12,11 @@ import { cronTask, log } from './utils'
 import UserConfig from './UserConfig'
 import Spacemesh from './Spacemesh'
 import router from './router'
+import { Action } from '@/types'
 
-Spacemesh.cache.on('set', (key, value) => {
-  log('DEBUG', 'CACHE', `set ${key}`)
-  log('VERBOSE', JSON.stringify(value))
-  socket.emit(key, value)
+Spacemesh.cache.on('set', (type: string, payload: any) => {
+  socket.emit(type, payload)
+  // log('DEBUG', 'SOCKET', 'emit', type)
 })
 
 UserConfig.onLoad((data: any) => {
@@ -27,6 +28,15 @@ UserConfig.load()
 cronTask(Spacemesh.update, 1).start()
 
 app.use('/', router)
+
+// Serve static files in production
+if (process.env.NODE_ENV === 'production') {
+  const dist = path.resolve(__dirname, '../../dist')
+  app.use(express.static(dist))
+  app.get('*', function (req, res) {
+    res.sendFile(path.resolve(dist, 'index.html'))
+  })
+}
 
 server.listen(PORT, () => {
   log('INFO', 'SERVER', `listening on http://localhost:${PORT}`)

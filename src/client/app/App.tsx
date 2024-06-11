@@ -23,8 +23,9 @@ const defaultState: State = {
 type Reducer = (state: State, actions: Action[]) => State
 
 const reducer: Reducer = (state: State, actions: Action[]): State => {
+  console.debug('actions', actions)
   return produce(state, (draft) => {
-    actions.forEach((action: Action) => {
+    actions?.forEach((action: Action) => {
       mergeField(draft, {
         key: action.type,
         value: action.payload,
@@ -40,21 +41,25 @@ function App() {
   const [state, dispatch] = useReducer(reducer, defaultState)
 
   useEffect(() => {
-    fetchFields().then((actions: Action[]) => dispatch(actions))
+    fetchFields().then((actions: Action[]) => {
+      dispatch(actions)
+    })
   }, [])
 
   useEffect(() => {
     const socket = io()
     socket.on('connect', () => setIsConnected(true))
     socket.on('disconnect', () => setIsConnected(false))
-    socket.onAny((action) => dispatch([action]))
+    socket.onAny((type, payload) => {
+      dispatch([{ type, payload }])
+    })
 
     return () => {
       socket.close()
     }
   }, [])
 
-  console.log('STATE:', state)
+  // console.log('STATE:', state)
 
   return (
     <SmhContext.Provider value={{ state, isConnected }}>
