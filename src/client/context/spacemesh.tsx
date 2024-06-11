@@ -19,8 +19,6 @@ export interface Action {
 export const SpacemeshContext = createContext(undefined as any)
 
 export const reducer = (state: State, actions: Action[]): State => {
-  // console.debug('actions', actions)
-
   return produce(state, (draft: any): void => {
     actions?.forEach((action: Action) => {
       const keys = action.type.split(':')
