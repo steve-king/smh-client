@@ -28,12 +28,12 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <SocketProvider>
-      <StoreProvider>
-        <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </StoreProvider>
-    </SocketProvider>
+    <StoreProvider>
+      {/* <SocketProvider> */}
+      <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
+        <RouterProvider router={router} />
+      </ThemeProvider>
+      {/* </SocketProvider> */}
+    </StoreProvider>
   </React.StrictMode>
 )

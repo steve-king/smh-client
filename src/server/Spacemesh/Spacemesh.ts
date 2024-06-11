@@ -88,14 +88,11 @@ class Spacemesh {
    */
   // getAllKeys = () => this.cache.keys().sort()
 
-  // getAllData = () => {
-  //   const keys = this.getAllKeys()
-  //   const data: any = {}
-  //   keys.forEach((key: string) => {
-  //     data[key] = this.cache.get(key)
-  //   })
-  //   return data
-  // }
+  getAllData = () =>
+    this.cache.keys().map((key: string) => ({
+      type: key,
+      payload: this.cache.get(key),
+    }))
 
   // debugKeys = () => {
   //   log('DEBUG', 'CACHE', 'getAllKeys')

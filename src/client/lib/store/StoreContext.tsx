@@ -1,6 +1,5 @@
 import { Config } from '@/types'
 import React, { createContext, useContext, useState, ReactNode } from 'react'
-import { useSocket } from '@/client/lib/socket'
 
 interface StoreContext {
   state: Config | null
@@ -18,7 +17,7 @@ interface Props {
 export const StoreProvider: React.FC<Props> = ({ children }) => {
   const [state, setState] = useState<Config | null>(null)
   const [updatedOn, setUpdatedOn] = useState<any>(null)
-  useSocket()
+  // useSocket()
 
   return (
     <StoreContext.Provider value={{ state, setState, updatedOn, setUpdatedOn }}>
