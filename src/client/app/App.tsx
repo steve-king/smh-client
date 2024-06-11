@@ -40,19 +40,14 @@ function App() {
   const [state, dispatch] = useReducer(reducer, defaultState)
 
   useEffect(() => {
-    fetchFields().then((actions: Action[]) => {
-      dispatch(actions)
-    })
+    fetchFields().then((actions: Action[]) => dispatch(actions))
   }, [])
 
   useEffect(() => {
     const socket = io()
     socket.on('connect', () => setIsConnected(true))
     socket.on('disconnect', () => setIsConnected(false))
-    socket.onAny((type: string, payload: any) => {
-      const action = { type, payload }
-      dispatch([action])
-    })
+    socket.onAny((action) => dispatch([action]))
 
     return () => {
       socket.close()
