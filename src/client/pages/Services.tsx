@@ -20,7 +20,7 @@ import {
 import { Progress as ProgressBar } from '@/client/components/ui/progress'
 
 import { Link } from 'react-router-dom'
-import { Page } from '@/client/app'
+import Page from '@/client/components/Page'
 import Card from '../components/Card'
 import Icon from '../components/Icon'
 

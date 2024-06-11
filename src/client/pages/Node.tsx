@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { findItemBy, parseNode } from '@/client/lib/utils'
-import { Page } from '@/client/app'
+import Page from '@/client/components/Page'
 import { Node as NodeProps } from '@/types'
 import Card from '@/client/components/Card'
 

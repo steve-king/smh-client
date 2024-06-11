@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Page } from '@/client/app'
+import Page from '@/client/components/Page'
 import { parseNode, cn } from '@/client/lib/utils'
 
 import {

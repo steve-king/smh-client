@@ -1,7 +1,7 @@
 import { ElementType, ReactNode } from 'react'
 import Layout from './layout'
 
-import Icon from '../components/Icon'
+import Icon from './Icon'
 
 const Page = ({
   title,

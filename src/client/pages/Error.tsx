@@ -1,6 +1,5 @@
 import { useRouteError } from 'react-router-dom'
-
-import { Page } from '@/client/app'
+import Page from '@/client/components/Page'
 
 export default function Error() {
   const error = useRouteError() as any

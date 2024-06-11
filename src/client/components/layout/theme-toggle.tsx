@@ -7,7 +7,7 @@ import {
 } from '@/client/components/ui/dropdown-menu'
 
 import Icon from '@/client/components/Icon'
-import { useTheme } from '@/client/app/providers/theme-provider'
+import { useTheme } from '@/client/context/theme'
 
 export default function ModeToggle() {
   const { setTheme } = useTheme()

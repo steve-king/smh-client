@@ -1,4 +1,4 @@
-import { Page } from '@/client/app'
+import Page from '@/client/components/Page'
 import Card from '@/client/components/Card'
 
 export const DashboardPage = () => {
