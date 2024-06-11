@@ -33,10 +33,22 @@ function App() {
     }
   }, [])
 
-  console.log('STATE:', state)
+  const getNodes = () => {
+    return Object.entries(state.node).map(([key, value]) => value)
+  }
+  const getServices = () => {
+    return Object.entries(state.service).map(([key, value]) => value)
+  }
+
+  // console.log('STATE:', state)
+
+  // console.log('NODES', getNodes())
+  // console.log('SERVICES', getServices())
 
   return (
-    <SpacemeshContext.Provider value={{ state, isConnected }}>
+    <SpacemeshContext.Provider
+      value={{ state, isConnected, getNodes, getServices }}
+    >
       {/* <p>{isConnected ? 'connected' : 'disconnected'}</p>
       <pre className="text-xs">{JSON.stringify(state, null, 2)}</pre> */}
       <Outlet />

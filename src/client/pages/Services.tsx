@@ -1,9 +1,10 @@
-import { Service as ServiceProps, Node as NodeProps } from '@/types'
+import { useContext } from 'react'
+
+import { Service, Node } from '@/types'
 
 import {
-  getNodeByServiceName,
   nodePath,
-  parseNode,
+  parseNodeStatus,
   suToBytes,
   suToTiB,
   cn,
@@ -25,47 +26,49 @@ import Card from '../components/Card'
 import Icon from '../components/Icon'
 
 import { buttonVariants } from '../components/ui/button'
-import { Outlet } from 'react-router-dom'
+import {
+  SpacemeshContext,
+  findNodeBelongsToService,
+} from '../context/spacemesh'
 
-const NodeStatus = ({ data }: { data: NodeProps | undefined }) => {
-  const node = data ? parseNode(data) : undefined
+import { NodeStatus } from '@/client/components/tables/NodeStatus'
 
-  let icon = 'disconnected'
-  let text = 'Not found'
-  let statusColour = 'text-red-600'
-  let textColour = 'text-muted-foreground'
+// const NodeStatus = (props: Node | undefined) => {
+//   const node = props ? parseNodeStatus(props) : undefined
 
-  if (node) {
-    icon = 'connected'
-    statusColour = node.statusColour
-    text = node.name
+//   let icon = 'disconnected'
+//   let text = 'Not found'
+//   let statusColour = 'text-red-600'
+//   let textColour = 'text-muted-foreground'
 
-    if (node.isOnline) {
-      textColour = ''
-    }
-  }
+//   if (node && node.isOnline) {
+//     textColour = ''
+//     icon = node.statusIcon
+//     statusColour = node.statusColour
+//     text = node.config.name
+//   }
 
-  const RenderStatus = () => (
-    <>
-      <Icon i={icon} className={cn(statusColour, 'mr-2')} />
-      <span className={textColour}>{text}</span>
-    </>
-  )
+//   const RenderStatus = () => (
+//     <>
+//       <Icon i={icon} className={cn(statusColour, 'mr-2')} />
+//       <span className={textColour}>{text}</span>
+//     </>
+//   )
 
-  if (node) {
-    return (
-      <Link to={nodePath(node.name)} className="flex items-center">
-        <RenderStatus />
-      </Link>
-    )
-  }
+//   if (node) {
+//     return (
+//       <Link to={nodePath(node.config.name)} className="flex items-center">
+//         <RenderStatus />
+//       </Link>
+//     )
+//   }
 
-  return (
-    <div className="flex items-center">
-      <RenderStatus />
-    </div>
-  )
-}
+//   return (
+//     <div className="flex items-center">
+//       <RenderStatus />
+//     </div>
+//   )
+// }
 
 interface StatusProps {
   isProving: boolean
@@ -109,11 +112,7 @@ const ServiceStatus = (props: StatusProps) => {
   )
 }
 
-interface RowProps extends ServiceProps {
-  node: NodeProps | undefined
-}
-
-const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
+const ServiceRow = ({ isOnline, config, node, Status }: Service) => {
   let isProving = false
   let statusText = ''
   let statusColour = ''
@@ -121,31 +120,30 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
   let percentRounded = 0
   let statusTextClass = ''
 
-  if (data === 'Idle') {
-    statusText = data
-    statusTextClass = 'text-xs'
+  if (typeof Status === 'string') {
+    statusText = Status
     if (node) {
       statusColour = 'text-green-700'
     } else {
       statusColour = 'text-red-600'
     }
-  } else if (data.error) {
+  } else if (!isOnline) {
     statusText = 'Offline'
     statusTextClass = 'text-muted-foreground'
     statusColour = 'text-red-600'
-  } else if (data.Proving) {
+  } else if (Status?.Proving) {
     isProving = true
     statusColour = 'text-yellow-600'
     statusTextClass = 'text-xs'
 
-    const { nonces, position } = data.Proving
+    const { nonces, position } = Status.Proving
 
     if (position === 0) {
       statusIcon = 'cpu'
       statusText = 'K2PoW'
     } else {
       statusText = 'Reading PoST'
-      const bytes = suToBytes(su)
+      const bytes = suToBytes(config.su)
       const percent = position / bytes
       percentRounded = Math.round(percent * 100)
     }
@@ -153,14 +151,14 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
 
   return (
     <TableRow>
-      <TableCell>{name}</TableCell>
+      <TableCell>{config.name}</TableCell>
       <TableCell>
-        <NodeStatus data={node} />
+        <NodeStatus {...(node as Node)} />
       </TableCell>
-      <TableCell>{host}</TableCell>
-      <TableCell>:{port_operator}</TableCell>
-      <TableCell>{su} SU</TableCell>
-      <TableCell>{suToTiB(su)} TiB</TableCell>
+      <TableCell>{config.host}</TableCell>
+      <TableCell>:{config.port_operator}</TableCell>
+      <TableCell>{config.su} SU</TableCell>
+      <TableCell>{suToTiB(config.su)} TiB</TableCell>
       <TableCell>
         <ServiceStatus
           isProving={isProving}
@@ -169,7 +167,7 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
           icon={statusIcon}
           colour={statusColour}
           percent={percentRounded}
-          nonces={data?.Proving?.nonces}
+          nonces={Status?.Proving?.nonces}
         />
       </TableCell>
     </TableRow>
@@ -177,21 +175,30 @@ const Service = ({ name, host, port_operator, su, node, data }: RowProps) => {
 }
 
 export default function Services() {
+  const { getServices, getNodes } = useContext(SpacemeshContext)
+  const nodes = getNodes()
+  const services = getServices().map((service: Service) => ({
+    ...service,
+    node: findNodeBelongsToService(nodes, service),
+  }))
+
+  console.log('SERVICES', services)
+
   return (
     <Page
       title="Services"
       icon="services"
-      Actions={() => (
-        <>
-          <Link
-            to="/services/create"
-            className={buttonVariants({ variant: 'ghost' })}
-          >
-            <span className="mr-2">Add service</span>
-            <Icon i="add" />
-          </Link>
-        </>
-      )}
+      // Actions={() => (
+      //   <>
+      //     <Link
+      //       to="/services/create"
+      //       className={buttonVariants({ variant: 'ghost' })}
+      //     >
+      //       <span className="mr-2">Add service</span>
+      //       <Icon i="add" />
+      //     </Link>
+      //   </>
+      // )}
     >
       <Card>
         <Table className="table-fixed">
@@ -231,17 +238,12 @@ export default function Services() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {/* {state?.services.map((service: ServiceProps) => (
-              <Service
-                key={service.name}
-                {...service}
-                node={getNodeByServiceName(service.name, state.nodes)}
-              />
-            ))} */}
+            {services.map((service: Service) => (
+              <ServiceRow key={service.config.id} {...service} />
+            ))}
           </TableBody>
         </Table>
       </Card>
-      <Outlet />
     </Page>
   )
 }

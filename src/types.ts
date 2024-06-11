@@ -10,13 +10,25 @@ interface Settings {
 
 export interface Node {
   id: string
-  name: string
-  host: string
-  port_public: string
-  port_private: string
-  port_post: string
-  smeshing: boolean | undefined
-  data: NodeData
+  isOnline: boolean
+  config: {
+    id: string
+    name: string
+    host: string
+    port_public: string
+    port_private: string
+    port_post: string
+    smeshing: boolean | undefined
+  }
+  Status?: {
+    is_synced: boolean
+  }
+  Version: string
+  PostStates?: [
+    {
+      name: string
+    }
+  ]
 }
 
 export interface NodeData {
@@ -32,11 +44,23 @@ export interface NodeData {
 }
 
 export interface Service {
-  name: string
-  host: string
-  port_operator: string
-  su: number
-  data: string | any
+  isOnline: boolean
+  config: {
+    name: string
+    host: string
+    port_operator: string
+    su: number
+  }
+  Status?: string | ProvingStatus
+  // data: string | any
+  node?: Node | undefined
+}
+
+type ProvingStatus = {
+  Proving: {
+    position: number
+    nonces: number
+  }
 }
 
 export interface Action {

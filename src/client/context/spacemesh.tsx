@@ -1,6 +1,8 @@
 import { createContext } from 'react'
 import { produce } from 'immer'
 
+import { Node, Service } from '@/types'
+
 export const defaultState: State = {
   node: {},
   service: {},
@@ -44,4 +46,25 @@ export const fetchFields = () => {
     .then((res) => res.json())
     .then((json) => json)
     .catch((e) => console.log('Error fetching state: ', e))
+}
+
+/**
+ *
+ * @param nodes
+ * @param service
+ * @returns Node
+ */
+export const findNodeBelongsToService = (
+  nodes: Node[],
+  service: Service
+): Node | undefined => {
+  const filename = service.config.name + '.key'
+  const node = nodes.find((item) => {
+    return (
+      item.PostStates &&
+      item.PostStates.find((service) => service.name === filename)
+    )
+  })
+
+  return node
 }

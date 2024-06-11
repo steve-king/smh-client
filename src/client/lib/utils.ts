@@ -1,7 +1,12 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
-import { Node as NodeProps, Service as ServiceProps } from '@/types'
+import {
+  Node,
+  Node as NodeProps,
+  Service,
+  Service as ServiceProps,
+} from '@/types'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -29,64 +34,51 @@ export function findItemBy(
   return undefined
 }
 
-export function parseNode(node: NodeProps) {
-  const config = {
-    name: node.name,
-    host: node.host,
-    port_public: node.port_public,
-    port_private: node.port_private,
-    port_post: node.port_post,
-  }
+// export function parseNodeStatus(node: NodeProps) {
+//   // const config = {
+//   //   name: node.name,
+//   //   host: node.host,
+//   //   port_public: node.port_public,
+//   //   port_private: node.port_private,
+//   //   port_post: node.port_post,
+//   // }
 
-  const statusError = node.data.status?.error
-  const isOnline = !statusError
-  const statusIcon = statusError ? 'disconnected' : 'connected'
-  const statusText =
-    !node.data.status || node.data.status?.error
-      ? 'Offline'
-      : node.data.status?.is_synced
-      ? 'Online'
-      : 'Syncing'
-  const statusColour =
-    statusText === 'Online'
-      ? 'text-green-700'
-      : statusText === 'Syncing'
-      ? 'text-yellow-600'
-      : 'text-red-600'
+//   if (node) {
+//     const { config, isOnline, status } = node
 
-  return {
-    path: nodePath(node.name),
-    ...config,
-    ...node,
-    isOnline,
-    statusText,
-    statusIcon,
-    statusColour,
-    statusError,
-    status: !statusError && { ...node.data.status },
-    version: !statusError ? node.data.version : '',
-  }
-}
+//     console.log(config.name)
 
-export function getNodeByServiceName(
-  name: string,
-  nodes: NodeProps[]
-): NodeProps | undefined {
-  const keyFilename = name + '.key'
-  const node = nodes.find((item) => {
-    const postInfo: {
-      error?: boolean
-      states: { name: string }[]
-    } = item.data.postInfo
+//     // const config = node.config
 
-    if (!postInfo?.error) {
-      return postInfo?.states.find((service) => service.name === keyFilename)
-    }
-    return false
-  })
+//     // const statusError = node.data.status?.error
+//     // const isOnline = !statusError
+//     const statusIcon = isOnline ? 'connected' : 'disconnected'
+//     const statusText = !isOnline
+//       ? 'Offline'
+//       : status?.is_synced
+//       ? 'Online'
+//       : 'Syncing'
+//     const statusColour = isOnline
+//       ? 'text-green-700'
+//       : statusText === 'Syncing'
+//       ? 'text-yellow-600'
+//       : 'text-red-600'
 
-  return node
-}
+//     return {
+//       path: nodePath(config.name),
+//       // ...config,
+//       ...node,
+//       isOnline,
+//       statusText,
+//       statusIcon,
+//       statusColour,
+//       // statusError,
+//       // status: !statusError && { ...node.data.status },
+//       // version: !statusError ? node.data.version : '',
+//     }
+//   }
+//   return undefined
+// }
 
 export const suToTiB = (su: number): number => su / 16
 

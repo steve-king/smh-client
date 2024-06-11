@@ -1,8 +1,10 @@
 import { useParams } from 'react-router-dom'
-import { findItemBy, parseNode } from '@/client/lib/utils'
+import { findItemBy } from '@/client/lib/utils'
 import Page from '@/client/components/Page'
 import { Node as NodeProps } from '@/types'
 import Card from '@/client/components/Card'
+
+import { parseNodeStatus } from '../components/tables/NodeStatus'
 
 const Node = () => {
   let node
@@ -11,7 +13,7 @@ const Node = () => {
   const nodeProps: NodeProps = findItemBy('name', name, state?.nodes)
 
   if (nodeProps) {
-    node = parseNode(nodeProps)
+    node = parseNodeStatus(nodeProps)
     return (
       <Page title={node.name} icon="node">
         <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
