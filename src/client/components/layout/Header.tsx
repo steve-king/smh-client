@@ -1,15 +1,9 @@
-import { ReactNode } from 'react'
 import { NavLink } from 'react-router-dom'
-import {
-  Button,
-  ButtonProps,
-  buttonVariants,
-} from '@/client/components/ui/button'
+import { buttonVariants } from '@/client/components/ui/button'
 import ThemeToggle from './theme-toggle'
 import Icon from '@/client/components/Icon'
 import logoLight from '@/client/assets/logo-spacemesh-trans-black.png'
 import logoDark from '@/client/assets/logo-spacemesh-trans-white.png'
-import { cn } from '@/client/lib/utils'
 
 const NavigationLink = ({
   to,

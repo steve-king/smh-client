@@ -12,7 +12,7 @@ export default function Services() {
     node: findNodeBelongsToService(nodes, service),
   }))
 
-  console.log('SERVICES', services)
+  // console.log('SERVICES', services)
 
   return (
     <Page

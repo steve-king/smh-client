@@ -33,18 +33,6 @@ export interface NodeStatus {
   is_synced: boolean
 }
 
-// export interface NodeData {
-//   status?: any
-//   build?: any
-//   coinbase?: any
-//   nodeInfo?: any
-//   postInfo?: any
-//   version?: string
-//   ErrorStream?: any[]
-//   EventsStream?: any[]
-//   PeerInfoStream?: any[]
-// }
-
 export interface Service {
   node?: Node | undefined
   isOnline: boolean
@@ -55,16 +43,17 @@ export interface Service {
     port_operator: string
     su: number
   }
-  Status?: string | ProvingStatus
-  // data: string | any
+  Status?: ProvingStatus
 }
 
-type ProvingStatus = {
-  Proving: {
-    position: number
-    nonces: number
-  }
-}
+export type ProvingStatus =
+  | {
+      Proving: {
+        position: number
+        nonces: number
+      }
+    }
+  | string
 
 export interface Action {
   type: string

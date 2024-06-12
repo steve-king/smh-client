@@ -7,12 +7,11 @@ import {
   TableRow,
 } from '@/client/components/ui/table'
 import Icon from '@/client/components/Icon'
-import { NodeStatus } from '@/client/components/tables/cells/NodeStatus'
-
 import { suToTiB } from '@/client/lib/utils'
-import { Service as ServiceProps, Node as NodeProps } from '@/types'
-
+import { NodeStatus } from '@/client/components/tables/cells/NodeStatus'
 import { ServiceStatus } from '@/client/components/tables/cells/ServiceStatus'
+
+import { Service as ServiceProps, Node as NodeProps } from '@/types'
 
 const ServiceRow = ({ service }: { service: ServiceProps }) => {
   return (
@@ -35,15 +34,6 @@ const ServiceRow = ({ service }: { service: ServiceProps }) => {
       <TableCell>{suToTiB(service.config.su)} TiB</TableCell>
       <TableCell>
         <ServiceStatus service={service} />
-        {/* <ServiceStatus
-          isProving={isProving}
-          text={statusText}
-          textClass={statusTextClass}
-          icon={statusIcon}
-          colour={statusColour}
-          percent={percentRounded}
-          nonces={Status?.Proving?.nonces}
-        /> */}
       </TableCell>
     </TableRow>
   )
