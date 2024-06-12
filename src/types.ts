@@ -49,6 +49,7 @@ export interface Service {
   node?: Node | undefined
   isOnline: boolean
   config: {
+    id: string
     name: string
     host: string
     port_operator: string

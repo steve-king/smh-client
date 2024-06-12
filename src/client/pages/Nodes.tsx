@@ -25,7 +25,7 @@ import Icon from '@/client/components/Icon'
 import { NodeForm } from '@/client/components/forms'
 import { Node as NodeProps } from '@/types'
 import { SpacemeshContext } from '../context/spacemesh'
-import { NodeStatus } from '@/client/components/tables/NodeStatus'
+import { NodeStatus } from '@/client/components/tables/cells/NodeStatus'
 import { Node } from '@/types'
 
 const NodeRow = (props: NodeProps) => {

@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useSpacemesh } from '../context/spacemesh'
 import Page from '@/client/components/Page'
 import Card from '@/client/components/Card'
-import { displayNodeStatus } from '../components/tables/NodeStatus'
+import { displayNodeStatus } from '../components/tables/cells/NodeStatus'
 
 const Node = () => {
   const { id } = useParams()

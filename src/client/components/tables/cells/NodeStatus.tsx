@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { cn } from '@/client/lib/utils'
-import Icon from '../Icon'
+import Icon from '../../Icon'
 import { Node as NodeProps, NodeStatus as NodeStatusProps } from '@/types'
 
 interface Props {
