@@ -16,7 +16,7 @@ router.get('/nodes', (req, res) => {
 // --------------------------------------------------
 router.get('/node/:id', (req, res) => {
   const node = Spacemesh.getNode(req.params.id)
-  if (!!node) {
+  if (node !== undefined) {
     res.json(node)
   } else {
     res.status(404).json('Not found')
@@ -28,8 +28,8 @@ router.get('/node/:id', (req, res) => {
 router.post('/nodes', (req, res) => {
   try {
     const node = {
-      id: uuidv4(),
       ...req.body,
+      id: uuidv4(),
     }
     log('INFO', 'API', 'Creating node:', JSON.stringify(node))
 

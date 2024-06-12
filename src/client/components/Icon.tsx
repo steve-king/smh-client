@@ -64,4 +64,8 @@ const icons: {
   port: Lucide.Unplug,
   name: Lucide.File,
   add: Lucide.CirclePlus,
+  delete: Lucide.Trash2,
+  edit: Lucide.Pencil,
+  actions: Lucide.Ellipsis,
+  // settings: Lucide.Settings,
 }

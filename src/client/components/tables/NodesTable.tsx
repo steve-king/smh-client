@@ -10,26 +10,66 @@ import {
   TableRow,
 } from '@/client/components/ui/table'
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/client/components/ui/dropdown-menu'
+
+import { Button } from '@/client/components/ui/button'
+
 import { NodeStatus } from './cells/NodeStatus'
 
 import { Node as NodeProps } from '@/types'
 
-const NodeRow = ({ node }: { node: NodeProps }) => {
+const NodeRow = ({
+  node,
+  showEditForm,
+  showDeleteDialog,
+}: {
+  node: NodeProps
+  showEditForm: (id: string) => void
+  showDeleteDialog: (id: string) => void
+}) => {
   const path = '/node/' + node.config.id
   return (
     <TableRow>
       <TableCell className="font-medium">
         <Link to={path}>{node.config.name}</Link>
       </TableCell>
-      <TableCell>{node.Version}</TableCell>
+      <TableCell>{node.PostStates?.length}</TableCell>
       <TableCell className="font-medium">{node.config.host}</TableCell>
       <TableCell>
         :{node.config.port_public} :{node.config.port_private} :
         {node.config.port_post}
       </TableCell>
-      <TableCell>{node.PostStates?.length}</TableCell>
+      <TableCell>{node.Version}</TableCell>
       <TableCell>
         <NodeStatus node={node} />
+      </TableCell>
+      <TableCell>
+        <div className="flex items-center justify-end gap">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild className="mx-1">
+              <Button variant="ghost" size="icon">
+                <Icon i="actions" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => showEditForm(node.config.id)}>
+                <Icon i="edit" size="16" className="mr-2" /> Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => showDeleteDialog(node.config.id)}
+                className="hover:text-red-600"
+              >
+                <Icon i="delete" size="16" className="mr-2" />
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </TableCell>
     </TableRow>
   )
@@ -37,8 +77,14 @@ const NodeRow = ({ node }: { node: NodeProps }) => {
 
 interface Props {
   nodes: NodeProps[]
+  showEditForm: (id: string) => void
+  showDeleteDialog: (id: string) => void
 }
-export default function NodesTable({ nodes }: Props) {
+export default function NodesTable({
+  nodes,
+  showEditForm,
+  showDeleteDialog,
+}: Props) {
   return (
     <Table className="table-fixed">
       <TableHeader>
@@ -50,10 +96,9 @@ export default function NodesTable({ nodes }: Props) {
           </TableHead>
           <TableHead>
             <div className="flex items-center">
-              <Icon i="version" className="mr-2" /> Version
+              <Icon i="services" className="mr-2" /> Services
             </div>
           </TableHead>
-
           <TableHead>
             <div className="flex items-center">
               <Icon i="host" className="mr-2" /> Host
@@ -66,17 +111,25 @@ export default function NodesTable({ nodes }: Props) {
           </TableHead>
           <TableHead>
             <div className="flex items-center">
-              <Icon i="services" className="mr-2" /> Services
+              <Icon i="version" className="mr-2" /> Version
             </div>
           </TableHead>
           <TableHead>
             <div className="flex items-center">Status</div>
           </TableHead>
+          <TableHead>
+            <div className="flex items-center justify-end">&nbsp;</div>
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {nodes.map((node: NodeProps) => (
-          <NodeRow key={node.config.id} node={node} />
+          <NodeRow
+            key={node.config.id}
+            node={node}
+            showEditForm={showEditForm}
+            showDeleteDialog={showDeleteDialog}
+          />
         ))}
       </TableBody>
     </Table>

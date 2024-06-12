@@ -52,7 +52,7 @@ class Spacemesh {
         // events: this.cache.get(keyString + 'Events'),
       }
     }
-    return null
+    return undefined
   }
 
   getNodes = () => {
@@ -73,7 +73,7 @@ class Spacemesh {
         status: this.cache.get(keyString + 'Status'),
       }
     }
-    return null
+    return undefined
   }
 
   getServices = () => {

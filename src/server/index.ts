@@ -12,7 +12,6 @@ import { cronTask, log } from './utils'
 import UserConfig from './UserConfig'
 import Spacemesh from './Spacemesh'
 import router from './router'
-import { Action } from '@/types'
 
 Spacemesh.cache.on('set', (type: string, payload: any) => {
   socket.emit(type, payload)

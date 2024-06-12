@@ -42,8 +42,8 @@ export const reducer = (state: State, actions: Action[]): State => {
  *
  * @returns
  */
-export const fetchFields = () => {
-  return fetch('/api/state')
+export const fetchFields = (url: string) => {
+  return fetch(url)
     .then((res) => res.json())
     .then((json) => json)
     .catch((e) => console.log('Error fetching state: ', e))

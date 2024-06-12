@@ -10,15 +10,16 @@ import {
   fetchFields,
 } from './context/spacemesh'
 
-function App() {
+function App({ api }: { api: string }) {
   const [isConnected, setIsConnected] = useState(false)
   const [state, dispatch] = useReducer(reducer, defaultState)
 
   useEffect(() => {
-    fetchFields().then((actions: Action[]) => {
+    fetchFields(api).then((actions: Action[]) => {
+      console.log('fetch')
       dispatch(actions)
     })
-  }, [])
+  }, [api])
 
   useEffect(() => {
     const socket = io()
@@ -34,10 +35,10 @@ function App() {
   }, [])
 
   const getNodes = () => {
-    return Object.entries(state.node).map(([key, value]) => value)
+    return Object.entries(state.node).map((entry) => entry[1])
   }
   const getServices = () => {
-    return Object.entries(state.service).map(([key, value]) => value)
+    return Object.entries(state.service).map((entry) => entry[1])
   }
 
   console.log('STATE', state)

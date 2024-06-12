@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useSpacemesh } from '@/client/context/spacemesh'
 
 import {
   Form,
@@ -18,6 +19,7 @@ import { Input, InputProps } from '@/client/components/ui/input'
 import { Checkbox } from '@/client/components/ui/checkbox'
 
 const formSchema = z.object({
+  id: z.string(),
   name: z.string().min(1, { message: 'Required' }),
   host: z.string().min(1, { message: 'Required' }),
   port_public: z.string().min(1, { message: 'Required' }),
@@ -27,14 +29,16 @@ const formSchema = z.object({
 })
 
 export default function NodeForm(props: {
+  nodeId: string | undefined
   onSubmit: () => void
   onCancel: () => void
 }) {
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const { state } = useSpacemesh()
+  let formConfig: any = {
+    url: '/api/nodes',
+    method: 'POST',
     defaultValues: {
+      id: undefined,
       name: '',
       host: '',
       port_public: '',
@@ -42,12 +46,28 @@ export default function NodeForm(props: {
       port_post: '',
       smeshing: false,
     },
+  }
+
+  if (props.nodeId) {
+    formConfig = {
+      url: '/api/node/' + props.nodeId,
+      method: 'PUT',
+      defaultValues: state.node[props.nodeId].config,
+    }
+  }
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: formConfig.defaultValues,
   })
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log('submit clicked')
     setIsSubmitting(true)
-    fetch('/api/node', {
-      method: 'POST',
+    fetch(formConfig.url, {
+      method: formConfig.method,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -179,7 +199,7 @@ export default function NodeForm(props: {
           <Button
             type="button"
             onClick={props.onCancel}
-            variant="secondary"
+            variant="outline"
             disabled={isSubmitting}
           >
             Cancel
