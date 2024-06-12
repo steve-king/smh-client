@@ -1,47 +1,44 @@
 import { useParams } from 'react-router-dom'
-import { findItemBy } from '@/client/lib/utils'
+import { useSpacemesh } from '../context/spacemesh'
 import Page from '@/client/components/Page'
-import { Node as NodeProps } from '@/types'
 import Card from '@/client/components/Card'
-
-import { parseNodeStatus } from '../components/tables/NodeStatus'
+import { displayNodeStatus } from '../components/tables/NodeStatus'
 
 const Node = () => {
-  let node
-  const { name } = useParams()
-  const state = {}
-  const nodeProps: NodeProps = findItemBy('name', name, state?.nodes)
+  const { id } = useParams()
+  const { state } = useSpacemesh()
+  let node = id && state.node[id]
 
-  if (nodeProps) {
-    node = parseNodeStatus(nodeProps)
+  if (node) {
+    const { config, Status, Version } = node
+    const statusDisplay = displayNodeStatus(node.isOnline, node.Status)
     return (
-      <Page title={node.name} icon="node">
+      <Page title={config.name} icon="nodes">
         <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           <Card icon="host">
             <h3 className="text-xs text-muted-foreground">Host</h3>
-            <p className="text-2xl">{node.host}</p>
+            <p className="text-2xl">{config.host}</p>
             <p className="text-xs text-muted-foreground">
-              :{node.port_public} :{node.port_private} :{node.port_post}
+              :{config.port_public} :{config.port_private} :{config.port_post}
             </p>
           </Card>
           <Card
-            icon={node.statusIcon}
-            iconProps={{ className: node.statusColour }}
+            icon={statusDisplay.icon}
+            iconProps={{ className: statusDisplay.iconColour }}
           >
             <h3 className="text-xs text-muted-foreground">Status</h3>
-            <p className="text-2xl">{node.statusText}</p>
+            <p className="text-2xl">{statusDisplay.text}</p>
             <p className="text-xs text-muted-foreground">
-              Layer: {node.status?.synced_layer?.number} /
-              {node.status?.top_layer?.number}
+              Layer: {node.Status?.synced_layer} /{node.Status?.top_layer}
             </p>
           </Card>
           <Card icon="peers">
             <h3 className="text-xs text-muted-foreground">Network</h3>
-            <p className="text-2xl">Peers: {node.status?.connected_peers}</p>
+            <p className="text-2xl">Peers: {Status.connected_peers}</p>
           </Card>
           <Card icon="version">
             <h3 className="text-xs text-muted-foreground">Version:</h3>
-            <p className="text-2xl">v1.5.7</p>
+            <p className="text-2xl">{Version}</p>
             <p className="text-xs text-muted-foreground">view source</p>
           </Card>
         </div>

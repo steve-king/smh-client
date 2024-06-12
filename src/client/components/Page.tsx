@@ -9,7 +9,7 @@ const Page = ({
   children,
   Actions,
 }: {
-  title?: string
+  title?: string | JSX.Element
   icon?: string
   children: ReactNode
   Actions?: ElementType

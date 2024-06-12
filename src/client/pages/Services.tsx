@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { Service, Node } from '@/types'
+import { Service, Node as NodeProps } from '@/types'
 
 import {
   nodePath,
@@ -26,49 +26,9 @@ import Card from '../components/Card'
 import Icon from '../components/Icon'
 
 import { buttonVariants } from '../components/ui/button'
-import {
-  SpacemeshContext,
-  findNodeBelongsToService,
-} from '../context/spacemesh'
+import { useSpacemesh, findNodeBelongsToService } from '../context/spacemesh'
 
 import { NodeStatus } from '@/client/components/tables/NodeStatus'
-
-// const NodeStatus = (props: Node | undefined) => {
-//   const node = props ? parseNodeStatus(props) : undefined
-
-//   let icon = 'disconnected'
-//   let text = 'Not found'
-//   let statusColour = 'text-red-600'
-//   let textColour = 'text-muted-foreground'
-
-//   if (node && node.isOnline) {
-//     textColour = ''
-//     icon = node.statusIcon
-//     statusColour = node.statusColour
-//     text = node.config.name
-//   }
-
-//   const RenderStatus = () => (
-//     <>
-//       <Icon i={icon} className={cn(statusColour, 'mr-2')} />
-//       <span className={textColour}>{text}</span>
-//     </>
-//   )
-
-//   if (node) {
-//     return (
-//       <Link to={nodePath(node.config.name)} className="flex items-center">
-//         <RenderStatus />
-//       </Link>
-//     )
-//   }
-
-//   return (
-//     <div className="flex items-center">
-//       <RenderStatus />
-//     </div>
-//   )
-// }
 
 interface StatusProps {
   isProving: boolean
@@ -153,7 +113,15 @@ const ServiceRow = ({ isOnline, config, node, Status }: Service) => {
     <TableRow>
       <TableCell>{config.name}</TableCell>
       <TableCell>
-        <NodeStatus {...(node as Node)} />
+        {node ? (
+          <NodeStatus
+            node={node as NodeProps}
+            to={'/node/' + node?.config.id}
+            showName
+          />
+        ) : (
+          ''
+        )}
       </TableCell>
       <TableCell>{config.host}</TableCell>
       <TableCell>:{config.port_operator}</TableCell>
@@ -175,7 +143,7 @@ const ServiceRow = ({ isOnline, config, node, Status }: Service) => {
 }
 
 export default function Services() {
-  const { getServices, getNodes } = useContext(SpacemeshContext)
+  const { getServices, getNodes } = useSpacemesh()
   const nodes = getNodes()
   const services = getServices().map((service: Service) => ({
     ...service,

@@ -16,9 +16,9 @@ import { Dashboard, Nodes, Node, Services, Error } from './pages'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} errorElement={<Error />}>
-      {/* <Route path="/" element={<Dashboard />} /> */}
+      <Route path="/" element={<Dashboard />} />
       <Route path="/nodes" element={<Nodes />} />
-      {/* <Route path="/node/:name" element={<Node />} /> */}
+      <Route path="/node/:id" element={<Node />} />
       <Route path="/services" element={<Services />} />
     </Route>
   )

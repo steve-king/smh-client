@@ -1,4 +1,4 @@
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 import { produce } from 'immer'
 
 import { Node, Service } from '@/types'
@@ -19,6 +19,7 @@ export interface Action {
 }
 
 export const SpacemeshContext = createContext(undefined as any)
+export const useSpacemesh = () => useContext(SpacemeshContext)
 
 export const reducer = (state: State, actions: Action[]): State => {
   return produce(state, (draft: any): void => {

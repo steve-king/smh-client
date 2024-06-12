@@ -59,7 +59,7 @@ export default function Header() {
 
       <nav className="flex-2">
         <NavigationLink to="/" icon="dashboard" text="Dashboard" />
-        <NavigationLink to="/nodes" icon="node" text="Nodes" />
+        <NavigationLink to="/nodes" icon="nodes" text="Nodes" />
         <NavigationLink to="/services" icon="services" text="Services" />
       </nav>
       <nav className="flex-1 text-right">

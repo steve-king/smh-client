@@ -42,12 +42,13 @@ const icons: {
   [key: string]: ElementType
 } = {
   cog: Lucide.Cog,
+  node: Lucide.Radio,
+  nodes: Lucide.Radio,
   service: Lucide.HardDrive,
   services: Lucide.Server,
   cpu: Lucide.Cpu,
   dot: Lucide.Dot,
   dashboard: Lucide.ActivitySquare,
-  node: Lucide.Radio,
   connected: Lucide.Globe,
   disconnected: Lucide.CircleAlert,
   host: Lucide.PcCase,

@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Page from '@/client/components/Page'
-import { cn } from '@/client/lib/utils'
 
 import {
   Table,
@@ -25,26 +24,16 @@ import Icon from '@/client/components/Icon'
 
 import { NodeForm } from '@/client/components/forms'
 import { Node as NodeProps } from '@/types'
-
-import {
-  SpacemeshContext,
-  findNodeBelongsToService,
-} from '../context/spacemesh'
-
-import {
-  NodeStatus,
-  parseNodeStatus,
-} from '@/client/components/tables/NodeStatus'
-import { Node, Service } from '@/types'
+import { SpacemeshContext } from '../context/spacemesh'
+import { NodeStatus } from '@/client/components/tables/NodeStatus'
+import { Node } from '@/types'
 
 const NodeRow = (props: NodeProps) => {
-  // const node = parseNodeStatus(props)
-  const textClass = props.isOnline ? '' : 'text-muted-foreground'
-  const path = '/node/' + props.id
+  const path = '/node/' + props.config.id
   return (
     <TableRow>
       <TableCell className="font-medium">
-        <Link to={props.path}>{props.config.name}</Link>
+        <Link to={path}>{props.config.name}</Link>
       </TableCell>
       <TableCell>{props.Version}</TableCell>
       <TableCell className="font-medium">{props.config.host}</TableCell>
@@ -54,37 +43,28 @@ const NodeRow = (props: NodeProps) => {
       </TableCell>
       <TableCell>{props.PostStates?.length}</TableCell>
       <TableCell>
-        <NodeStatus {...parseNodeStatus(props)} />
-        {/* <div className="flex items-center">
-          <Icon i={node.statusIcon} className={node.statusColour} />
-          <span className={cn('ml-2', textClass)}>{node.statusText}</span>
-        </div> */}
+        <NodeStatus node={props} />
       </TableCell>
     </TableRow>
   )
 }
 
 const Nodes = () => {
-  const { getServices, getNodes } = useContext(SpacemeshContext)
-  const nodes = getNodes()
-  // const services = getServices().map((service: Service) => ({
-  //   ...service,
-  //   node: findNodeBelongsToService(nodes, service),
-  // }))
-
   const [showForm, setShowForm] = useState(false)
+  const { getNodes } = useContext(SpacemeshContext)
+  const nodes = getNodes()
 
   const onNodeFormSubmit = () => {
     console.log('nodeFormSubmit')
     setShowForm(false)
   }
 
-  console.log('NODES', nodes)
+  // console.log('NODES', nodes)
 
   return (
     <Page
       title="Nodes"
-      icon="node"
+      icon="nodes"
       Actions={() => (
         <Button variant="ghost" size="icon" onClick={() => setShowForm(true)}>
           <Icon i="add"></Icon>

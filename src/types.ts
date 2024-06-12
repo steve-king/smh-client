@@ -20,9 +20,7 @@ export interface Node {
     port_post: string
     smeshing: boolean | undefined
   }
-  Status?: {
-    is_synced: boolean
-  }
+  Status?: NodeStatus
   Version: string
   PostStates?: [
     {
@@ -31,19 +29,24 @@ export interface Node {
   ]
 }
 
-export interface NodeData {
-  status?: any
-  build?: any
-  coinbase?: any
-  nodeInfo?: any
-  postInfo?: any
-  version?: string
-  ErrorStream?: any[]
-  EventsStream?: any[]
-  PeerInfoStream?: any[]
+export interface NodeStatus {
+  is_synced: boolean
 }
 
+// export interface NodeData {
+//   status?: any
+//   build?: any
+//   coinbase?: any
+//   nodeInfo?: any
+//   postInfo?: any
+//   version?: string
+//   ErrorStream?: any[]
+//   EventsStream?: any[]
+//   PeerInfoStream?: any[]
+// }
+
 export interface Service {
+  node?: Node | undefined
   isOnline: boolean
   config: {
     name: string
@@ -53,7 +56,6 @@ export interface Service {
   }
   Status?: string | ProvingStatus
   // data: string | any
-  node?: Node | undefined
 }
 
 type ProvingStatus = {

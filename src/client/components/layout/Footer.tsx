@@ -1,9 +1,11 @@
+import { useContext } from 'react'
 import Icon from '@/client/components/Icon'
 import { cn } from '@/client/lib/utils'
 
+import { useSpacemesh } from '@/client/context/spacemesh'
+
 const ConnectionStatus = () => {
-  // const { isConnected } = useSocketContext()
-  const isConnected = false
+  const { isConnected } = useSpacemesh()
   const statusString = isConnected ? 'Connected' : 'Disconnected'
   const statusColour = isConnected ? 'text-green-500' : 'text-red-700'
   return (
