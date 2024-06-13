@@ -30,7 +30,7 @@ const NodeRow = ({ node }: { node: NodeProps }) => {
         <NodeStatus node={node} />
       </TableCell>
       <TableCell>
-        <Actions namespace="node" id={node.config.id} Form={NodeForm} />
+        <Actions namespace="node" config={node.config} Form={NodeForm} />
       </TableCell>
     </TableRow>
   )

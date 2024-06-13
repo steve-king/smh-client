@@ -13,18 +13,20 @@ import { ServiceStatus } from '@/client/components/tables/cells/ServiceStatus'
 import { Actions } from '@/client/components/tables/cells'
 import { Service as ServiceProps, Node as NodeProps } from '@/types'
 import { ServiceForm } from '../forms'
+import {
+  findNodeBelongsToService,
+  useSpacemesh,
+} from '@/client/context/spacemesh'
 
 const ServiceRow = ({ service }: { service: ServiceProps }) => {
+  const { getNodes } = useSpacemesh()
+  const node = findNodeBelongsToService(getNodes(), service)
   return (
     <TableRow>
       <TableCell>{service.config.name}</TableCell>
       <TableCell>
-        {service.node ? (
-          <NodeStatus
-            node={service.node as NodeProps}
-            to={'/node/' + service.node?.config.id}
-            showName
-          />
+        {node ? (
+          <NodeStatus node={node} to={'/node/' + node?.config.id} showName />
         ) : (
           ''
         )}
@@ -32,14 +34,14 @@ const ServiceRow = ({ service }: { service: ServiceProps }) => {
       <TableCell>{service.config.host}</TableCell>
       <TableCell>:{service.config.port_operator}</TableCell>
       <TableCell>{service.config.su} SU</TableCell>
-      <TableCell>{suToTiB(service.config.su)} TiB</TableCell>
+      <TableCell>{suToTiB(Number(service.config.su))} TiB</TableCell>
       <TableCell>
-        <ServiceStatus service={service} />
+        <ServiceStatus service={service} node={node as NodeProps} />
       </TableCell>
       <TableCell>
         <Actions
           namespace="service"
-          id={service.config.id}
+          config={service.config}
           Form={ServiceForm}
         />
       </TableCell>

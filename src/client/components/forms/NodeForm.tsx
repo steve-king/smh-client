@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { useSpacemesh } from '@/client/context/spacemesh'
 
 import {
   Form,
@@ -16,8 +15,20 @@ import {
 import { Button } from '@/client/components/ui/button'
 import { Input, InputProps } from '@/client/components/ui/input'
 import { Checkbox } from '@/client/components/ui/checkbox'
+import { NodeConfig } from '@/types'
+
+const defaults: NodeConfig = {
+  id: '',
+  name: '',
+  host: '',
+  port_public: '',
+  port_private: '',
+  port_post: '',
+  smeshing: false,
+}
 
 const formSchema = z.object({
+  id: z.string(),
   name: z.string().min(1, { message: 'Required' }),
   host: z.string().min(1, { message: 'Required' }),
 
@@ -32,62 +43,45 @@ const formSchema = z.object({
   smeshing: z.boolean(),
 })
 
-export const NodeForm = (props: {
+interface Props {
   id?: string | undefined
+  values?: NodeConfig
+  url?: string
+  method?: string
   onSubmit: () => void
   onCancel: () => void
-}) => {
-  const { state } = useSpacemesh()
-  let formConfig: any = {
-    url: '/api/nodes',
-    method: 'POST',
-    defaultValues: {
-      name: '',
-      host: '',
-      port_public: '',
-      port_private: '',
-      port_post: '',
-      smeshing: false,
-    },
-  }
+}
 
-  if (props.id) {
-    formConfig = {
-      url: '/api/node/' + props.id,
-      method: 'PUT',
-      defaultValues: state.node[props.id].config,
-    }
-  }
-
+export const NodeForm = ({
+  values = defaults,
+  url = '/api/nodes',
+  method = 'POST',
+  onSubmit,
+  onCancel,
+}: Props) => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: formConfig.defaultValues,
+    defaultValues: values,
   })
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function submit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
-    fetch(formConfig.url, {
-      method: formConfig.method,
+    fetch(url, {
+      method,
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        ...(props.id && { id: props.id }),
-        ...values,
-      }),
+      body: JSON.stringify(values),
     }).then((res) => {
       setIsSubmitting(false)
-      if (res.ok && typeof props.onSubmit === 'function') {
-        props.onSubmit()
-      }
+      if (res.ok && typeof onSubmit === 'function') onSubmit()
     })
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(submit)} className="space-y-8">
         <FormField
           control={form.control}
           name="name"
@@ -203,7 +197,7 @@ export const NodeForm = (props: {
         <div className="flex justify-end gap-4">
           <Button
             type="button"
-            onClick={props.onCancel}
+            onClick={onCancel}
             variant="outline"
             disabled={isSubmitting}
           >

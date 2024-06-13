@@ -9,20 +9,21 @@ import { Button } from '@/client/components/ui/button'
 import Icon from '@/client/components/Icon'
 import { FormDialog, DeleteDialog } from '../../forms'
 import { useSpacemesh } from '@/client/context/spacemesh'
+import { NodeConfig, ServiceConfig } from '@/types'
 
 interface Props {
   namespace: string
-  id: string
+  config: NodeConfig | ServiceConfig
   Form: React.ElementType
 }
 
-export const Actions = ({ id, namespace, Form }: Props) => {
+export const Actions = ({ namespace, config, Form }: Props) => {
   const { fetchState } = useSpacemesh()
   const [openForm, setOpenForm] = useState(false)
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
 
   const deleteItem = () => {
-    fetch(`/api/${namespace}/${id}`, { method: 'DELETE' })
+    fetch(`/api/${namespace}/${config.id}`, { method: 'DELETE' })
       .then(() => {
         fetchState()
         setOpenDeleteDialog(false)
@@ -58,7 +59,9 @@ export const Actions = ({ id, namespace, Form }: Props) => {
         open={openForm}
       >
         <Form
-          id={id}
+          url={`/api/${namespace}/${config.id}`}
+          method="PUT"
+          values={config}
           onSubmit={() => setOpenForm(false)}
           onCancel={() => setOpenForm(false)}
         />

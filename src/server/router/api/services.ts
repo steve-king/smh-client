@@ -11,8 +11,8 @@ const router = express.Router()
 router.post('/services', (req, res) => {
   try {
     const service = {
-      id: uuidv4(),
       ...req.body,
+      id: uuidv4(),
     }
     log('INFO', 'API', 'Creating service:', JSON.stringify(service))
     config.data.services.push(service)
@@ -36,7 +36,7 @@ router.delete('/service/:id', (req, res) => {
     log('INFO', 'API', 'Deleting service:', id)
     config.data.services.splice(index, 1)
     config.save(config.data)
-    Spacemesh.deleteNode(id)
+    Spacemesh.deleteService(id)
     config.load()
     res.status(200).json(id)
   }

@@ -1,37 +1,30 @@
-import { Service as ServiceProps, ProvingStatus } from '@/types'
+import {
+  Service as ServiceProps,
+  ProvingStatus,
+  Node as NodeProps,
+} from '@/types'
 import { cn, suToBytes } from '@/client/lib/utils'
 
 import { Progress as ProgressBar } from '@/client/components/ui/progress'
 import Icon from '@/client/components/Icon'
 
-interface Props {
-  service: ServiceProps
-}
-
 /**
  * DEV
  */
-
 const devStatus = {
   post: {
     Proving: {
       nonces: { start: 0, end: 128 },
       position: 317708042240,
-      // position: 0,
     },
   },
   cpu: {
     Proving: {
       nonces: { start: 0, end: 128 },
-      // position: 317708042240,
       position: 0,
     },
   },
 }
-
-/**
- * END DEV
- */
 
 interface DisplayProps {
   isProving: boolean
@@ -43,12 +36,13 @@ interface DisplayProps {
   progress: number
 }
 
-const displayServiceStatus = ({
-  isOnline,
-  config,
-  Status,
-  node,
-}: ServiceProps): DisplayProps => {
+const displayServiceStatus = (
+  service: ServiceProps,
+  node: NodeProps
+): DisplayProps => {
+  const { Status, isOnline, config } = service
+  // let Status = devStatus.post
+
   const display: any = {
     animateClass: '',
     textClass: '',
@@ -81,7 +75,7 @@ const displayServiceStatus = ({
       display.icon = 'cpu'
     } else {
       display.text = 'Reading PoST'
-      const bytes = suToBytes(config.su)
+      const bytes = suToBytes(Number(config.su))
       const percent = Status?.Proving.position / bytes
       display.progress = Math.round(percent * 100)
     }
@@ -90,9 +84,12 @@ const displayServiceStatus = ({
   return display as DisplayProps
 }
 
-export const ServiceStatus = ({ service }: Props) => {
-  // service.Status = devStatus.cpu
-  const display = displayServiceStatus(service)
+interface Props {
+  service: ServiceProps
+  node: NodeProps
+}
+export const ServiceStatus = ({ service, node }: Props) => {
+  const display = displayServiceStatus(service, node)
 
   return (
     <div className={cn('flex items-center', display.animation)}>

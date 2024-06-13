@@ -11,8 +11,8 @@ const router = express.Router()
 router.post('/nodes', (req, res) => {
   try {
     const node = {
-      id: uuidv4(),
       ...req.body,
+      id: uuidv4(),
     }
     log('INFO', 'API', 'Creating node:', JSON.stringify(node))
     config.data.nodes.push(node)

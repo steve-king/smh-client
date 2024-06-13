@@ -28,7 +28,7 @@ export interface ServiceConfig {
   name: string
   host: string
   port_operator: string
-  su: number
+  su: string
 }
 
 export interface Node {

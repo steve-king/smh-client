@@ -9,35 +9,35 @@ import { SpacemeshContext } from '../context/spacemesh'
 import ServicesTable from '../components/tables/ServicesTable'
 import { FormDialog, ServiceForm } from '@/client/components/forms'
 
+const Actions = () => {
+  const [openForm, setOpenForm] = useState(false)
+  return (
+    <>
+      <Button variant="ghost" size="icon" onClick={() => setOpenForm(true)}>
+        <Icon i="add"></Icon>
+      </Button>
+      <FormDialog
+        title="Create node"
+        desc="Add a new node to your configuration."
+        open={openForm}
+      >
+        <ServiceForm
+          onSubmit={() => setOpenForm(false)}
+          onCancel={() => setOpenForm(false)}
+        />
+      </FormDialog>
+    </>
+  )
+}
+
 export default function Services() {
   const { getServices } = useContext(SpacemeshContext)
-  const [openForm, setOpenForm] = useState(false)
   const services = getServices()
 
   // console.log('SERVICES', services)
 
   return (
-    <Page
-      title="Services"
-      icon="services"
-      Actions={() => (
-        <>
-          <Button variant="ghost" size="icon" onClick={() => setOpenForm(true)}>
-            <Icon i="add"></Icon>
-          </Button>
-          <FormDialog
-            title="Create service"
-            desc="Add a new service to your configuration."
-            open={openForm}
-          >
-            <ServiceForm
-              onSubmit={() => setOpenForm(false)}
-              onCancel={() => setOpenForm(false)}
-            />
-          </FormDialog>
-        </>
-      )}
-    >
+    <Page title="Services" icon="services" Actions={Actions}>
       <Card>
         <ServicesTable services={services} />
       </Card>
