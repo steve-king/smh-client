@@ -7,8 +7,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction,
 } from '@/client/components/ui/alert-dialog'
 import { Button } from '../components/ui/button'
 import Card from '@/client/components/Card'
@@ -17,7 +15,6 @@ import Icon from '@/client/components/Icon'
 import { SpacemeshContext } from '../context/spacemesh'
 import NodesTable from '../components/tables/NodesTable'
 import { NodeForm } from '@/client/components/forms'
-import { FieldWithPossiblyUndefined } from 'lodash'
 
 const Nodes = () => {
   const [ShowNodeForm, setShowNodeForm] = useState(false)
@@ -48,7 +45,10 @@ const Nodes = () => {
 
   const deleteNode = () => {
     fetch('/api/node/' + nodeId, { method: 'DELETE' })
-      .then(closeDeleteDialog)
+      .then(() => {
+        fetchState()
+        closeDeleteDialog()
+      })
       .catch((e) => console.log(e))
   }
 

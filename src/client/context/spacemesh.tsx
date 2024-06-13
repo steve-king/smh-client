@@ -41,10 +41,6 @@ export const reducer = (state: State, action: Action): State => {
       case 'updates':
         action.payload.forEach((item: Payload) => updateField(draft, item))
         break
-
-      case 'delete':
-        deleteField(draft, action.payload)
-        break
     }
 
     return draft
