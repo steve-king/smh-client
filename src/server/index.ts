@@ -13,8 +13,13 @@ import UserConfig from './UserConfig'
 import Spacemesh from './Spacemesh'
 import router from './router'
 
-Spacemesh.cache.on('set', (type: string, payload: any) => {
-  socket.emit(type, payload)
+Spacemesh.cache.on('set', (key: string, value: any) => {
+  socket.emit('update', { key, value })
+  // log('DEBUG', 'SOCKET', 'emit', type)
+})
+
+Spacemesh.cache.on('del', (key: string, value: any) => {
+  socket.emit('delete', { key, value })
   // log('DEBUG', 'SOCKET', 'emit', type)
 })
 

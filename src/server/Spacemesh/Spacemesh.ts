@@ -90,11 +90,11 @@ class Spacemesh {
 
   getAllData = () => {
     const data = this.cache.keys().map((key: string) => ({
-      type: key,
-      payload: this.cache.get(key),
+      key,
+      value: this.cache.get(key),
     }))
 
-    console.log('ALL DATA', data)
+    // console.log('ALL DATA', data)
 
     return data
   }

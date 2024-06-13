@@ -49,9 +49,6 @@ const Nodes = () => {
   const deleteNode = () => {
     fetch('/api/node/' + nodeId, { method: 'DELETE' })
       .then(closeDeleteDialog)
-      .then(() => {
-        // re-fetch the state object
-      })
       .catch((e) => console.log(e))
   }
 

@@ -8,14 +8,25 @@ import {
   reducer,
   SpacemeshContext,
   fetchAll,
+  Update,
 } from './context/spacemesh'
 
 function App({ api }: { api: string }) {
   const [isConnected, setIsConnected] = useState(false)
-  const [state, dispatch] = useReducer(reducer, defaultState)
+  const [state, dispatch] = useReducer(reducer, { ...defaultState })
 
   const fetchState = () => {
-    fetchAll(api).then((actions: Action[]) => dispatch(actions))
+    dispatch({ type: 'reset' })
+    fetchAll(api).then((payload: Update[]) => {
+      dispatch({ type: 'updates', payload })
+    })
+  }
+
+  const getNodes = () => {
+    return Object.entries(state.node).map((entry) => entry[1])
+  }
+  const getServices = () => {
+    return Object.entries(state.service).map((entry) => entry[1])
   }
 
   useEffect(() => {
@@ -26,8 +37,12 @@ function App({ api }: { api: string }) {
     const socket = io()
     socket.on('connect', () => setIsConnected(true))
     socket.on('disconnect', () => setIsConnected(false))
-    socket.onAny((type, payload) => {
-      dispatch([{ type, payload }])
+    socket.onAny((event, payload) => {
+      const action = {
+        type: event,
+        payload,
+      }
+      dispatch(action)
     })
 
     return () => {
@@ -35,18 +50,20 @@ function App({ api }: { api: string }) {
     }
   }, [])
 
-  const getNodes = () => {
-    return Object.entries(state.node).map((entry) => entry[1])
-  }
-  const getServices = () => {
-    return Object.entries(state.service).map((entry) => entry[1])
-  }
-
-  console.debug('STATE', state)
+  // console.debug('STATE', state)
 
   return (
     <SpacemeshContext.Provider
-      value={{ state, fetchState, isConnected, getNodes, getServices }}
+      value={{
+        isConnected,
+        state,
+        dispatch,
+        fetchState: () => {
+          fetchState()
+        },
+        getNodes,
+        getServices,
+      }}
     >
       <Outlet />
     </SpacemeshContext.Provider>

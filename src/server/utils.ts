@@ -47,13 +47,13 @@ export const pingHost = (host: string, port: number): Promise<boolean> =>
     netSocket.on('timeout', () => {
       log('DEBUG', 'PING', `host connection timed out: ${host}:${port}`)
       netSocket.destroy()
-      reject(false)
+      resolve(false)
     })
 
     netSocket.on('error', () => {
       log('DEBUG', 'PING', `host connection error: ${host}:${port}`)
       netSocket.destroy()
-      reject(false)
+      resolve(false)
     })
 
     if (validatePort(port)) {
