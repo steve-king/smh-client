@@ -28,8 +28,8 @@ router.get('/node/:id', (req, res) => {
 router.post('/nodes', (req, res) => {
   try {
     const node = {
-      ...req.body,
       id: uuidv4(),
+      ...req.body,
     }
     log('INFO', 'API', 'Creating node:', JSON.stringify(node))
 

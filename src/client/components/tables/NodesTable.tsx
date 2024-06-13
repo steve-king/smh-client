@@ -26,11 +26,11 @@ import { Node as NodeProps } from '@/types'
 const NodeRow = ({
   node,
   showEditForm,
-  showDeleteDialog,
+  openDeleteDialog,
 }: {
   node: NodeProps
   showEditForm: (id: string) => void
-  showDeleteDialog: (id: string) => void
+  openDeleteDialog: (id: string) => void
 }) => {
   const path = '/node/' + node.config.id
   return (
@@ -61,7 +61,7 @@ const NodeRow = ({
                 <Icon i="edit" size="16" className="mr-2" /> Edit
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => showDeleteDialog(node.config.id)}
+                onClick={() => openDeleteDialog(node.config.id)}
                 className="hover:text-red-600"
               >
                 <Icon i="delete" size="16" className="mr-2" />
@@ -78,12 +78,12 @@ const NodeRow = ({
 interface Props {
   nodes: NodeProps[]
   showEditForm: (id: string) => void
-  showDeleteDialog: (id: string) => void
+  openDeleteDialog: (id: string) => void
 }
 export default function NodesTable({
   nodes,
   showEditForm,
-  showDeleteDialog,
+  openDeleteDialog,
 }: Props) {
   return (
     <Table className="table-fixed">
@@ -128,7 +128,7 @@ export default function NodesTable({
             key={node.config.id}
             node={node}
             showEditForm={showEditForm}
-            showDeleteDialog={showDeleteDialog}
+            openDeleteDialog={openDeleteDialog}
           />
         ))}
       </TableBody>

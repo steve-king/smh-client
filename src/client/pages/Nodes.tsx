@@ -17,18 +17,42 @@ import Icon from '@/client/components/Icon'
 import { SpacemeshContext } from '../context/spacemesh'
 import NodesTable from '../components/tables/NodesTable'
 import { NodeForm } from '@/client/components/forms'
+import { FieldWithPossiblyUndefined } from 'lodash'
 
 const Nodes = () => {
   const [ShowNodeForm, setShowNodeForm] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [nodeId, setNodeId] = useState<string | undefined>(undefined)
-  const { getNodes } = useContext(SpacemeshContext)
+  const { getNodes, fetchState } = useContext(SpacemeshContext)
   const nodes = getNodes()
 
-  const onNodeFormSubmit = () => {
-    console.log('nodeFormSubmit')
+  const openNodeForm = (id?: string) => {
+    setNodeId(id)
+    setShowNodeForm(true)
+  }
+
+  const closeNodeForm = () => {
     setShowNodeForm(false)
     setNodeId(undefined)
+  }
+
+  const openDeleteDialog = (id: string): void => {
+    setNodeId(id)
+    setShowDeleteDialog(true)
+  }
+
+  const closeDeleteDialog = () => {
+    setShowDeleteDialog(false)
+    setNodeId(undefined)
+  }
+
+  const deleteNode = () => {
+    fetch('/api/node/' + nodeId, { method: 'DELETE' })
+      .then(closeDeleteDialog)
+      .then(() => {
+        // re-fetch the state object
+      })
+      .catch((e) => console.log(e))
   }
 
   // console.log('NODES', nodes)
@@ -38,14 +62,7 @@ const Nodes = () => {
       title="Nodes"
       icon="nodes"
       Actions={() => (
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => {
-            setNodeId(undefined)
-            setShowNodeForm(true)
-          }}
-        >
+        <Button variant="ghost" size="icon" onClick={() => openNodeForm()}>
           <Icon i="add"></Icon>
         </Button>
       )}
@@ -53,14 +70,8 @@ const Nodes = () => {
       <Card>
         <NodesTable
           nodes={nodes}
-          showEditForm={(id: string): void => {
-            setNodeId(id)
-            setShowNodeForm(true)
-          }}
-          showDeleteDialog={(id: string): void => {
-            setNodeId(id)
-            setShowDeleteDialog(true)
-          }}
+          showEditForm={openNodeForm}
+          openDeleteDialog={openDeleteDialog}
         />
       </Card>
       <AlertDialog open={ShowNodeForm}>
@@ -72,11 +83,8 @@ const Nodes = () => {
             </AlertDialogDescription>
             <NodeForm
               nodeId={nodeId}
-              onSubmit={onNodeFormSubmit}
-              onCancel={() => {
-                setShowNodeForm(false)
-                setNodeId(undefined)
-              }}
+              onSubmit={closeNodeForm}
+              onCancel={closeNodeForm}
             />
           </AlertDialogHeader>
         </AlertDialogContent>
@@ -91,26 +99,10 @@ const Nodes = () => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setShowDeleteDialog(false)
-                setNodeId(undefined)
-              }}
-            >
+            <Button variant="outline" onClick={closeDeleteDialog}>
               Cancel
             </Button>
-            <Button
-              variant="destructive"
-              onClick={() => {
-                fetch('/api/node/' + nodeId, { method: 'DELETE' })
-                  .then(() => {
-                    setShowDeleteDialog(false)
-                    setNodeId(undefined)
-                  })
-                  .catch((e) => console.log(e))
-              }}
-            >
+            <Button variant="destructive" onClick={deleteNode}>
               Delete
             </Button>
           </AlertDialogFooter>

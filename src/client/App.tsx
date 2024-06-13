@@ -7,18 +7,19 @@ import {
   Action,
   reducer,
   SpacemeshContext,
-  fetchFields,
+  fetchAll,
 } from './context/spacemesh'
 
 function App({ api }: { api: string }) {
   const [isConnected, setIsConnected] = useState(false)
   const [state, dispatch] = useReducer(reducer, defaultState)
 
+  const fetchState = () => {
+    fetchAll(api).then((actions: Action[]) => dispatch(actions))
+  }
+
   useEffect(() => {
-    fetchFields(api).then((actions: Action[]) => {
-      console.log('fetch')
-      dispatch(actions)
-    })
+    fetchState()
   }, [api])
 
   useEffect(() => {
@@ -41,11 +42,11 @@ function App({ api }: { api: string }) {
     return Object.entries(state.service).map((entry) => entry[1])
   }
 
-  console.log('STATE', state)
+  console.debug('STATE', state)
 
   return (
     <SpacemeshContext.Provider
-      value={{ state, isConnected, getNodes, getServices }}
+      value={{ state, fetchState, isConnected, getNodes, getServices }}
     >
       <Outlet />
     </SpacemeshContext.Provider>

@@ -19,9 +19,14 @@ import { Input, InputProps } from '@/client/components/ui/input'
 import { Checkbox } from '@/client/components/ui/checkbox'
 
 const formSchema = z.object({
-  id: z.string(),
   name: z.string().min(1, { message: 'Required' }),
   host: z.string().min(1, { message: 'Required' }),
+
+  // TODO: port validation
+  // A range error will crash netSocket (and there fore the entire server) if the error is not prevented
+  /**
+   * >= 0 and < 65536
+   */
   port_public: z.string().min(1, { message: 'Required' }),
   port_private: z.string().min(1, { message: 'Required' }),
   port_post: z.string(),
@@ -38,7 +43,6 @@ export default function NodeForm(props: {
     url: '/api/nodes',
     method: 'POST',
     defaultValues: {
-      id: undefined,
       name: '',
       host: '',
       port_public: '',
@@ -64,14 +68,16 @@ export default function NodeForm(props: {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log('submit clicked')
     setIsSubmitting(true)
     fetch(formConfig.url, {
       method: formConfig.method,
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(values),
+      body: JSON.stringify({
+        ...(props.nodeId && { id: props.nodeId }),
+        ...values,
+      }),
     }).then((res) => {
       setIsSubmitting(false)
       if (res.ok && typeof props.onSubmit === 'function') {

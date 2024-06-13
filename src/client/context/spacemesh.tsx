@@ -15,7 +15,7 @@ export interface State {
 
 export interface Action {
   type: string
-  payload: any
+  payload?: any
 }
 
 export const SpacemeshContext = createContext(undefined as any)
@@ -42,11 +42,11 @@ export const reducer = (state: State, actions: Action[]): State => {
  *
  * @returns
  */
-export const fetchFields = (url: string) => {
+export const fetchAll = (url: string) => {
   return fetch(url)
     .then((res) => res.json())
     .then((json) => json)
-    .catch((e) => console.log('Error fetching state: ', e))
+    .catch((e) => console.log('Error fetching data: ', e))
 }
 
 /**

@@ -29,12 +29,20 @@ export default abstract class SpacemeshClient {
   }
 
   checkOnline = async () => {
-    const { host } = this.config
+    const { id, host } = this.config
     this.isOnline = await pingHost(host, Number(this.defaultPort))
-    if (!this.isOnline) this.connectStreams = true
+    if (!this.isOnline) {
+      this.connectStreams = true
+      // Delete all keys other than isOnline and config
+      const keysToDelete = spacemesh.cache
+        .keys()
+        .filter((key) => key.includes(this.key))
+        .filter((key) => !key.includes(`${this.key}:config`))
+        .filter((key) => !key.includes(`${this.key}:isOnline`))
+      spacemesh.cache.del(keysToDelete)
+      log('DEBUG', 'CACHE', keysToDelete.length, 'keys deleted for', this.key)
+    }
     this.setCache(`${this.key}:isOnline`, this.isOnline)
-
-    // TODO: Delete all keys other than isOnline and config
 
     return this.isOnline
   }

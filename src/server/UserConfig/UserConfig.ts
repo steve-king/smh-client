@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { log } from '../utils'
 
-import defaultConfig from './config.dev'
+import defaultConfig from './config.default'
 
 interface Settings {
   cronInterval: number

@@ -34,7 +34,7 @@ export const recursiveFileList = (dir: string, ext?: string) => {
  * @returns connection success/fail
  */
 export const pingHost = (host: string, port: number): Promise<boolean> =>
-  new Promise((resolve) => {
+  new Promise((resolve, reject) => {
     const netSocket = new net.Socket({})
     netSocket.setTimeout(10000)
 
@@ -47,20 +47,36 @@ export const pingHost = (host: string, port: number): Promise<boolean> =>
     netSocket.on('timeout', () => {
       log('DEBUG', 'PING', `host connection timed out: ${host}:${port}`)
       netSocket.destroy()
-      resolve(false)
+      reject(false)
     })
 
     netSocket.on('error', () => {
       log('DEBUG', 'PING', `host connection error: ${host}:${port}`)
       netSocket.destroy()
-      resolve(false)
+      reject(false)
     })
 
-    netSocket.connect({
-      host,
-      port,
-    })
+    if (validatePort(port)) {
+      netSocket.connect({
+        host,
+        port,
+      })
+    } else {
+      resolve(false)
+    }
   })
+
+/**
+ * When used before connecting to netsocket, will prevent server from crashing should an invalid value get through
+ * @param port
+ * @returns
+ */
+const validatePort = (port: number) => {
+  if (port > 0 && port < 65536) {
+    return true
+  }
+  return false
+}
 
 /**
  *

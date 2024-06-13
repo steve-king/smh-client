@@ -28,8 +28,8 @@ router.get('/service/:id', (req, res) => {
 router.post('/services', (req, res) => {
   try {
     const service = {
-      ...req.body,
       id: uuidv4(),
+      ...req.body,
     }
 
     log('INFO', 'API', 'Creating service:', JSON.stringify(service))
