@@ -7,20 +7,22 @@ import {
 } from '@/client/components/ui/dropdown-menu'
 import { Button } from '@/client/components/ui/button'
 import Icon from '@/client/components/Icon'
-import { FormDialog, NodeForm, DeleteDialog } from '../../forms'
+import { FormDialog, DeleteDialog } from '../../forms'
 import { useSpacemesh } from '@/client/context/spacemesh'
 
 interface Props {
+  namespace: string
   id: string
+  Form: React.ElementType
 }
 
-export const NodeActions = ({ id }: Props) => {
+export const Actions = ({ id, namespace, Form }: Props) => {
   const { fetchState } = useSpacemesh()
   const [openForm, setOpenForm] = useState(false)
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
 
-  const deleteNode = () => {
-    fetch('/api/node/' + id, { method: 'DELETE' })
+  const deleteItem = () => {
+    fetch(`/api/${namespace}/${id}`, { method: 'DELETE' })
       .then(() => {
         fetchState()
         setOpenDeleteDialog(false)
@@ -51,11 +53,11 @@ export const NodeActions = ({ id }: Props) => {
       </DropdownMenu>
 
       <FormDialog
-        title="Create node"
-        desc="Add a new node to your configuration."
+        title={`Create ${namespace}`}
+        desc={`Add a new ${namespace} to your configuration.`}
         open={openForm}
       >
-        <NodeForm
+        <Form
           id={id}
           onSubmit={() => setOpenForm(false)}
           onCancel={() => setOpenForm(false)}
@@ -63,11 +65,11 @@ export const NodeActions = ({ id }: Props) => {
       </FormDialog>
 
       <DeleteDialog
-        title="Delete node"
+        title={`Delete ${namespace}`}
         desc="Are you sure?"
         open={openDeleteDialog}
         setOpen={setOpenDeleteDialog}
-        deleteItem={deleteNode}
+        deleteItem={deleteItem}
       />
     </div>
   )

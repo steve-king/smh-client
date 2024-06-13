@@ -19,24 +19,26 @@ const Nodes = () => {
       title="Nodes"
       icon="nodes"
       Actions={() => (
-        <Button variant="ghost" size="icon" onClick={() => setOpenForm(true)}>
-          <Icon i="add"></Icon>
-        </Button>
+        <>
+          <Button variant="ghost" size="icon" onClick={() => setOpenForm(true)}>
+            <Icon i="add"></Icon>
+          </Button>
+          <FormDialog
+            title="Create node"
+            desc="Add a new node to your configuration."
+            open={openForm}
+          >
+            <NodeForm
+              onSubmit={() => setOpenForm(false)}
+              onCancel={() => setOpenForm(false)}
+            />
+          </FormDialog>
+        </>
       )}
     >
       <Card>
         <NodesTable nodes={nodes} />
       </Card>
-      <FormDialog
-        title="Create node"
-        desc="Add a new node to your configuration."
-        open={openForm}
-      >
-        <NodeForm
-          onSubmit={() => setOpenForm(false)}
-          onCancel={() => setOpenForm(false)}
-        />
-      </FormDialog>
     </Page>
   )
 }

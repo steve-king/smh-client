@@ -1,4 +1,4 @@
-import { NodeActions } from './NodeActions'
+import { Actions } from './Actions'
 import { NodeStatus } from './NodeStatus'
 
-export { NodeActions, NodeStatus }
+export { Actions, NodeStatus }

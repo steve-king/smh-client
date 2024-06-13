@@ -8,8 +8,9 @@ import {
   TableRow,
 } from '@/client/components/ui/table'
 import Icon from '@/client/components/Icon'
-import { NodeStatus, NodeActions } from '@/client/components/tables/cells'
+import { NodeStatus, Actions } from '@/client/components/tables/cells'
 import { Node as NodeProps } from '@/types'
+import { NodeForm } from '../forms'
 
 const NodeRow = ({ node }: { node: NodeProps }) => {
   const path = '/node/' + node.config.id
@@ -29,7 +30,7 @@ const NodeRow = ({ node }: { node: NodeProps }) => {
         <NodeStatus node={node} />
       </TableCell>
       <TableCell>
-        <NodeActions id={node.config.id} />
+        <Actions namespace="node" id={node.config.id} Form={NodeForm} />
       </TableCell>
     </TableRow>
   )
@@ -71,9 +72,7 @@ export default function NodesTable({ nodes }: Props) {
           <TableHead>
             <div className="flex items-center">Status</div>
           </TableHead>
-          <TableHead>
-            <div className="flex items-center justify-end">&nbsp;</div>
-          </TableHead>
+          <TableHead>&nbsp;</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

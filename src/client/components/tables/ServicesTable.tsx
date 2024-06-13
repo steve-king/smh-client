@@ -10,8 +10,9 @@ import Icon from '@/client/components/Icon'
 import { suToTiB } from '@/client/lib/utils'
 import { NodeStatus } from '@/client/components/tables/cells/NodeStatus'
 import { ServiceStatus } from '@/client/components/tables/cells/ServiceStatus'
-
+import { Actions } from '@/client/components/tables/cells'
 import { Service as ServiceProps, Node as NodeProps } from '@/types'
+import { ServiceForm } from '../forms'
 
 const ServiceRow = ({ service }: { service: ServiceProps }) => {
   return (
@@ -34,6 +35,13 @@ const ServiceRow = ({ service }: { service: ServiceProps }) => {
       <TableCell>{suToTiB(service.config.su)} TiB</TableCell>
       <TableCell>
         <ServiceStatus service={service} />
+      </TableCell>
+      <TableCell>
+        <Actions
+          namespace="service"
+          id={service.config.id}
+          Form={ServiceForm}
+        />
       </TableCell>
     </TableRow>
   )
@@ -78,6 +86,7 @@ export default function ServicesTable({ services }: Props) {
             </div>
           </TableHead>
           <TableHead>Status</TableHead>
+          <TableHead>&nbsp;</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
