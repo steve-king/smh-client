@@ -8,20 +8,20 @@ const router = express.Router()
 
 // GET ALL
 // --------------------------------------------------
-router.get('/nodes', (req, res) => {
-  res.json(Spacemesh.getNodes())
-})
+// router.get('/nodes', (req, res) => {
+//   res.json(Spacemesh.getNodes())
+// })
 
-// GET ONE (by ID)
-// --------------------------------------------------
-router.get('/node/:id', (req, res) => {
-  const node = Spacemesh.getNode(req.params.id)
-  if (node !== undefined) {
-    res.json(node)
-  } else {
-    res.status(404).json('Not found')
-  }
-})
+// // GET ONE (by ID)
+// // --------------------------------------------------
+// router.get('/node/:id', (req, res) => {
+//   const node = Spacemesh.getNode(req.params.id)
+//   if (node !== undefined) {
+//     res.json(node)
+//   } else {
+//     res.status(404).json('Not found')
+//   }
+// })
 
 // CREATE
 // --------------------------------------------------

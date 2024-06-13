@@ -6,22 +6,22 @@ import config from '@/server/UserConfig'
 
 const router = express.Router()
 
-// GET ALL
-// --------------------------------------------------
-router.get('/services', (req, res) => {
-  res.json(Spacemesh.getServices())
-})
+// // GET ALL
+// // --------------------------------------------------
+// router.get('/services', (req, res) => {
+//   res.json(Spacemesh.getServices())
+// })
 
-// GET ONE (by ID)
-// --------------------------------------------------
-router.get('/service/:id', (req, res) => {
-  const service = Spacemesh.getService(req.params.id)
-  if (!!service) {
-    res.json(service)
-  } else {
-    res.status(404).json('Not found')
-  }
-})
+// // GET ONE (by ID)
+// // --------------------------------------------------
+// router.get('/service/:id', (req, res) => {
+//   const service = Spacemesh.getService(req.params.id)
+//   if (!!service) {
+//     res.json(service)
+//   } else {
+//     res.status(404).json('Not found')
+//   }
+// })
 
 // CREATE
 // --------------------------------------------------
