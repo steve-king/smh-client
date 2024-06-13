@@ -1,5 +1,6 @@
-import FormDialog from './FormDialog'
-import NodeForm from './NodeForm'
-import ServiceForm from './ServiceForm'
+import { NodeForm } from './NodeForm'
+import { ServiceForm } from './ServiceForm'
+import { FormDialog } from './FormDialog'
+import { DeleteDialog } from './DeleteDialog'
 
-export { FormDialog, NodeForm, ServiceForm }
+export { NodeForm, ServiceForm, FormDialog, DeleteDialog }

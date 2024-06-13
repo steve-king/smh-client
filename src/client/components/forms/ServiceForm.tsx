@@ -1,3 +1,3 @@
-export default function ServiceForm() {
+export const ServiceForm = () => {
   return <p>Service form</p>
 }

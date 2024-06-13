@@ -1,4 +1,3 @@
-// import { ReactNode } from 'react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -33,11 +32,11 @@ const formSchema = z.object({
   smeshing: z.boolean(),
 })
 
-export default function NodeForm(props: {
-  nodeId: string | undefined
+export const NodeForm = (props: {
+  id?: string | undefined
   onSubmit: () => void
   onCancel: () => void
-}) {
+}) => {
   const { state } = useSpacemesh()
   let formConfig: any = {
     url: '/api/nodes',
@@ -52,11 +51,11 @@ export default function NodeForm(props: {
     },
   }
 
-  if (props.nodeId) {
+  if (props.id) {
     formConfig = {
-      url: '/api/node/' + props.nodeId,
+      url: '/api/node/' + props.id,
       method: 'PUT',
-      defaultValues: state.node[props.nodeId].config,
+      defaultValues: state.node[props.id].config,
     }
   }
 
@@ -75,7 +74,7 @@ export default function NodeForm(props: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        ...(props.nodeId && { id: props.nodeId }),
+        ...(props.id && { id: props.id }),
         ...values,
       }),
     }).then((res) => {
