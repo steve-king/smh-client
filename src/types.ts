@@ -1,25 +1,40 @@
-export interface Config {
+export interface Action {
+  type: string
+  payload: any
+}
+
+export interface UserConfig {
   settings?: Settings
-  nodes: Node[]
-  services: Service[]
+  nodes: NodeConfig[]
+  services: ServiceConfig[]
 }
 
 interface Settings {
   refreshInterval: number
 }
 
+export interface NodeConfig {
+  id: string
+  name: string
+  host: string
+  port_public: string
+  port_private: string
+  port_post: string
+  smeshing: boolean | undefined
+}
+
+export interface ServiceConfig {
+  id: string
+  name: string
+  host: string
+  port_operator: string
+  su: number
+}
+
 export interface Node {
   id: string
   isOnline: boolean
-  config: {
-    id: string
-    name: string
-    host: string
-    port_public: string
-    port_private: string
-    port_post: string
-    smeshing: boolean | undefined
-  }
+  config: NodeConfig
   Status?: NodeStatus
   Version: string
   PostStates?: [
@@ -36,13 +51,7 @@ export interface NodeStatus {
 export interface Service {
   node?: Node | undefined
   isOnline: boolean
-  config: {
-    id: string
-    name: string
-    host: string
-    port_operator: string
-    su: number
-  }
+  config: ServiceConfig
   Status?: ProvingStatus
 }
 
@@ -54,8 +63,3 @@ export type ProvingStatus =
       }
     }
   | string
-
-export interface Action {
-  type: string
-  payload: any
-}

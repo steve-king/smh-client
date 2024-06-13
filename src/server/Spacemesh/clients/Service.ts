@@ -2,20 +2,13 @@ import { credentials } from '@grpc/grpc-js'
 import api from '../grpc'
 import { log } from '../../utils'
 import SpacemeshClient from './AbstractClient'
-
-export interface Config {
-  id: string
-  name: string
-  host: string
-  port_operator: string
-  su: string
-}
+import { ServiceConfig } from '@/types'
 
 export default class ServiceClient extends SpacemeshClient {
-  config: Config
+  config: ServiceConfig
   clients: any
 
-  constructor(config: Config) {
+  constructor(config: ServiceConfig) {
     super()
     this.config = config
     this.defaultPort = Number(config.port_operator)
@@ -37,7 +30,7 @@ export default class ServiceClient extends SpacemeshClient {
   callStreamingClients = () => {}
 
   callHttpEndpoints = async () => {
-    const { id, host, port_operator } = this.config
+    const { host, port_operator } = this.config
     const url = 'http://' + host + ':' + port_operator + '/status'
 
     fetch(url)

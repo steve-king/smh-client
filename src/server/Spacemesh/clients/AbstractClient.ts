@@ -1,11 +1,12 @@
 import { debounce } from 'lodash'
 import { log, objectsAreEqual, pingHost } from '../../utils'
 import spacemesh from '../Spacemesh'
+import { NodeConfig, ServiceConfig } from '@/types'
 
 export default abstract class SpacemeshClient {
   key = ''
   defaultPort = 0
-  config: any = null
+  config: NodeConfig | ServiceConfig | null = null
   isOnline = false
   streams: any[] = []
   connectStreams = true
@@ -29,20 +30,13 @@ export default abstract class SpacemeshClient {
   }
 
   checkOnline = async () => {
-    const { id, host } = this.config
+    const { host } = this.config as NodeConfig | ServiceConfig
     this.isOnline = await pingHost(host, Number(this.defaultPort))
+
     if (!this.isOnline) {
       this.connectStreams = true
-      // Delete all keys
-      const keysToDelete = spacemesh.cache
-        .keys()
-        .filter((key) => key.includes(this.key))
-      spacemesh.cache.del(keysToDelete)
-      log('DEBUG', 'CACHE', keysToDelete.length, 'keys deleted for', this.key)
     }
     this.setCache(`${this.key}:isOnline`, this.isOnline)
-    this.setCache(`${this.key}:config`, this.config)
-
     return this.isOnline
   }
 
@@ -67,13 +61,24 @@ export default abstract class SpacemeshClient {
     this.debouncedCheckOnline()
   }
 
-  handleGrpcStreamEnd = (streamName: string) => {
-    log('DEBUG', 'GRPC', streamName + ' ended')
-    this.debouncedCheckOnline()
-  }
-
-  cancelStreams = () => {
+  invalidateInstance = () => {
     this.streams.forEach((stream) => stream.cancel())
-    log('INFO', 'GRPC', `${this.streams.length} streams cancelled`)
+
+    // Delete all cache entires
+    const cacheKeys = spacemesh.cache
+      .keys()
+      .filter((key) => key.includes(this.key))
+    spacemesh.cache.del(cacheKeys)
+
+    // Replace all functions
+    // Prevents any overhanging checkOnline() calls from firing and clogging up cache with invalid entries
+    const instanceKeys = Object.keys(this) as (keyof this)[]
+    instanceKeys.forEach((key) => {
+      if (typeof this[key] === 'function') {
+        this[key] = (() => {
+          log('DEBUG', 'SPACEMESH', `instance has been invalidated`)
+        }) as any
+      }
+    })
   }
 }

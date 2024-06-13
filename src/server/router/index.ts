@@ -10,7 +10,7 @@ router.get('/api', (req, res) => {
 })
 
 router.get('/api/state', (req, res) => {
-  res.json(Spacemesh.getAllData())
+  res.json(Spacemesh.getCacheData())
 })
 
 router.use('/api', [nodes, services])

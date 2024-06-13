@@ -18,18 +18,13 @@ Spacemesh.cache.on('set', (key: string, value: any) => {
   // log('DEBUG', 'SOCKET', 'emit', type)
 })
 
-Spacemesh.cache.on('del', (key: string, value: any) => {
-  socket.emit('delete', { key, value })
-  // log('DEBUG', 'SOCKET', 'emit', type)
-})
-
 UserConfig.onLoad((data: any) => {
   Spacemesh.init(data)
-  Spacemesh.update()
+  Spacemesh.updateAll()
 })
 UserConfig.load()
 
-cronTask(Spacemesh.update, 1).start()
+cronTask(Spacemesh.updateAll, 1).start()
 
 app.use('/', router)
 

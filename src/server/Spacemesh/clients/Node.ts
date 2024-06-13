@@ -1,10 +1,11 @@
 import { credentials } from '@grpc/grpc-js'
 import api from '../grpc'
 import { debounce } from 'lodash'
-import { log, hexArrayToBase64, sortArrayByKey } from '../../utils'
+import { log } from '../../utils'
 import * as parsers from './parsers'
 
 import SpacemeshClient from './AbstractClient'
+import { NodeConfig } from '@/types'
 
 export interface Config {
   id: string
@@ -16,12 +17,12 @@ export interface Config {
 }
 
 export default class NodeClient extends SpacemeshClient {
-  config: Config
+  config: NodeConfig
   clients: any
   events: any[] = []
   peers: any[] = []
 
-  constructor(config: Config) {
+  constructor(config: NodeConfig) {
     super()
     this.config = config
     this.defaultPort = Number(config.port_public)
@@ -86,7 +87,7 @@ export default class NodeClient extends SpacemeshClient {
 
     const statusStream = this.clients.NodeService.StatusStream({})
     statusStream.on('error', this.handleGrpcError)
-    statusStream.on('end', () => this.handleGrpcStreamEnd('StatusStream'))
+    // statusStream.on('end', () => this.handleGrpcStreamEnd('StatusStream'))
     statusStream.on('data', (data: any) => {
       this.setCache(`${this.key}:Status`, parsers.status(data))
     })
@@ -95,7 +96,7 @@ export default class NodeClient extends SpacemeshClient {
     this.events = []
     const eventsStream = this.clients.AdminService.EventsStream({})
     eventsStream.on('error', this.handleGrpcError)
-    eventsStream.on('end', () => this.handleGrpcStreamEnd('EventsStream'))
+    // eventsStream.on('end', () => this.handleGrpcStreamEnd('EventsStream'))
     eventsStream.on('data', (data: any) => {
       this.events.push(parsers.eventsStream(data))
       this.setEventsCache(`node:${this.config.id}:Events`, this.events)
