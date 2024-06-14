@@ -10,7 +10,9 @@ export interface UserConfig {
 }
 
 interface Settings {
-  refreshInterval: number
+  cronInterval: number
+  email: string
+  coingeckoApiKey: string
 }
 
 export interface NodeConfig {

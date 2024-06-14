@@ -1,4 +1,6 @@
-const config = {
+import { UserConfig } from '@/types'
+
+const config: UserConfig = {
   nodes: [],
   services: [],
   settings: {

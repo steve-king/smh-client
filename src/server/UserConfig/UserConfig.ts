@@ -4,17 +4,7 @@ import { log } from '../utils'
 
 import defaultConfig from './config.default'
 
-interface Settings {
-  cronInterval: number
-  debounceInterval: number
-  email: string | undefined
-}
-
-export interface Config {
-  nodes: any[]
-  services: any[]
-  settings: Settings
-}
+import { UserConfig as Config } from '@/types'
 
 class UserConfig {
   public data: Config
