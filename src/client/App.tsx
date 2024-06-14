@@ -10,6 +10,7 @@ import {
   Payload,
   Action,
 } from './context/spacemesh'
+import { Node, Service } from '@/types'
 
 function App() {
   const api = '/api/state'
@@ -50,8 +51,10 @@ function App() {
     <SpacemeshContext.Provider
       value={{
         isConnected,
-        nodes: Object.entries(state.node).map((entry) => entry[1]),
-        services: Object.entries(state.service).map((entry) => entry[1]),
+        nodes: Object.entries(state.node).map((entry) => entry[1]) as Node[],
+        services: Object.entries(state.service).map(
+          (entry) => entry[1]
+        ) as Service[],
         fetchState,
       }}
     >

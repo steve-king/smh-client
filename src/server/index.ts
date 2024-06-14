@@ -18,12 +18,15 @@ Spacemesh.cache.on('set', (key: string, value: any) => {
   // log('DEBUG', 'SOCKET', 'emit', type)
 })
 
-UserConfig.onLoad((data: any) => {
-  Spacemesh.init(data)
+UserConfig.onLoad((config: any) => {
+  Spacemesh.init(config)
   Spacemesh.updateAll()
 })
 UserConfig.load()
 
+// TODO
+// - stop and start cron task in UserConfig.onLoad
+// - use the cronInterval config setting
 cronTask(Spacemesh.updateAll, 1).start()
 
 app.use('/', router)
