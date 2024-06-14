@@ -19,8 +19,8 @@ import {
 } from '@/client/context/spacemesh'
 
 const ServiceRow = ({ service }: { service: ServiceProps }) => {
-  const { getNodes } = useSpacemesh()
-  const node = findNodeBelongsToService(getNodes(), service)
+  const { nodes } = useSpacemesh()
+  const node = findNodeBelongsToService(nodes, service)
   return (
     <TableRow>
       <TableCell>{service.config.name}</TableCell>

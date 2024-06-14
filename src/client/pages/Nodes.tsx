@@ -5,7 +5,7 @@ import { Button } from '../components/ui/button'
 import Card from '@/client/components/Card'
 import Icon from '@/client/components/Icon'
 
-import { SpacemeshContext } from '../context/spacemesh'
+import { useSpacemesh } from '../context/spacemesh'
 import NodesTable from '../components/tables/NodesTable'
 import { FormDialog, NodeForm } from '@/client/components/forms'
 
@@ -31,8 +31,7 @@ const Actions = () => {
 }
 
 const Nodes = () => {
-  const { getNodes } = useContext(SpacemeshContext)
-  const nodes = getNodes()
+  const { nodes } = useSpacemesh()
   return (
     <Page title="Nodes" icon="nodes" Actions={Actions}>
       <Card>

@@ -13,12 +13,15 @@ import { ThemeProvider } from '@/client/context/theme'
 import App from './App'
 import { Dashboard, Nodes, Node, Services, Error } from './pages'
 
+// import { fetchData } from './context/spacemesh'
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
       path="/"
-      element={<App api={'/api/state'} />}
+      element={<App />}
       errorElement={<Error />}
+      // loader={() => fetchData('/api/state')}
     >
       <Route path="/" element={<Dashboard />} />
       <Route path="/nodes" element={<Nodes />} />

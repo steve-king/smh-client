@@ -2,47 +2,45 @@ import { useEffect, useState, useReducer } from 'react'
 import { Outlet } from 'react-router-dom'
 import io from 'socket.io-client'
 
+import { useLoaderData } from 'react-router-dom'
+
 import {
   defaultState,
-  Action,
   reducer,
   SpacemeshContext,
-  fetchAll,
-  Update,
+  fetchData,
+  Payload,
+  Action,
 } from './context/spacemesh'
 
-function App({ api }: { api: string }) {
+function App() {
+  const api = '/api/state'
   const [isConnected, setIsConnected] = useState(false)
   const [state, dispatch] = useReducer(reducer, { ...defaultState })
-
-  const fetchState = () => {
-    dispatch({ type: 'reset' })
-    fetchAll(api).then((payload: Update[]) => {
-      dispatch({ type: 'updates', payload })
-    })
-  }
-
-  const getNodes = () => {
-    return Object.entries(state.node).map((entry) => entry[1])
-  }
-  const getServices = () => {
-    return Object.entries(state.service).map((entry) => entry[1])
-  }
+  const data = useLoaderData()
 
   useEffect(() => {
     fetchState()
-  }, [api])
+    // dispatch({ type: 'updates', payload: data })
+  }, [data])
+
+  const fetchState = () => {
+    dispatch({ type: 'reset' })
+    fetchData(api).then((payload: Payload[]) => {
+      dispatch({ type: 'updates', payload })
+    })
+  }
 
   useEffect(() => {
     const socket = io()
     socket.on('connect', () => setIsConnected(true))
     socket.on('disconnect', () => setIsConnected(false))
-    socket.onAny((event, payload) => {
+    socket.onAny((event, data) => {
       const action = {
-        type: event,
-        payload,
+        type: 'update',
+        payload: data,
       }
-      dispatch(action)
+      dispatch(action as Action)
     })
 
     return () => {
@@ -56,13 +54,9 @@ function App({ api }: { api: string }) {
     <SpacemeshContext.Provider
       value={{
         isConnected,
-        state,
-        dispatch,
-        fetchState: () => {
-          fetchState()
-        },
-        getNodes,
-        getServices,
+        nodes: Object.entries(state.node).map((entry) => entry[1]),
+        services: Object.entries(state.service).map((entry) => entry[1]),
+        fetchState,
       }}
     >
       <Outlet />

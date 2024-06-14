@@ -3,24 +3,24 @@ import { produce } from 'immer'
 
 import { Node, Service } from '@/types'
 
-export const defaultState: State = {
-  node: {},
-  service: {},
-}
-
 export interface State {
   node: any
   service: any
 }
 
 export interface Action {
-  type: 'reset' | 'updates' | 'update' | 'delete'
+  type: 'reset' | 'update' | 'updates'
   payload?: any
 }
 
 export interface Payload {
   key: string
   value: any
+}
+
+export const defaultState: State = {
+  node: {},
+  service: {},
 }
 
 export const SpacemeshContext = createContext(undefined as any)
@@ -60,37 +60,11 @@ const updateField = (state: any, item: Payload) => {
   state[namespace][id][fieldName] = item.value
 }
 
-const deleteField = (state: any, item: Payload) => {
-  const keys = item.key.split(':')
-  const namespace = keys[0]
-  const id = keys[1]
-  const fieldName = keys[2]
-
-  delete state[namespace][id][fieldName]
-}
-
-// export const reducer = (state: State, actions: Action[]): State => {
-//   return produce(state, (draft: any): void => {
-//     actions?.forEach((action: Action) => {
-//       const keys = action.type.split(':')
-//       const namespace = keys[0]
-//       const id = keys[1]
-//       const fieldName = keys[2]
-
-//       if (draft[namespace][id] === undefined) {
-//         draft[namespace][id] = {}
-//       }
-
-//       draft[namespace][id][fieldName] = action.payload
-//     })
-//   })
-// }
-
 /**
  *
  * @returns
  */
-export const fetchAll = (url: string) => {
+export const fetchData = (url: string) => {
   return fetch(url)
     .then((res) => res.json())
     .then((json) => json)

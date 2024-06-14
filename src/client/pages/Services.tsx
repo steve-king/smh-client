@@ -31,10 +31,7 @@ const Actions = () => {
 }
 
 export default function Services() {
-  const { getServices } = useContext(SpacemeshContext)
-  const services = getServices()
-
-  // console.log('SERVICES', services)
+  const { services } = useContext(SpacemeshContext)
 
   return (
     <Page title="Services" icon="services" Actions={Actions}>

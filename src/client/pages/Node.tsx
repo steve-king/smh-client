@@ -3,11 +3,12 @@ import { useSpacemesh } from '../context/spacemesh'
 import Page from '@/client/components/Page'
 import Card from '@/client/components/Card'
 import { displayNodeStatus } from '../components/tables/cells/NodeStatus'
+import { Node as NodeProps } from '@/types'
 
 const Node = () => {
   const { id } = useParams()
-  const { state } = useSpacemesh()
-  let node = id && state.node[id]
+  const { nodes } = useSpacemesh()
+  let node = id && nodes.find((node: NodeProps) => node.config.id === id)
 
   if (node) {
     const { config, Status, Version } = node
