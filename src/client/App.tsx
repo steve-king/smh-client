@@ -2,8 +2,6 @@ import { useEffect, useState, useReducer } from 'react'
 import { Outlet } from 'react-router-dom'
 import io from 'socket.io-client'
 
-import { useLoaderData } from 'react-router-dom'
-
 import {
   defaultState,
   reducer,
@@ -17,12 +15,10 @@ function App() {
   const api = '/api/state'
   const [isConnected, setIsConnected] = useState(false)
   const [state, dispatch] = useReducer(reducer, { ...defaultState })
-  const data = useLoaderData()
 
   useEffect(() => {
     fetchState()
-    // dispatch({ type: 'updates', payload: data })
-  }, [data])
+  }, [api])
 
   const fetchState = () => {
     dispatch({ type: 'reset' })
