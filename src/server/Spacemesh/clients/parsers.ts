@@ -1,7 +1,7 @@
 import {
-  hexArrayToBase64,
   sortArrayByKey,
   secondsAndNanosToISOString,
+  byteArrayToHexString,
 } from '@/utils'
 
 /**
@@ -47,7 +47,7 @@ export const postStates = (data: any) => {
     .map(({ name, state, id }: any) => ({
       name,
       state,
-      id: hexArrayToBase64(id),
+      id: byteArrayToHexString(id),
     }))
 }
 
@@ -70,7 +70,7 @@ export const eventsStream = (data: any) => {
       delete parsedEvent.beacon
       parsedEvent.data = {
         ...data.beacon,
-        beacon: hexArrayToBase64(data.beacon.beacon),
+        beacon: byteArrayToHexString(data.beacon.beacon),
       }
       break
 
@@ -80,7 +80,7 @@ export const eventsStream = (data: any) => {
       parsedEvent.data = {
         ...data.poet_wait_proof,
         until: secondsAndNanosToISOString(until.seconds, until.nanos),
-        smesher: hexArrayToBase64(smesher),
+        smesher: byteArrayToHexString(smesher),
       }
       break
 
@@ -88,9 +88,9 @@ export const eventsStream = (data: any) => {
       delete parsedEvent.eligibilities
       parsedEvent.data = {
         ...data.eligibilities,
-        smesher: hexArrayToBase64(data.eligibilities.smesher),
-        atx: hexArrayToBase64(data.eligibilities.atx),
-        beacon: hexArrayToBase64(data.eligibilities.beacon),
+        smesher: byteArrayToHexString(data.eligibilities.smesher),
+        atx: byteArrayToHexString(data.eligibilities.atx),
+        beacon: byteArrayToHexString(data.eligibilities.beacon),
       }
       break
 
@@ -98,8 +98,8 @@ export const eventsStream = (data: any) => {
       delete parsedEvent.post_start
       parsedEvent.data = {
         ...data.post_start,
-        smesher: hexArrayToBase64(data.post_start.smesher),
-        challenge: hexArrayToBase64(data.post_start.challenge),
+        smesher: byteArrayToHexString(data.post_start.smesher),
+        challenge: byteArrayToHexString(data.post_start.challenge),
       }
       break
 
@@ -107,8 +107,8 @@ export const eventsStream = (data: any) => {
       delete parsedEvent.post_complete
       parsedEvent.data = {
         ...data.post_complete,
-        smesher: hexArrayToBase64(data.post_complete.smesher),
-        challenge: hexArrayToBase64(data.post_complete.challenge),
+        smesher: byteArrayToHexString(data.post_complete.smesher),
+        challenge: byteArrayToHexString(data.post_complete.challenge),
       }
       break
   }

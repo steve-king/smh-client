@@ -27,6 +27,20 @@ export const hexArrayToBase64 = (hexArray: number[]): string => {
   return base64String
 }
 
+export const byteArrayToHexString = (byteArray: number[]): string => {
+  // Assuming 'hexArray' is a byte array
+  const hexArray = new Uint8Array(byteArray)
+
+  // Convert to a hexadecimal string
+  const hexString =
+    '0x' +
+    Array.from(hexArray)
+      .map((byte) => byte.toString(16).padStart(2, '0'))
+      .join('')
+  // console.log(hexString)
+  return hexString
+}
+
 /**
  *
  * @param obj1
