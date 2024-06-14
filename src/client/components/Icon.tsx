@@ -67,5 +67,6 @@ const icons: {
   delete: Lucide.Trash2,
   edit: Lucide.Pencil,
   actions: Lucide.Ellipsis,
+  events: Lucide.MessageSquareCode,
   // settings: Lucide.Settings,
 }

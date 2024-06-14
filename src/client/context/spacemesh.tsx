@@ -27,7 +27,6 @@ export const SpacemeshContext = createContext(undefined as any)
 export const useSpacemesh = () => useContext(SpacemeshContext)
 
 export const reducer = (state: State, action: Action): State => {
-  console.log('ACTION', action)
   return produce(state, (draft) => {
     switch (action.type) {
       case 'reset':
@@ -40,6 +39,7 @@ export const reducer = (state: State, action: Action): State => {
 
       case 'updates':
         action.payload.forEach((item: Payload) => updateField(draft, item))
+        console.log(state)
         break
     }
 

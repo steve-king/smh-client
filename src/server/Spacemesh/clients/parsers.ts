@@ -2,7 +2,7 @@ import {
   hexArrayToBase64,
   sortArrayByKey,
   secondsAndNanosToISOString,
-} from '../../utils'
+} from '@/utils'
 
 /**
  * status
@@ -91,6 +91,24 @@ export const eventsStream = (data: any) => {
         smesher: hexArrayToBase64(data.eligibilities.smesher),
         atx: hexArrayToBase64(data.eligibilities.atx),
         beacon: hexArrayToBase64(data.eligibilities.beacon),
+      }
+      break
+
+    case 'post_start':
+      delete parsedEvent.post_start
+      parsedEvent.data = {
+        ...data.post_start,
+        smesher: hexArrayToBase64(data.post_start.smesher),
+        challenge: hexArrayToBase64(data.post_start.challenge),
+      }
+      break
+
+    case 'post_complete':
+      delete parsedEvent.post_complete
+      parsedEvent.data = {
+        ...data.post_complete,
+        smesher: hexArrayToBase64(data.post_complete.smesher),
+        challenge: hexArrayToBase64(data.post_complete.challenge),
       }
       break
   }

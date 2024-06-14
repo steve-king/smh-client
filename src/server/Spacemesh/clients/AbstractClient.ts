@@ -1,7 +1,9 @@
 import { debounce } from 'lodash'
-import { log, objectsAreEqual, pingHost } from '../../utils'
+import { log, pingHost } from '../../utils'
+// import { objectsAreEqual } from '@/utils'
 import spacemesh from '../Spacemesh'
 import { NodeConfig, ServiceConfig } from '@/types'
+import { isEqual } from 'lodash'
 
 export default abstract class SpacemeshClient {
   key = ''
@@ -45,7 +47,7 @@ export default abstract class SpacemeshClient {
   // Check data has changed before caching
   setCache = (key: string, value: any) => {
     const oldValue = spacemesh.cache.get(key)
-    if (objectsAreEqual(value, oldValue)) {
+    if (isEqual(value, oldValue)) {
       log('VERBOSE', 'CACHE', 'no changes detected', key)
       return
     }
