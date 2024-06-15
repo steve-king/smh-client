@@ -38,7 +38,7 @@ const Chart = ({ data }: ChartProps) => {
         <Line
           type="monotone"
           dataKey="value"
-          stroke="#000"
+          stroke="#fff"
           strokeWidth="1.5"
           dot={false}
         />

@@ -29,7 +29,7 @@ const PriceData = (props: PriceDataProps) => {
           <span className={cn(changeColour, 'text-sm flex items-center')}>
             <Icon
               i={changeIcon}
-              size={16}
+              size={20}
               className={cn('ml-4 mr-1')}
               strokeWidth={3}
             />
@@ -86,7 +86,7 @@ export const PriceCard = () => {
         {chartData && <ChartData {...chartData} />}
       </div>
       {/* <hr /> */}
-      <p className="mt-3 text-xs font-light  text-muted-foreground">
+      <p className="mt-3 text-xs text-right font-light text-muted-foreground">
         Source:{' '}
         <a
           href="https://www.coingecko.com/en/coins/spacemesh"
