@@ -4,9 +4,9 @@ const config: UserConfig = {
   nodes: [],
   services: [],
   settings: {
-    cronInterval: 1,
+    cron_interval: 1,
     email: '',
-    coingeckoApiKey: '',
+    coingecko_api_key: '',
   },
 }
 

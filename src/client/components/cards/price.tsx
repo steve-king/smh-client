@@ -3,7 +3,7 @@ import Card from '../Card'
 export const PriceCard = () => {
   /**
    * TODO
-   * - This request should be done on the server and cached
+   * - Coingecko request should be done on the server and cached
    * - UserConfig should contain a 'CoingeckoApiKey' field
    * - As well as price, it will be possible to show price history chart, market cap, daily price change etc
    */

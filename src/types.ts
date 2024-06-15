@@ -10,9 +10,9 @@ export interface UserConfig {
 }
 
 interface Settings {
-  cronInterval: number
+  cron_interval: number
   email: string
-  coingeckoApiKey: string
+  coingecko_api_key: string
 }
 
 export interface NodeConfig {

@@ -5,7 +5,7 @@ import { PriceCard, StorageCard } from '../components/cards'
 export const DashboardPage = () => {
   return (
     <Page title="Dashboard" icon="dashboard">
-      <div className="mb-6 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-6 grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
         <PriceCard />
 
         <Card icon="network">

@@ -1,10 +1,11 @@
 import fs from 'fs'
 import path from 'path'
 import { log } from '../utils'
-
-import defaultConfig from './config.default'
-
 import { UserConfig as Config } from '@/types'
+
+const configPath =
+  process.env.NODE_ENV === 'production' ? './config.default' : './config.dev'
+const defaultConfig = require(configPath).default
 
 class UserConfig {
   public data: Config

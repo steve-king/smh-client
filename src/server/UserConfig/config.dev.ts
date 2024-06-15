@@ -1,12 +1,16 @@
-import defaultConfig from './config.default'
+import { UserConfig } from '@/types'
 
-const config = {
-  ...defaultConfig,
+const config: UserConfig = {
+  settings: {
+    cron_interval: 1,
+    email: 'steve.king5891@gmail.com',
+    coingecko_api_key: 'CG-2AWodFqHecRGcqpBSABapbPz',
+  },
   nodes: [
     {
       id: '2afb1e3a-2e98-44dd-a66b-96efea6de359',
       name: 'Homelab',
-      host: '192.168.1.2',
+      host: 'homelab.lan',
       port_public: '9092',
       port_private: '9093',
       port_post: '9094',
@@ -35,13 +39,20 @@ const config = {
       name: 'service-02',
       host: '192.168.1.10',
       port_operator: '10002',
-      su: '48',
+      su: '16',
     },
     {
       id: '3',
       name: 'service-03',
       host: '192.168.1.10',
       port_operator: '10003',
+      su: '48',
+    },
+    {
+      id: '4',
+      name: 'service-04',
+      host: '192.168.1.10',
+      port_operator: '10004',
       su: '48',
     },
   ],
