@@ -13,6 +13,7 @@ interface Settings {
   cron_interval: number
   email: string
   coingecko_api_key: string
+  coingecko_cache_duration: number
 }
 
 export interface NodeConfig {

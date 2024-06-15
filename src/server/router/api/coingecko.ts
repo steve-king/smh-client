@@ -1,30 +1,31 @@
 import express from 'express'
-import NodeCache from 'node-cache'
-import config from '@/server/UserConfig'
+import coingecko from '@/server/modules/Coingecko'
 import { log } from '@/server/utils'
 
 const router = express.Router()
-const cache = new NodeCache()
-let expired = true
 
-// cache.on('expired') => expired = true
-
-// FETCH
 // --------------------------------------------------
-router.get('/:id', (req, res) => {
+router.get('/coingecko/:coinId', (req, res) => {
   try {
-    // does cache entry exist and not expired?
-    // get coingecko key
-    // fetch price data from coingecko
-    // save to cache
-    // set expired = false
-    // else:
-    // load from cache
-
-    res.status(200).json('data')
+    coingecko
+      .coinPrice('spacemesh')
+      .then((data: any) => res.status(200).json(data))
+      .catch(() => res.status(500).json('Error fetching coingecko data'))
   } catch (e) {
-    res.status(500).json('Error fetching data')
+    res.status(500).json('Error')
   }
 })
+
+// --------------------------------------------------
+// router.get('/coingecko/:coinId/data', (req, res) => {
+//   try {
+//     coingecko
+//       .fetchCoinData('spacemesh')
+//       .then((data: any) => res.status(200).json(data))
+//       .catch(() => res.status(500).json('Error fetching coingecko data'))
+//   } catch (e) {
+//     res.status(500).json('Error')
+//   }
+// })
 
 export default router

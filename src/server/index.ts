@@ -12,6 +12,7 @@ import { cronTask, log } from '@/server/utils'
 import UserConfig from '@/server/modules/UserConfig'
 import Spacemesh from '@/server/modules/Spacemesh'
 import router from '@/server/router'
+import Coingecko from './modules/Coingecko'
 
 Spacemesh.cache.on('set', (key: string, value: any) => {
   socket.emit('update', { key, value })
@@ -21,6 +22,9 @@ Spacemesh.cache.on('set', (key: string, value: any) => {
 UserConfig.onLoad((config: any) => {
   Spacemesh.init(config)
   Spacemesh.updateAll()
+
+  const { coingecko_api_key, coingecko_cache_duration } = config.settings
+  Coingecko.init(coingecko_api_key, coingecko_cache_duration)
 })
 UserConfig.load()
 
