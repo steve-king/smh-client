@@ -7,7 +7,7 @@ const config: UserConfig = {
     cron_interval: 1,
     email: '',
     coingecko_api_key: '',
-    coingecko_cache_duration: 10,
+    coingecko_cache_duration: 60,
   },
 }
 

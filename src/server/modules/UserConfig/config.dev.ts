@@ -5,7 +5,7 @@ const config: UserConfig = {
     cron_interval: 1,
     email: 'steve.king5891@gmail.com',
     coingecko_api_key: 'CG-2AWodFqHecRGcqpBSABapbPz',
-    coingecko_cache_duration: 1,
+    coingecko_cache_duration: 60,
   },
   nodes: [
     {

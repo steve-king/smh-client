@@ -39,7 +39,7 @@ export const reducer = (state: State, action: Action): State => {
 
       case 'updates':
         action.payload.forEach((item: Payload) => updateField(draft, item))
-        console.log(state)
+        // console.log(state)
         break
     }
 
