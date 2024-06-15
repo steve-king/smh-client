@@ -1,7 +1,7 @@
 import express from 'express'
+import Spacemesh from '@/server/modules/Spacemesh'
 import nodes from './api/nodes'
 import services from './api/services'
-import Spacemesh from '../Spacemesh'
 
 const router = express.Router()
 

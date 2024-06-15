@@ -1,7 +1,7 @@
 import { credentials } from '@grpc/grpc-js'
 import api from '../grpc'
 import { debounce } from 'lodash'
-import { log } from '../../utils'
+import { log } from '@/server/utils'
 import * as parsers from './parsers'
 
 import SpacemeshClient from './AbstractClient'

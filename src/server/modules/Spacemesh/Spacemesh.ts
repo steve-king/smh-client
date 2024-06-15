@@ -1,7 +1,7 @@
 import NodeCache from 'node-cache'
 import Node from './clients/Node'
 import Service from './clients/Service'
-import { log } from '../utils'
+import { log } from '@/server/utils'
 import { UserConfig, NodeConfig, ServiceConfig } from '@/types'
 import { isEqual } from 'lodash'
 

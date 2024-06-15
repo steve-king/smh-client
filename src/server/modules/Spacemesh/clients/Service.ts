@@ -1,6 +1,6 @@
 import { credentials } from '@grpc/grpc-js'
+import { log } from '@/server/utils'
 import api from '../grpc'
-import { log } from '../../utils'
 import SpacemeshClient from './AbstractClient'
 import { ServiceConfig } from '@/types'
 

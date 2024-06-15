@@ -8,10 +8,10 @@ const PORT = 3131
 const server = http.createServer(app)
 const socket = new SocketIO.Server(server)
 
-import { cronTask, log } from './utils'
-import UserConfig from './UserConfig'
-import Spacemesh from './Spacemesh'
-import router from './router'
+import { cronTask, log } from '@/server/utils'
+import UserConfig from '@/server/modules/UserConfig'
+import Spacemesh from '@/server/modules/Spacemesh'
+import router from '@/server/router'
 
 Spacemesh.cache.on('set', (key: string, value: any) => {
   socket.emit('update', { key, value })

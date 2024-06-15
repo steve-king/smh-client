@@ -1,8 +1,8 @@
 import express from 'express'
 import { v4 as uuidv4 } from 'uuid'
-import Spacemesh from '@/server/Spacemesh'
 import { log } from '@/server/utils'
-import config from '@/server/UserConfig'
+import Spacemesh from '@/server/modules/Spacemesh'
+import config from '@/server/modules/UserConfig'
 
 const router = express.Router()
 
