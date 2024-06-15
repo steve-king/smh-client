@@ -128,3 +128,7 @@ body:before {
 .dark .bg-card {
   background-color: rgba(0, 0, 0, 0.5);
 }
+
+.link {
+  text-decoration: underline;
+}

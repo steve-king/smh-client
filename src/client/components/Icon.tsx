@@ -68,5 +68,9 @@ const icons: {
   edit: Lucide.Pencil,
   actions: Lucide.Ellipsis,
   events: Lucide.MessageSquareCode,
+  externalLink: Lucide.SquareArrowOutUpRight,
+  market: Lucide.CandlestickChart,
+  chevronUp: Lucide.ChevronUp,
+  chevronDown: Lucide.ChevronDown,
   // settings: Lucide.Settings,
 }

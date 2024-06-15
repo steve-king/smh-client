@@ -38,6 +38,7 @@ class Coingecko {
       include_24hr_vol: true,
       include_24hr_change: true,
       include_last_updated_at: true,
+      precision: 2,
     }
     const queryString = new URLSearchParams(queryParams as any).toString()
     const url = `${baseUrl}/simple/price?${queryString}`
