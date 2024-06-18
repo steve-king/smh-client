@@ -112,7 +112,7 @@ export const cronTask = (
  */
 
 type LogType = 'ERROR' | 'INFO' | 'DEBUG' | 'VERBOSE'
-const logSettings: LogType[] = ['ERROR', 'INFO', 'DEBUG']
+const logSettings: LogType[] = ['ERROR', 'INFO']
 
 export function log(type: LogType, ...args: any[]) {
   if (logSettings.includes(type)) {

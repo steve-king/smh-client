@@ -1,12 +1,12 @@
 import Page from '@/client/components/Page'
 import Card from '@/client/components/Card'
-import { PriceCard, StorageCard } from '../components/cards'
+import { StorageCard, MarketData } from '../components/cards'
 
 export const DashboardPage = () => {
   return (
     <Page title="Dashboard" icon="dashboard">
       <div className="mb-6 grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
-        <PriceCard />
+        <MarketData />
 
         <Card icon="network">
           <p>Network</p> <p>Epoch: 23 Layer: 93972</p>

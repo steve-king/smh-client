@@ -1,4 +1,4 @@
 import { StorageCard } from './storage'
-import { PriceCard } from './price'
+import { MarketData } from './market-data'
 
-export { StorageCard, PriceCard }
+export { StorageCard, MarketData }
