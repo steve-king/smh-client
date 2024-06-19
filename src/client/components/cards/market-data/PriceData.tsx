@@ -23,7 +23,7 @@ export const PriceData = () => {
     const { usd, usd_24h_vol, usd_24h_change, usd_market_cap } = priceData
     const changeColour = usd_24h_change > 0 ? 'text-green-600' : 'text-red-600'
     const changeIcon = usd_24h_change > 0 ? 'chevronUp' : 'chevronDown'
-    const changePercent = ((usd - usd_24h_change - usd) / usd).toFixed(2)
+    const changePercent = (usd_24h_change / usd).toFixed(2)
     const million = 1000000
     const volumeM = (usd_24h_vol / million).toFixed(2)
     const mCapM = (usd_market_cap / million).toFixed(2)

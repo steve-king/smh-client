@@ -5,8 +5,10 @@ import { StorageCard, MarketData } from '../components/cards'
 export const DashboardPage = () => {
   return (
     <Page title="Dashboard" icon="dashboard">
-      <div className="mb-6 grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
-        <MarketData />
+      <div className="mb-6 grid gap-4 sm:grid-cols-1 lg:grid-cols-3">
+        <div className="col-span-2">
+          <MarketData />
+        </div>
 
         <Card icon="network">
           <p>Network</p> <p>Epoch: 23 Layer: 93972</p>

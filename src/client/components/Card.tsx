@@ -22,8 +22,6 @@ interface Icon {
   }
 }
 
-// const defaultIconProps = { size: 48, strokeWidth: 3, absoluteStrokeWidth: true }
-
 export default function Card({
   className,
   children,
@@ -31,7 +29,7 @@ export default function Card({
   iconProps,
 }: CardProps) {
   return (
-    <UiCard.Card className={cn('flex items-center', className)}>
+    <UiCard.Card className={cn('flex items-cente rounded', className)}>
       {icon && (
         <UiCard.CardContent className="p-6 pr-0">
           <Icon i={icon} size={40} {...iconProps} />
