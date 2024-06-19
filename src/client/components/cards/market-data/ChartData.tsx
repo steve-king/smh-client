@@ -7,10 +7,11 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
+  TooltipProps,
 } from 'recharts'
 
+import useTailwind from '@/client/context/tailwind'
 interface CoingeckoChartData {
   prices: [number, number][]
 }
@@ -19,11 +20,34 @@ const formatDate = (date: number) => {
   return format(new Date(date), 'dd MMM')
 }
 
+const formatLongDate = (date: number) => {
+  return format(new Date(date), 'dd MMMM yyyy')
+}
+
 const formatPrice = (price: number) => {
   return `$${price.toFixed(2)}`
 }
 
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: TooltipProps<number, string>) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="border bg-popover p-2 rounded">
+        <p className="text-xs text-muted-foreground">{formatLongDate(label)}</p>
+        <p>{formatPrice(payload[0].value as number)}</p>
+      </div>
+    )
+  }
+
+  return null
+}
+
 export const ChartData = () => {
+  // const config = useTailwind()
+  // console.log(config)
   const [chartData, setChartData] = useState<CoingeckoChartData | null>(null)
   useEffect(() => {
     const url = '/api/coingecko/spacemesh/chart'
@@ -69,7 +93,12 @@ export const ChartData = () => {
             interval={30}
             tickMargin={10}
           />
-          <Tooltip />
+          <Tooltip
+            content={<CustomTooltip />}
+            formatter={(value: number) => [formatPrice(value), '']}
+            labelFormatter={(date) => formatLongDate(date)}
+            contentStyle={{ fontSize: '12px' }}
+          />
           {/* <Legend /> */}
           <Line
             type="monotone"
