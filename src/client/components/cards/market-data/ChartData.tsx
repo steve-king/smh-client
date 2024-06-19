@@ -12,6 +12,7 @@ import {
 } from 'recharts'
 
 import useTailwind from '@/client/context/tailwind'
+
 interface CoingeckoChartData {
   prices: [number, number][]
 }
@@ -46,8 +47,8 @@ const CustomTooltip = ({
 }
 
 export const ChartData = () => {
-  // const config = useTailwind()
-  // console.log(config)
+  const { theme } = useTailwind()
+  console.log(theme)
   const [chartData, setChartData] = useState<CoingeckoChartData | null>(null)
   useEffect(() => {
     const url = '/api/coingecko/spacemesh/chart'

@@ -5,12 +5,12 @@ import { useMemo } from 'react'
 import resolveConfig from 'tailwindcss/resolveConfig'
 
 // Project
-import { content, theme } from 'tailwind.config.js'
+import tailwindConfig from '@/client/tailwind.config'
 
 export default function useTailwind() {
   const tailwind = useMemo(
-    () => resolveConfig({ content, theme }),
-    [content, theme]
+    () => resolveConfig(tailwindConfig),
+    [tailwindConfig]
   )
 
   return tailwind
