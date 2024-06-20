@@ -41,10 +41,8 @@ export const NodeStatus = ({ node, showName = false, to }: Props) => {
         <div className="flex items-center">{children}</div>
       )}
     >
-      <Icon i={display.icon} className={cn(display.iconColour, 'mr-2')} />
-      <span className={display.textColour}>
-        {showName ? node.config.name : display.text}
-      </span>
+      <Icon i={display.icon} className={cn(display.textColour, 'mr-2')} />
+      <span>{showName ? node.config.name : display.text}</span>
     </ConditionalWrapper>
   )
 }
@@ -54,25 +52,40 @@ export const displayNodeStatus = (
   status: NodeStatusProps | undefined
 ) => {
   const colours = {
-    success: 'text-green-700',
-    error: 'text-red-600',
-    warning: 'text-yellow-600',
+    text: {
+      success: 'text-green-700',
+      error: 'text-red-600',
+      warning: 'text-yellow-600',
+    },
+    bg: {
+      success: 'bg-green-700',
+      error: 'bg-red-600',
+      warning: 'bg-yellow-600',
+    },
   }
 
   return {
     icon: 'node',
-    iconColour:
-      isOnline && status?.is_synced
-        ? colours.success
-        : isOnline
-        ? colours.warning
-        : colours.error,
     text:
       isOnline && status?.is_synced
         ? 'Online'
         : isOnline
         ? 'Syncing'
         : 'Offline',
-    textColour: '',
+    textColour:
+      isOnline && status?.is_synced
+        ? colours.text.success
+        : isOnline
+        ? colours.text.warning
+        : colours.text.error,
+    bgColour:
+      isOnline && status?.is_synced
+        ? colours.bg.success
+        : isOnline
+        ? colours.bg.warning
+        : colours.bg.error,
+    syncProgress: status
+      ? (1 - (status?.top_layer - status?.synced_layer) / 16) * 100
+      : 0,
   }
 }

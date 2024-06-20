@@ -2,12 +2,10 @@ import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
 import {
   ComposedChart,
-  LineChart,
   Bar,
   Line,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
   TooltipProps,
@@ -31,7 +29,6 @@ const CustomTooltip = ({
   label,
 }: TooltipProps<number, string>) => {
   if (active && payload && payload.length) {
-    console.log(payload)
     return (
       <div className="border bg-popover p-2 rounded">
         <p className="text-xs text-muted-foreground">{formatLongDate(label)}</p>
@@ -76,7 +73,6 @@ export const ChartData = () => {
 
   const [scalePadding, setScalePadding] = useState(0)
   const onResize = (width: number, height: number) => {
-    console.log(width, height)
     setScalePadding(height / 2)
   }
 

@@ -117,4 +117,13 @@ export default class NodeClient extends SpacemeshClient {
   setEventsCache = debounce((key: string, value: any) => {
     this.setCache(key, value)
   }, this.debounceMs)
+
+  setOffline = () => {
+    this.setCache(`${this.key}:Status`, null)
+    this.setCache(`${this.key}:Version`, null)
+    this.setCache(`${this.key}:PostStates`, null)
+    this.setCache(`${this.key}:Coinbase`, null)
+    this.setCache(`${this.key}:Peers`, null)
+    this.setCache(`${this.key}:Events`, null)
+  }
 }

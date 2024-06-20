@@ -6,6 +6,7 @@ import { displayNodeStatus } from '../components/tables/cells/NodeStatus'
 import { Node as NodeProps } from '@/types'
 import { EventsStream } from '../components/Events'
 import { PeersStream } from '../components/Peers'
+import { Progress } from '../components/ui/progress'
 
 const Node = () => {
   const { id } = useParams()
@@ -13,7 +14,7 @@ const Node = () => {
   let node = id && nodes.find((node: NodeProps) => node.config.id === id)
 
   if (node) {
-    const { config, Status, Version, Events, Peers } = node
+    const { isOnline, config, Status, Version, Events, Peers } = node
     const statusDisplay = displayNodeStatus(node.isOnline, node.Status)
 
     return (
@@ -22,14 +23,23 @@ const Node = () => {
         <div className="mb-4 grid gap-4 sm-max:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           <Card
             icon={statusDisplay.icon}
-            iconProps={{ className: statusDisplay.iconColour }}
+            iconProps={{ className: statusDisplay.textColour }}
           >
             <h3 className="text-xs text-muted-foreground">Status</h3>
             <p className="text-2xl">{statusDisplay.text}</p>
-            {node.Status ? (
-              <p className="text-xs text-muted-foreground">
-                Layer: {node.Status?.synced_layer} / {node.Status?.top_layer}
-              </p>
+            {isOnline ? (
+              <>
+                <p className="text-xs text-muted-foreground mb-1">
+                  Layer: {node.Status?.synced_layer} / {node.Status?.top_layer}
+                </p>
+                {!node.Status?.is_synced && (
+                  <Progress
+                    value={statusDisplay.syncProgress}
+                    className={statusDisplay.textColour}
+                    indicatorColor={statusDisplay.bgColour}
+                  />
+                )}
+              </>
             ) : (
               <p className="text-xs">&nbsp;</p>
             )}
@@ -55,19 +65,33 @@ const Node = () => {
           <div>
             <Card className="mb-4">
               <h2 className="font-medium">Rewards</h2>
-              <hr className="my-2" />
-              <p className="text-xs">Coinbase: {node.Coinbase}</p>
+              {node.Coinbase && (
+                <>
+                  <hr className="my-2" />
+                  <p className="text-xs">Coinbase: {node.Coinbase}</p>
+                </>
+              )}
             </Card>
             <Card className="mb-4">
               <h2 className="font-medium">Services</h2>
-              <hr className="my-2" />
-              <pre className="text-xs">
-                {JSON.stringify(node.PostStates, null, 2)}
-              </pre>
+              {node.PostStates && (
+                <>
+                  <hr className="my-2" />
+                  <pre className="text-xs">
+                    {JSON.stringify(node.PostStates, null, 2)}
+                  </pre>
+                </>
+              )}
             </Card>
-            {Peers && <PeersStream peers={Peers} />}
+            <Card>
+              <h2 className="font-medium">Peers</h2>
+              {Peers && <PeersStream peers={Peers} />}
+            </Card>
           </div>
-          {Events && <EventsStream events={Events} />}
+          <Card>
+            <h2 className="mb-4 font-medium">Events</h2>
+            {Events && <EventsStream events={Events} />}
+          </Card>
         </div>
       </Page>
     )

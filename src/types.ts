@@ -49,6 +49,10 @@ export interface Node {
 
 export interface NodeStatus {
   is_synced: boolean
+  connected_peers: number
+  synced_layer: number
+  top_layer: number
+  verified_layer: number
 }
 
 export interface Service {

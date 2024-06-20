@@ -41,4 +41,8 @@ export default class ServiceClient extends SpacemeshClient {
         this.debouncedCheckOnline()
       })
   }
+
+  setOffline = () => {
+    this.setCache(`${this.key}:Status`, null)
+  }
 }

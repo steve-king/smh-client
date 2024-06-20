@@ -20,11 +20,10 @@ Spacemesh.cache.on('set', (key: string, value: any) => {
 })
 
 UserConfig.onLoad((config: any) => {
-  Spacemesh.init(config)
-  Spacemesh.updateAll()
-
   const { coingecko_api_key, coingecko_cache_duration } = config.settings
   Coingecko.init(coingecko_api_key, coingecko_cache_duration)
+  Spacemesh.init(config)
+  Spacemesh.updateAll()
 })
 UserConfig.load()
 

@@ -47,15 +47,10 @@ interface EventsProps {
 }
 export const EventsStream = ({ events }: EventsProps) => {
   let theEvents = [...events]
-  return (
-    <Card>
-      <h2 className="mb-4 font-bold">Events</h2>
-      {theEvents
-        .sort(sortArrayByKey('timestamp'))
-        .reverse()
-        .map((event, i) => (
-          <Event key={event.timestamp + i} event={event} className="mb-4" />
-        ))}
-    </Card>
-  )
+  return theEvents
+    .sort(sortArrayByKey('timestamp'))
+    .reverse()
+    .map((event, i) => (
+      <Event key={event.timestamp + i} event={event} className="mb-4" />
+    ))
 }

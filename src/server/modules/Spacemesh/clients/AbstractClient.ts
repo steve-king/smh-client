@@ -35,10 +35,14 @@ export default abstract class SpacemeshClient {
 
     if (!this.isOnline) {
       this.connectStreams = true
+      this.setOffline()
     }
     this.setCache(`${this.key}:isOnline`, this.isOnline)
+
     return this.isOnline
   }
+
+  setOffline = () => {}
 
   debouncedCheckOnline = debounce(this.checkOnline, this.debounceMs)
 
