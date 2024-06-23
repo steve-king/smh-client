@@ -109,7 +109,11 @@ export const ServiceStatus = ({ service, node }: Props) => {
           )} */}
         </p>
         {display.progress > 0 && (
-          <ProgressBar value={display.progress} className="mt-1 h-[4px]" />
+          <ProgressBar
+            value={display.progress}
+            className="mt-1 h-[4px]"
+            indicatorColor="bg-yellow-600"
+          />
         )}
       </div>
     </div>
